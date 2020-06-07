@@ -8,7 +8,7 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Short: "dash",
+	Short: "dashi",
 	Run: func(cmd *cobra.Command, args []string) {
 		cmd.Help()
 	},
