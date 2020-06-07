@@ -1,0 +1,19 @@
+package database
+
+import (
+  "github.com/spf13/cobra"
+  "{{ .opts.Package }}/server"
+)
+
+var DropCmd = &cobra.Command{
+  Use:   "drop",
+  Short: "Database drop",
+  RunE: func(cmd *cobra.Command, args []string) error {
+    s, err := server.NewServer()
+    if err != nil {
+      return err
+    }
+
+    return s.DatabaseDrop()
+  },
+}

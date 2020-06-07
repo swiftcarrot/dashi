@@ -1,13 +1,19 @@
 package database
 
 import (
- 	"github.com/spf13/cobra"
+	"github.com/spf13/cobra"
+ 	"{{ .opts.Package }}/server"
 )
 
 var CreateCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Database create",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return nil
+		s, err := server.NewServer()
+		if err != nil {
+			return err
+		}
+
+		return s.DatabaseCreate()
 	},
 }

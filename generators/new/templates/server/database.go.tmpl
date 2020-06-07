@@ -21,6 +21,26 @@ func (server *Server) GetDatabase() (*pop.Connection, error) {
   return conn, nil
 }
 
+func (server *Server) DatabaseCreate() error {
+  conn, err := server.GetDatabase()
+  defer conn.Close()
+  if err != nil {
+    return err
+  }
+
+  return pop.CreateDB(conn)
+}
+
+func (server *Server) DatabaseDrop() error {
+  conn, err := server.GetDatabase()
+  defer conn.Close()
+  if err != nil {
+    return err
+  }
+
+  return pop.DropDB(conn)
+}
+
 func (server *Server) DatabaseMigrate() error {
   db, err := server.GetDatabase()
   defer db.Close()
