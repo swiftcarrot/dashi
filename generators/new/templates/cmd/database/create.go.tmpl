@@ -1,0 +1,13 @@
+package database
+
+import (
+ 	"github.com/spf13/cobra"
+)
+
+var CreateCmd = &cobra.Command{
+	Use:   "create",
+	Short: "Database create",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return nil
+	},
+}

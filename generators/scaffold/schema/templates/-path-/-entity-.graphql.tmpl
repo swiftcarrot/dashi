@@ -1,0 +1,37 @@
+type {{ .opts.Name.String }} {
+	{{ range .opts.Attrs -}}
+		{{ .Name.String | camelize  }}: {{ .GraphqlType }}
+	{{ end }}
+}
+
+type {{.opts.Name.String}}Result {
+	{{ .opts.Name.Pluralize.Camelize }}: [{{ .opts.Name.String }}]!
+	pagination: Pagination
+}
+
+extend type Query {
+	get{{ .opts.Name.Singularize }}(id: ID!): {{ .opts.Name }}
+	list{{ .opts.Name.Pluralize }}(page: Int, perPage: Int): {{.opts.Name.String}}Result
+}
+
+input Create{{ .opts.Name.String }}Input {
+	{{ range .opts.Attrs -}}
+		{{if ne .Name.Camelize.String "ID" -}}
+			{{ .Name.Camelize }}: {{ .GraphqlType }}
+		{{ end -}}
+	{{ end }}
+}
+
+input Update{{ .opts.Name }}Input {
+	{{ range .opts.Attrs -}}
+		{{if ne .Name.Camelize.String "ID" -}}
+			{{ .Name.Camelize }}: {{ .GraphqlType }}
+		{{ end -}}
+	{{ end }}
+}
+
+extend type Mutation {
+  create{{ .opts.Name }}(input: Create{{ .opts.Name }}Input!): {{ .opts.Name }}
+  update{{ .opts.Name }}(id: ID!, input: Update{{ .opts.Name }}Input!): {{ .opts.Name }}
+  delete{{ .opts.Name }}(id: ID!): {{ .opts.Name }}
+}

@@ -1,0 +1,27 @@
+scalar Time
+
+scalar Map
+
+scalar Any
+
+scalar UUID
+
+type Pagination {
+  perPage: Int!
+  total: Int!
+  currentPageCount: Int!
+  currentPage: Int!
+}
+
+type Mutation {
+  any: Any
+}
+
+type Query {
+  any: Any
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}

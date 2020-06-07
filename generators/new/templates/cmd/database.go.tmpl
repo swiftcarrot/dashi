@@ -1,0 +1,24 @@
+package cmd
+
+import (
+	"github.com/spf13/cobra"
+	"{{ .opts.Package }}/cmd/database"
+)
+
+var databaseCmd = &cobra.Command{
+	Use:     "database",
+	Aliases: []string{"db"},
+	Short:   "Database create, migrate ...",
+	Long:    "Database create, migrate ...",
+}
+
+func init() {
+	databaseCmd.AddCommand(database.CreateCmd)
+	databaseCmd.AddCommand(database.MigrateCmd)
+	databaseCmd.AddCommand(database.RollbackCmd)
+	databaseCmd.AddCommand(database.DumpCmd)
+	databaseCmd.AddCommand(database.RestoreCmd)
+	databaseCmd.AddCommand(database.ResetCmd)
+
+	rootCmd.AddCommand(databaseCmd)
+}

@@ -1,0 +1,18 @@
+GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
+
+all: fmt build
+
+fmt:
+	gofmt -w $(GOFMT_FILES)
+
+docker:
+	docker build -t {{ .opts.Name }} .
+
+build:
+	find . -name ".DS_Store" -delete
+	~/go/bin/gqlgen generate
+	rm -f migrations/schema.sql
+	~/go/bin/packr2
+	go mod tidy
+	go build -ldflags "-X {{ .opts.Package }}/cmd.Version=`git rev-parse HEAD`" -o bin/{{ .opts.Name }}
+	go install

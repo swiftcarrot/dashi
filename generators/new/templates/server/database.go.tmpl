@@ -1,0 +1,50 @@
+package server
+
+import (
+  "github.com/gobuffalo/packr/v2"
+  "github.com/gobuffalo/pop"
+)
+
+func (server *Server) GetDatabase() (*pop.Connection, error) {
+  conn, err := pop.NewConnection(server.config.Database)
+  if err != nil {
+    return nil, err
+  }
+
+  err = conn.Open()
+  if err != nil {
+    return nil, err
+  }
+
+  server.db = conn
+
+  return conn, nil
+}
+
+func (server *Server) DatabaseMigrate() error {
+  db, err := server.GetDatabase()
+  defer db.Close()
+  if err != nil {
+    return err
+  }
+
+  mig, err := pop.NewMigrationBox(packr.New("Migrations", "../migrations"), db)
+  if err != nil {
+    return err
+  }
+  return mig.Up()
+}
+
+func (server *Server) DatabaseRollback() error {
+  db, err := server.GetDatabase()
+  defer db.Close()
+  if err != nil {
+    return err
+  }
+
+  mig, err := pop.NewMigrationBox(packr.New("Migrations", "../migrations"), db)
+  if err != nil {
+    return err
+  }
+  return mig.Down(1)
+}

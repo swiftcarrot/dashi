@@ -1,0 +1,86 @@
+package server
+
+import (
+  "log"
+  "net/http"
+  "os"
+
+  "github.com/99designs/gqlgen/graphql/handler"
+  "github.com/99designs/gqlgen/graphql/playground"
+  "github.com/go-chi/chi"
+  "github.com/go-chi/cors"
+  "github.com/gobuffalo/pop"
+  "github.com/spf13/viper"
+  "{{ .opts.Package }}/graphql/generated"
+  "{{ .opts.Package }}/graphql/resolver"
+)
+
+type Server struct {
+  config  *Config
+  db      *pop.Connection
+  handler http.Handler
+}
+
+const defaultPort = "8080"
+
+func (server *Server) ListenAndServe() error {
+  defer server.db.Close()
+
+  port := os.Getenv("PORT")
+  if port == "" {
+    port = defaultPort
+  }
+
+  log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
+  log.Fatal(http.ListenAndServe(":"+port, server.handler))
+  return nil
+}
+
+func GetConfig() (*Config, error) {
+  config := Config{}
+  err := viper.Unmarshal(&config)
+  if err != nil {
+      return nil, err
+  }
+
+  return &config, nil
+}
+
+func NewServer() (*Server, error) {
+  config, err := GetConfig()
+  if err != nil {
+      return nil, err
+  }
+
+  // TODO: context
+  // ctx := context.Background()
+  server := &Server{
+      config: config,
+  }
+
+  conn, err := server.GetDatabase()
+  if err != nil {
+      return nil, err
+  }
+
+  router := chi.NewRouter()
+
+  cors := cors.New(cors.Options{
+    AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
+    AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+    AllowCredentials: true,
+  })
+
+  router.Use(cors.Handler)
+
+  srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{
+    Conn: conn,
+  }}))
+
+  router.Handle("/", playground.Handler("GraphQL playground", "/graphql"))
+  router.Handle("/graphql", srv)
+
+  server.handler = router
+
+  return server, nil
+}

@@ -1,0 +1,154 @@
+{{ reserveImport "context"  }}
+{{ reserveImport "fmt"  }}
+{{ reserveImport "io"  }}
+{{ reserveImport "strconv"  }}
+{{ reserveImport "time"  }}
+{{ reserveImport "sync"  }}
+{{ reserveImport "errors"  }}
+{{ reserveImport "bytes"  }}
+
+{{ reserveImport "github.com/vektah/gqlparser/v2" }}
+{{ reserveImport "github.com/vektah/gqlparser/v2/ast" }}
+{{ reserveImport "github.com/99designs/gqlgen/graphql" }}
+{{ reserveImport "github.com/99designs/gqlgen/graphql/introspection" }}
+
+{{ .Imports }}
+
+{{ if .HasRoot }}
+	type {{.ResolverType}} struct {}
+{{ end }}
+
+{{ range $resolver := .Resolvers -}}
+	func (r *{{lcFirst $resolver.Object.Name}}{{ucFirst $.ResolverType}}) {{$resolver.Field.GoFieldName}}{{ $resolver.Field.ShortResolverDeclaration }} {
+		{{ if (ne $resolver.Implementation "") }}
+			{{$resolver.Implementation}}
+		{{ else}}
+			{{ if isCreate $resolver.Field.GoFieldName}}
+				{{ template  "create" $resolver}}
+			{{ else if isList $resolver.Field.GoFieldName}}
+				{{ template  "list" $resolver}}
+			{{ else if isGet $resolver.Field.GoFieldName}}
+				{{ template  "get" $resolver}}
+			{{ else if isUpdate $resolver.Field.GoFieldName}}
+				{{ template  "update" $resolver}}
+			{{ else if isDelete $resolver.Field.GoFieldName}}
+				{{ template  "delete" $resolver}}
+			{{ else }}
+				return nil, nil
+			{{ end }}
+		{{ end }}
+	}
+{{ end }}
+
+{{ range $object := .Objects -}}
+	// {{$object.Name}} returns {{ $object.ResolverInterface | ref }} implementation.
+	func (r *{{$.ResolverType}}) {{$object.Name}}() {{ $object.ResolverInterface | ref }} { return &{{lcFirst $object.Name}}{{ucFirst $.ResolverType}}{r} }
+{{ end }}
+
+{{ range $object := .Objects -}}
+	type {{lcFirst $object.Name}}{{ucFirst $.ResolverType}} struct { *{{$.ResolverType}} }
+{{ end }}
+
+{{ if (ne .RemainingSource "") }}
+    // !!! WARNING !!!
+    // The code below was going to be deleted when updating resolvers. It has been copied here so you have
+    // one last chance to move it out of harms way if you want. There are two reasons this happens:
+	//  - When renaming or deleting a resolver the old code will be put in here. You can safely delete
+	//    it when you're done.
+	//  - You have helper methods in this file. Move them out to keep these resolver files clean.
+	{{ .RemainingSource }}
+{{ end }}
+
+{{ define "create" }}
+	{{ $input := index .Field.Args 0 -}}
+	{{ $entity := .Field.TypeReference.Definition.Name | lcFirst -}}
+	{{ $entityType := .Field.TypeReference.Definition.Name | go }}
+	{{ $entity }} := &model.{{ $entityType }}{
+		{{ range $o := $input.TypeReference.Definition.Fields -}}
+			{{ $o.Name | go }}: {{$input.Name}}.{{ $o.Name | go }},
+		{{ end }}
+	}
+	err := r.Conn.Create({{$entity}})
+	if err != nil {
+		return nil, err
+	}
+	return {{$entity}}, nil
+{{ end }}
+
+{{ define "update" }}
+	{{ $input := index .Field.Args 1 -}}
+	{{ $entity := .Field.TypeReference.Definition.Name | lcFirst }}
+	{{ $entityType := .Field.TypeReference.Definition.Name | go }}
+	{{ $entity }} := &model.{{ $entityType -}}{}
+	err := r.Conn.Find({{$entity}}, id)
+	if err != nil {
+		return nil, err
+	}
+	{{ range $o := $input.TypeReference.Definition.Fields -}}
+		{{$entity}}.{{$o.Name | go}} = {{$input.Name}}.{{ $o.Name | go }}
+	{{ end }}
+	err = r.Conn.Update({{$entity}})
+	if err != nil {
+	return nil, err
+	}
+	return {{$entity}}, nil
+{{ end }}
+
+
+{{ define "delete" }}
+	{{ $entity := .Field.TypeReference.Definition.Name | lcFirst }}
+	{{ $entityType := .Field.TypeReference.Definition.Name | go }}
+	{{$entity}} := &model.{{$entityType}}{}
+	err := r.Conn.Find({{$entity}}, id)
+	if err != nil {
+		return nil, err
+	}
+	err = r.Conn.Destroy({{$entity}})
+	if err != nil {
+		return nil, err
+	}
+	return {{$entity}}, nil
+{{ end }}
+
+{{ define "get" }}
+	{{ $entity := .Field.TypeReference.Definition.Name | lcFirst }}
+	{{ $entityType := .Field.TypeReference.Definition.Name | go }}
+	{{$entity}} := &model.{{$entityType}}{}
+	err := r.Conn.Find({{$entity}}, id)
+	if err != nil {
+		return nil, err
+	}
+	return {{$entity}}, nil
+{{ end }}
+
+{{ define "list" }}
+	{{ $resultType := .Field.TypeReference.Definition.Name | go  }}
+	{{ $entityType :=  $resultType | entityFromResult }}
+	{{ $entity := $entityType | lcFirst | pluralize }}
+
+	{{$entity}} := &[]*model.{{$entityType}}{}
+	if page == nil {
+		page = &Page
+	}
+	if perPage == nil {
+		perPage = &PerPage
+	}
+	err := r.Conn.Paginate(*page, *perPage).All({{$entity}})
+	if err != nil {
+		return nil, err
+	}
+
+	total, err := r.Conn.Count({{$entity}})
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.{{$resultType}}{
+			{{$entity | ucFirst}}: *{{$entity}},
+			Pagination: &model.Pagination{
+				Total:            total,
+				CurrentPage:      *page,
+				CurrentPageCount: len(*{{$entity}}),
+				PerPage:          *perPage,
+			}}, nil
+{{ end }}

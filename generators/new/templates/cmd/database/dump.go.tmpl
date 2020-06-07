@@ -1,0 +1,13 @@
+package database
+
+import (
+	"github.com/spf13/cobra"
+)
+
+var DumpCmd = &cobra.Command{
+	Use:   "dump",
+	Short: "Database dump",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return nil
+	},
+}

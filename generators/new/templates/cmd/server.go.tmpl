@@ -1,0 +1,23 @@
+package cmd
+
+import (
+	"github.com/spf13/cobra"
+	"{{ .opts.Package }}/server"
+)
+
+var serverCmd = &cobra.Command{
+	Use:   "server",
+	Short: "Start server",
+	RunE: func(cmd *cobra.Command, args []string) error {
+   	server, err := server.NewServer()
+   	if err != nil {
+   		return err
+   	}
+
+		return server.ListenAndServe()
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(serverCmd)
+}

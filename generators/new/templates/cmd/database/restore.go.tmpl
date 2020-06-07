@@ -1,0 +1,13 @@
+package database
+
+import (
+	"github.com/spf13/cobra"
+)
+
+var RestoreCmd = &cobra.Command{
+	Use:   "restore",
+	Short: "Database restore",
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return nil
+	},
+}

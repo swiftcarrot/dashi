@@ -1,0 +1,19 @@
+package database
+
+import (
+  "github.com/spf13/cobra"
+  "{{ .opts.Package }}/server"
+)
+
+var RollbackCmd = &cobra.Command{
+  Use:   "rollback",
+  Short: "Database rollback",
+  RunE: func(cmd *cobra.Command, args []string) error {
+    s, err := server.NewServer()
+    if err != nil {
+      return err
+    }
+
+    return s.DatabaseRollback()
+  },
+}
