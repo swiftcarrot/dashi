@@ -4,8 +4,9 @@ all: fmt build
 
 fmt:
 	gofmt -w $(GOFMT_FILES)
+	yarn prettier --write '**/*.js' '**/*.graphql'
 
-docker:
+image:
 	docker build -t {{ .opts.Name }} .
 
 build:
