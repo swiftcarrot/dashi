@@ -35,6 +35,7 @@ func New(opts *scaffold.Options) (*genny.Generator, error) {
 			return g, err
 		}
 	}
+
 	var f genny.File
 	up := t.Fizz()
 	down := t.UnFizz()

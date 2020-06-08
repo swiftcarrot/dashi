@@ -11,7 +11,6 @@ import (
 	"github.com/swiftcarrot/dashi/generators/scaffold/attrs"
 	"github.com/swiftcarrot/dashi/generators/scaffold/graphql"
 	"github.com/swiftcarrot/dashi/generators/scaffold/migration"
-	"github.com/swiftcarrot/dashi/generators/scaffold/model"
 	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
 )
 
@@ -58,14 +57,14 @@ var ScaffoldCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		modelGen, err := model.New(opts)
-		if err != nil {
-			return err
-		}
+		//modelGen, err := model.New(opts)
+		//if err != nil {
+		//	return err
+		//}
 
 		err = run.With(schemaGen)
 		err = run.With(migrationGen)
-		err = run.With(modelGen)
+		//err = run.With(modelGen)
 		err = run.With(graphqlGen)
 
 		return run.Run()

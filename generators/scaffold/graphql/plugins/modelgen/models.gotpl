@@ -26,7 +26,6 @@
 			{{- with .Description }}
 				{{.|prefixLines "// "}}
 			{{- end}}
-			//{{$field.Type}}
 			{{ $field.Name|go }} {{$field.Type | ref}} `{{$field.Tag}}`
 		{{- end }}
 	}

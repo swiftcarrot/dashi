@@ -105,11 +105,18 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 
 			for _, field := range schemaType.Fields {
 				var typ types.Type
+				if field.Type.Elem != nil {
+					println(field.Type.Elem.Name())
+				}
 				fieldDef := cfg.Schema.Types[field.Type.Name()]
 
 				if cfg.Models.UserDefined(field.Type.Name()) {
 					var err error
 					typ, err = binder.FindTypeFromName(cfg.Models[field.Type.Name()].Model[0])
+					if !field.Type.NonNull && field.Type.NamedType != "" {
+						field.Type.NonNull = true
+						typ, err = binder.FindType("github.com/swiftcarrot/dashi/libs/graphql", "Nulls"+field.Type.Name())
+					}
 					if err != nil {
 						return err
 					}
@@ -160,6 +167,10 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 
 				if isStruct(typ) && (fieldDef.Kind == ast.Object || fieldDef.Kind == ast.InputObject) {
 					typ = types.NewPointer(typ)
+				}
+
+				if isSlice(typ) && (fieldDef.Kind == ast.Scalar) {
+					typ, _ = binder.FindType("github.com/gobuffalo/pop/slices", field.Type.Name())
 				}
 				it.Fields = append(it.Fields, &Field{
 					Name:        name,
@@ -231,5 +242,10 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 
 func isStruct(t types.Type) bool {
 	_, is := t.Underlying().(*types.Struct)
+	return is
+}
+
+func isSlice(t types.Type) bool {
+	_, is := t.Underlying().(*types.Slice)
 	return is
 }

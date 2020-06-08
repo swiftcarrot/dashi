@@ -101,8 +101,10 @@ func withNullable(s string, nullable bool) string {
 }
 func graphqlType(s string, nullable bool) string {
 	switch strings.ToLower(s) {
-	case "int", "bigint":
+	case "int":
 		return withNullable("Int", nullable)
+	case "bigint":
+		return withNullable("Int64", nullable)
 	case "decimal", "float":
 		return withNullable("Float", nullable)
 	case "timestamp", "datetime", "date", "time":
@@ -112,11 +114,11 @@ func graphqlType(s string, nullable bool) string {
 	case "uuid.uuid", "uuid":
 		return withNullable("UUID", nullable)
 	case "slices.string":
-		return "[String]"
+		return "[String!]"
 	case "slices.float":
-		return "[Float]"
+		return "[Float!]"
 	case "slices.int":
-		return "[Int]"
+		return "[Int!]"
 	case "json", "jsonb":
 		return "Map!"
 	case "blob":

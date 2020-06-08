@@ -28,12 +28,11 @@ func UnmarshalNullsString(v interface{}) (nulls.String, error) {
 	case string:
 		return nulls.NewString(v), nil
 	case nil:
-		return nulls.String{Valid: false }, nil
+		return nulls.String{Valid: false}, nil
 	default:
-		return nulls.String{Valid: false }, fmt.Errorf("%T is not a valid uuid", v)
+		return nulls.String{Valid: false}, fmt.Errorf("%T is not a valid uuid", v)
 	}
 }
-
 
 func NewString(f *string) nulls.String {
 	if f != nil {
