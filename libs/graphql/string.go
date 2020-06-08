@@ -3,6 +3,8 @@ package graphql
 import (
 	"fmt"
 
+	"github.com/gobuffalo/pop/slices"
+
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/gobuffalo/nulls"
 )
@@ -31,6 +33,21 @@ func UnmarshalNullsString(v interface{}) (nulls.String, error) {
 		return nulls.String{Valid: false}, nil
 	default:
 		return nulls.String{Valid: false}, fmt.Errorf("%T is not a valid uuid", v)
+	}
+}
+
+func MarshalSliceString(s slices.String) graphql.Marshaler {
+	return graphql.MarshalAny(s)
+}
+
+func UnmarshalSliceString(v interface{}) (slices.String, error) {
+	switch v := v.(type) {
+	case []string:
+		return v, nil
+	case nil:
+		return []string{}, nil
+	default:
+		return []string{}, fmt.Errorf("%T is not a valid uuid", v)
 	}
 }
 
