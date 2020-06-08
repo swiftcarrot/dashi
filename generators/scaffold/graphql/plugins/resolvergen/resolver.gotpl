@@ -85,6 +85,7 @@
 		return nil, err
 	}
 	{{ range $o := $input.TypeReference.Definition.Fields -}}
+		//{{$o.Type}}
 		{{$entity}}.{{$o.Name | go}} = {{$input.Name}}.{{ $o.Name | go }}
 	{{ end }}
 	err = r.Conn.Update({{$entity}})

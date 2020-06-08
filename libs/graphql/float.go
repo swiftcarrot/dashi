@@ -22,8 +22,16 @@ func UnmarshalNullsFloat(v interface{}) (nulls.Float64, error) {
 		f, _ := graphql.UnmarshalFloat(v)
 		return nulls.NewFloat64(f), nil
 	case nil:
-		return nulls.Float64{Valid: false, Float64: 0}, nil
+		return nulls.Float64{Valid: false}, nil
 	default:
-		return nulls.Float64{Valid: false, Float64: 0}, fmt.Errorf("%T is not a valid float", v)
+		return nulls.Float64{Valid: false}, fmt.Errorf("%T is not a valid float", v)
+	}
+}
+
+func NewFloat(f *float64) nulls.Float64 {
+	if f != nil {
+		return nulls.NewFloat64(*f)
+	} else {
+		return nulls.Float64{Valid: false}
 	}
 }

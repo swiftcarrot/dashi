@@ -54,18 +54,18 @@ models:
       - github.com/99designs/gqlgen/graphql.Int
       - github.com/99designs/gqlgen/graphql.Int64
       - github.com/99designs/gqlgen/graphql.Int32
-      - {{ .opts.Package }}/graphql/model/graphql.NullsInt32
-      - {{ .opts.Package }}/graphql/model/graphql.NullsInt64
-      - {{ .opts.Package }}/graphql/model/graphql.NullsInt
+      - github.com/swiftcarrot/dashi/libs/graphql.NullsInt32
+      - github.com/swiftcarrot/dashi/libs/graphql.NullsInt64
+      - github.com/swiftcarrot/dashi/libs/graphql.NullsInt
   Float:
     model:
       - github.com/99designs/gqlgen/graphql.Float
-      - {{ .opts.Package }}/graphql/model/graphql.NullsFloat
+      - github.com/swiftcarrot/dashi/libs/graphql.NullsFloat
   String:
     model:
-      - {{ .opts.Package }}/graphql/model/graphql.String
-      - {{ .opts.Package }}/graphql/model/graphql.NullsString
+      - github.com/swiftcarrot/dashi/libs/graphql.String
+      - github.com/swiftcarrot/dashi/libs/graphql.NullsString
   UUID:
     model:
-      - {{ .opts.Package }}/graphql/model/graphql.UUID
-      - {{ .opts.Package }}/graphql/model/graphql.NullsUUID
+      - github.com/swiftcarrot/dashi/libs/graphql.UUID
+      - github.com/swiftcarrot/dashi/libs/graphql.NullsUUID

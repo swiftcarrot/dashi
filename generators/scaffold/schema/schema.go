@@ -32,7 +32,6 @@ func New(opts *scaffold.Options) (*genny.Generator, error) {
 	g.Transformer(t)
 	g.Transformer(genny.Replace("-entity-", opts.Name.Underscore().String()))
 	g.Transformer(genny.Replace("-path-", "graphql/schema"))
-
 	if err := g.Box(packr.New("scaffold:schema:templates", "../schema/templates")); err != nil {
 		return g, err
 	}

@@ -35,13 +35,19 @@ func UnmarshalNullsUUID(v interface{}) (nulls.UUID, error) {
 		return nulls.NewUUID(uuid.FromStringOrNil(v)), nil
 	case nil:
 		return nulls.UUID{
-			UUID:  uuid.Nil,
 			Valid: false,
 		}, nil
 	default:
 		return nulls.UUID{
-			UUID:  uuid.Nil,
 			Valid: false,
 		}, fmt.Errorf("%T is not a valid uuid", v)
+	}
+}
+
+func NewUUID(f *uuid.UUID) nulls.UUID {
+	if f != nil {
+		return nulls.NewUUID(*f)
+	} else {
+		return nulls.UUID{Valid: false}
 	}
 }
