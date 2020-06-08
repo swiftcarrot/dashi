@@ -8,6 +8,7 @@ import (
 	"github.com/gobuffalo/genny/v2/gogen"
 	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/dashi/generators/dashboard"
+	"github.com/swiftcarrot/dashi/generators/packages"
 )
 
 func New(opts *Options) (*genny.Group, error) {
@@ -34,8 +35,15 @@ func New(opts *Options) (*genny.Group, error) {
 	g.Transformer(t)
 
 	g.Transformer(genny.Dot())
-	g.Command(exec.Command("make"))
 	gg.Add(g)
+
+	packages, err := packages.New(&packages.Options{
+		Name: opts.Name,
+	})
+	if err != nil {
+		return nil, err
+	}
+	gg.Add(packages)
 
 	dashboard, err := dashboard.New(&dashboard.Options{
 		Name: opts.Name,
@@ -43,8 +51,11 @@ func New(opts *Options) (*genny.Group, error) {
 	if err != nil {
 		return nil, err
 	}
-
 	gg.Add(dashboard)
+
+	make := genny.New()
+	make.Command(exec.Command("make"))
+	gg.Add(make)
 
 	return gg, nil
 }
