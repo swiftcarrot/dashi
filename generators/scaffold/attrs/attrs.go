@@ -27,16 +27,16 @@ func (ats Attrs) Slice() []string {
 	return x
 }
 
-//TODO need test case
-//Supported Attr.inputType
-//  bigint, int, decimal, float, nulls.int,  nulls.bigint
-//  string, text, nulls.string, nulls.text
-//  timestamp, datetime, date, time, nulls.*
-//  uuid, nulls.uuid
-//  bool, nulls.bool
-//  jsonb, json
-//  blob
-//  slices.int, slices.float, slices.string
+// TODO need test case
+// Supported Attr.inputType
+// bigint, int, decimal, float, nulls.int,  nulls.bigint
+// string, text, nulls.string, nulls.text
+// timestamp, datetime, date, time, nulls.*
+// uuid, nulls.uuid
+// bool, nulls.bool
+// jsonb, json
+// blob
+// slices.int, slices.float, slices.string
 
 //GoType returns the Go type for an Attr based on its commonType
 func (a Attr) GoType() string {

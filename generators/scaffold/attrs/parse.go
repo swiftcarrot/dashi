@@ -2,14 +2,15 @@ package attrs
 
 import (
 	"errors"
-	"github.com/gobuffalo/flect/name"
 	"strings"
+
+	"github.com/gobuffalo/flect/name"
 )
 
-//ErrRepeatedAttr is returned when parsing an array with repeated names
+// ErrRepeatedAttr is returned when parsing an array with repeated names
 var ErrRepeatedAttr = errors.New("duplicate attr name")
 
-//Parse takes a string like name:inputType:goType and turns it into an Attr
+// Parse takes a string like name:inputType:goType and turns it into an Attr
 func Parse(arg string) (Attr, error) {
 	arg = strings.TrimSpace(arg)
 	attr := Attr{

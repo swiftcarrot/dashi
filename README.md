@@ -1,6 +1,6 @@
 # Dashi
 
-Dashi is a framework for building GraphQL service in Go.
+Dashi is a framework for building GraphQL application in Go and React.
 
 ## Documentation
 

@@ -1,11 +1,12 @@
 package resolvergen
 
 import (
-	"github.com/gobuffalo/flect"
 	"os"
 	"path/filepath"
 	"strings"
 	"text/template"
+
+	"github.com/gobuffalo/flect"
 
 	"github.com/99designs/gqlgen/codegen"
 	"github.com/99designs/gqlgen/codegen/config"

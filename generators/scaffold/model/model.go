@@ -3,9 +3,8 @@ package model
 import (
 	"strings"
 
-	"github.com/gobuffalo/flect/name"
-
 	"github.com/gobuffalo/flect"
+	"github.com/gobuffalo/flect/name"
 	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/genny/v2/gogen"
 	"github.com/gobuffalo/packr/v2"
