@@ -3,10 +3,9 @@ package graphql
 import (
 	"fmt"
 
-	"github.com/gobuffalo/pop/slices"
-
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/gobuffalo/nulls"
+	"github.com/gobuffalo/pop/slices"
 )
 
 func MarshalString(s string) graphql.Marshaler {
