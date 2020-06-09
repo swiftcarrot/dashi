@@ -105,11 +105,7 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 
 			for _, field := range schemaType.Fields {
 				var typ types.Type
-				if field.Type.Elem != nil {
-					println(field.Type.Elem.Name())
-				}
 				fieldDef := cfg.Schema.Types[field.Type.Name()]
-
 				if cfg.Models.UserDefined(field.Type.Name()) {
 					var err error
 					typ, err = binder.FindTypeFromName(cfg.Models[field.Type.Name()].Model[0])

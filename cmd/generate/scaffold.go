@@ -2,6 +2,7 @@ package generate
 
 import (
 	"context"
+	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
 
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
@@ -57,15 +58,16 @@ var ScaffoldCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		//modelGen, err := model.New(opts)
-		//if err != nil {
-		//	return err
-		//}
+
+		dashboardGen, err := dashboard.New(opts)
+		if err != nil {
+			return err
+		}
 
 		err = run.With(schemaGen)
 		err = run.With(migrationGen)
-		//err = run.With(modelGen)
 		err = run.With(graphqlGen)
+		err = run.With(dashboardGen)
 
 		return run.Run()
 	},

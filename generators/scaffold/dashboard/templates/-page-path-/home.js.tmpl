@@ -1,0 +1,48 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'kit';
+import { ToolTable } from 'components';
+import { query, mutation } from 'api';
+
+const {{.opts.Name.Pascalize}}HomePage = () => {
+	const [state, setState] = useState({
+		loading: true,
+		data: null,
+		error: null,
+	});
+	const { loading, data, error } = state;
+
+	useEffect(() => {
+		reload();
+	}, []);
+
+	function reload() {
+		query
+			.{{.opts.Name.Pluralize.Camelize}}({ page: 1, perPage: 20 })
+			.then((data) => {
+					setState({ loading: false, data, error: null });
+			})
+			.catch((error) => {
+					setState({ loading: false, data: null, error });
+			});
+	}
+
+	function handleDelete(entity) {
+			mutation.delete{{.opts.Name.Pascalize}}({ id: entity.id }).then(() => {
+				reload();
+			});
+	}
+
+	if (loading) {
+		return <div>loading</div>;
+	}
+
+	return (
+		<div>
+			<h2>{{.opts.Name.Pluralize.Pascalize}}</h2>
+			<Link to="/tools/new">New {{.opts.Name.Pascalize}}</Link>
+			<{{.opts.Name.Pascalize}}Table {{.opts.Name.Pluralize.Camelize}}={data.{{.opts.Name.Pluralize.Camelize}}} onDelete={handleDelete} />
+		</div>
+	);
+};
+
+export default {{.opts.Name.Pascalize}}HomePage;
