@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Sidebar } from 'components';
-import { Container } from 'kit';
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <Fragment>
       <Sidebar />
-      <Container fluid>{children}</Container>
-    </div>
+      <div className="content">{children}</div>
+    </Fragment>
   );
 };
 

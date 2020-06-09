@@ -1,10 +1,9 @@
-import React, { Fragment } from 'react';
-import { css, Global } from '@emotion/core';
+import React from 'react';
 import GraphiQL from 'graphiql';
 import 'graphiql/graphiql.min.css';
 
 function graphQLFetcher(graphQLParams) {
-  return fetch('http://localhost:8080', {
+  return fetch('http://localhost:8080/graphql', {
     method: 'post',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(graphQLParams),
@@ -13,16 +12,9 @@ function graphQLFetcher(graphQLParams) {
 
 const GraphiQLPage = () => {
   return (
-    <Fragment>
-      <Global
-        styles={css`
-          #graphiql {
-            height: 100vh;
-          }
-        `}
-      />
+    <div className="graphiql">
       <GraphiQL fetcher={graphQLFetcher} />
-    </Fragment>
+    </div>
   );
 };
 
