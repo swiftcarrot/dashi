@@ -1,5 +1,5 @@
 module.exports = {
   someSidebar: {
-    'Getting Started': ['installation', 'first-project'],
+    'Getting Started': ['installation', 'first-project', 'project-structure'],
   },
 };
