@@ -1,0 +1,45 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'kit';
+import { query } from 'api';
+import { useParams } from 'react-router-dom';
+
+const ToolPage = () => {
+  const { id } = useParams();
+  const [state, setState] = useState({
+    loading: true,
+    data: null,
+    error: null,
+  });
+  const { loading, data, error } = state;
+
+  useEffect(() => {
+    query
+      .tool({ id })
+      .then((data) => {
+        setState({ loading: false, data, error: null });
+      })
+      .catch((error) => {
+        setState({ loading: false, data: null, error });
+      });
+  }, []);
+
+  if (loading) {
+    return <div>loading</div>;
+  }
+
+  return (
+    <div>
+      <h2>Tool</h2>
+      <div>Key: {data.key}</div>
+      <div>Icon: {data.icon}</div>
+      <div>Name: {data.name}</div>
+      <div>About: {data.about}</div>
+      <div>Website: {data.website}</div>
+      <div>Created At: {data.created_at}</div>
+      <div>Updated At: {data.updated_at}</div>
+      <Link to={`/tools/${id}/edit`}>Edit</Link>
+    </div>
+  );
+};
+
+export default ToolPage;

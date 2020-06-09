@@ -1,0 +1,17 @@
+import React from 'react';
+import { Form, FormGroup, FormSubmit } from 'kit';
+
+const ToolForm = (props) => {
+  return (
+    <Form {...props}>
+      <FormGroup name="key" label="Key" />
+      <FormGroup name="icon" label="Icon" />
+      <FormGroup name="name" label="Name" />
+      <FormGroup name="about" label="About" />
+      <FormGroup name="website" label="Website" />
+      <FormSubmit />
+    </Form>
+  );
+};
+
+export default ToolForm;

@@ -1,0 +1,63 @@
+import React, { useState, useEffect } from 'react';
+import { Link } from 'kit';
+import { ToolForm } from 'components';
+import { query, mutation } from 'api';
+import { useParams, useNavigate } from 'react-router-dom';
+
+const ToolEditPage = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [state, setState] = useState({
+    loading: true,
+    data: null,
+    error: null,
+  });
+  const { loading, data, error } = state;
+
+  useEffect(() => {
+    query
+      .tool({ id })
+      .then((data) => {
+        setState({ loading: false, data, error: null });
+      })
+      .catch((error) => {
+        setState({ loading: false, data: null, error });
+      });
+  }, []);
+
+  function handleSubmit(values, { setSubmitting }) {
+    mutation
+      .updateTool({ id, input: values })
+      .then(() => {
+        setSubmitting(false);
+        navigate(`/tools/${id}`);
+      })
+      .catch((err) => {
+        console.warn(err);
+        setSubmitting(false);
+      });
+  }
+
+  if (loading) {
+    return <div>loading</div>;
+  }
+
+  return (
+    <div>
+      <h2>Edit Tool</h2>
+      <Link to="/tools">back</Link>
+      <ToolForm
+        initialValues={{"{{"}}
+          key: data.key,
+          icon: data.icon,
+          name: data.name,
+          about: data.about,
+          website: data.website,
+        {{"}}"}}
+        onSubmit={handleSubmit}
+      />
+    </div>
+  );
+};
+
+export default ToolEditPage;

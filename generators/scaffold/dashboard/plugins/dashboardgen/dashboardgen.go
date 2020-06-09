@@ -5,17 +5,27 @@ import (
 	"github.com/99designs/gqlgen/plugin"
 )
 
+type Plugin struct {
+	ObjectName string
+}
+
+type DashboardData struct {
+	Object    *codegen.Object
+	Resolvers []*Resolver
+}
+
+type Resolver struct {
+	Object *codegen.Object
+	Field  *codegen.Field
+}
+
+var _ plugin.CodeGenerator = &Plugin{}
+
 func New(obj string) plugin.Plugin {
 	return &Plugin{
 		ObjectName: obj,
 	}
 }
-
-type Plugin struct {
-	ObjectName string
-}
-
-var _ plugin.CodeGenerator = &Plugin{}
 
 func (m *Plugin) Name() string {
 	return "dashboardgen"
@@ -25,7 +35,7 @@ func (m *Plugin) GenerateCode(data *codegen.Data) error {
 	return m.generatePerSchema(data)
 }
 
-//TODO extract entity and query/mutation from codegen.Data, and generate corresponding js api code
+// TODO extract entity and query/mutation from codegen.Data, and generate corresponding js api code
 func (m *Plugin) generatePerSchema(data *codegen.Data) error {
 	for _, o := range data.Objects {
 		resolvers := []*Resolver{}
@@ -44,14 +54,4 @@ func (m *Plugin) generatePerSchema(data *codegen.Data) error {
 		}
 	}
 	return nil
-}
-
-type DashboardData struct {
-	Object    *codegen.Object
-	Resolvers []*Resolver
-}
-
-type Resolver struct {
-	Object *codegen.Object
-	Field  *codegen.Field
 }

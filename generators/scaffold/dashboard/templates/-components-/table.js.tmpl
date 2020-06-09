@@ -1,0 +1,43 @@
+import React from 'react';
+import { Link, Table } from 'kit';
+
+const ToolTable = ({ tools, onDelete }) => {
+  function handleClick(e, tool) {
+    e.preventDefault();
+
+    if (window.confirm('Delete?')) {
+      onDelete(tool);
+    }
+  }
+
+  return (
+    <Table
+      keyExtractor={(row) => row.id}
+      data={tools}
+      columns={[
+        { key: 'name', title: 'Name' },
+        { key: 'key', title: 'Key' },
+        { key: 'icon', title: 'Icon' },
+        { key: 'about', title: 'About' },
+        { key: 'website', title: 'Website' },
+        { key: 'created_at', title: 'CreatedAt' },
+        { key: 'updated_at', title: 'UpdatedAt' },
+        {
+          key: 'action',
+          title: 'Action',
+          render: (tool) => (
+            <div>
+              <Link to={`/tools/${tool.id}`}>View</Link>
+              <Link to={`/tools/${tool.id}/edit`}>Edit</Link>
+              <a href="#" onClick={(e) => handleClick(e, tool)}>
+                Delete
+              </a>
+            </div>
+          ),
+        },
+      ]}
+    />
+  );
+};
+
+export default ToolTable;

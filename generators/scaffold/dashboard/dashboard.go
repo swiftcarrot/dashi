@@ -36,8 +36,10 @@ func New(opts *scaffold.Options) (*genny.Generator, error) {
 	t := gogen.TemplateTransformer(data, helpers)
 	g.Transformer(t)
 	g.Transformer(genny.Replace("-entity-", opts.Name.Underscore().String()))
-	g.Transformer(genny.Replace("-page-path-", "packages/dashboard/src/page/"+opts.Name.Dasherize().String()))
-	if err := g.Box(packr.New("scaffold:dashboard:templates", "../dashboard/templates")); err != nil {
+	g.Transformer(genny.Replace("-pages-", "packages/dashboard/src/pages/"+opts.Name.Dasherize().String()))
+	g.Transformer(genny.Replace("-components-", "packages/dashboard/src/components/"+opts.Name.Dasherize().String()))
+	err := g.Box(packr.New("scaffold:dashboard:templates", "../dashboard/templates"))
+	if err != nil {
 		return g, err
 	}
 

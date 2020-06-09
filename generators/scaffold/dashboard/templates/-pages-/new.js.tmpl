@@ -1,0 +1,39 @@
+import React from 'react';
+import { ToolForm } from 'components';
+import { mutation } from 'api';
+import { useNavigate } from 'react-router-dom';
+
+const ToolNewPage = (props) => {
+  const navigate = useNavigate();
+
+  function handleSubmit(values, { setSubmitting }) {
+    mutation
+      .createTool({ input: values })
+      .then((data) => {
+        setSubmitting(false);
+        navigate(`/tools/${data.id}`);
+      })
+      .catch((err) => {
+        console.warn(err);
+        setSubmitting(false);
+      });
+  }
+
+  return (
+    <div>
+      <h2>New Tool</h2>
+      <ToolForm
+        initialValues={{"{{"}}
+          key: '',
+          icon: '',
+          name: '',
+          about: '',
+          website: '',
+        {{"}}"}}
+        onSubmit={handleSubmit}
+      />
+    </div>
+  );
+};
+
+export default ToolNewPage;
