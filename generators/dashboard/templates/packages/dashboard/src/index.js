@@ -3,8 +3,7 @@ import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { render } from 'react-dom';
 import { Layout } from 'layouts';
-import HomePage from 'pages/home';
-import GraphiQLPage from 'pages/graphiql';
+import { HomePage, GraphiQLPage } from 'pages';
 
 const App = () => {
   return (
