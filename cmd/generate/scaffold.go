@@ -2,7 +2,6 @@ package generate
 
 import (
 	"context"
-	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
 
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
@@ -10,6 +9,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 	"github.com/swiftcarrot/dashi/generators/scaffold/attrs"
+	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
 	"github.com/swiftcarrot/dashi/generators/scaffold/graphql"
 	"github.com/swiftcarrot/dashi/generators/scaffold/migration"
 	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
