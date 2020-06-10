@@ -111,7 +111,7 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 					typ, err = binder.FindTypeFromName(cfg.Models[field.Type.Name()].Model[0])
 					if !field.Type.NonNull && field.Type.NamedType != "" {
 						field.Type.NonNull = true
-						typ, err = binder.FindType("github.com/swiftcarrot/dashi/libs/graphql", "Nulls"+field.Type.Name())
+						typ, err = binder.FindType("github.com/swiftcarrot/dashi/graphql", "Nulls"+field.Type.Name())
 					}
 					if err != nil {
 						return err
