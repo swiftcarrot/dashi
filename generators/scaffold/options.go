@@ -9,7 +9,6 @@ import (
 type Options struct {
 	Name  flect.Ident
 	Attrs attrs.Attrs
-	// add your stuff here
 }
 
 // Validate that options are usuable

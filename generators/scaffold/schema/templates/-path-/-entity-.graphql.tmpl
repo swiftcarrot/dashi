@@ -1,7 +1,7 @@
 type {{ .opts.Name.String }} {
-	{{ range .opts.Attrs -}}
+	{{- range .opts.Attrs -}}
 		{{ .Name.String | camelize  }}: {{ .GraphqlType }}
-	{{ end }}
+	{{- end }}
 	createdAt: Time!
 	updatedAt: Time!
 }
@@ -16,15 +16,7 @@ extend type Query {
 	list{{ .opts.Name.Pluralize }}(page: Int, perPage: Int): {{.opts.Name.String}}Result
 }
 
-input Create{{ .opts.Name.String }}Input {
-	{{ range .opts.Attrs -}}
-		{{if ne .Name.Camelize.String "ID" -}}
-			{{ .Name.Camelize }}: {{ .GraphqlType }}
-		{{ end -}}
-	{{ end }}
-}
-
-input Update{{ .opts.Name }}Input {
+input {{ .opts.Name.String }}Input {
 	{{ range .opts.Attrs -}}
 		{{if ne .Name.Camelize.String "ID" -}}
 			{{ .Name.Camelize }}: {{ .GraphqlType }}
@@ -33,7 +25,7 @@ input Update{{ .opts.Name }}Input {
 }
 
 extend type Mutation {
-  create{{ .opts.Name }}(input: Create{{ .opts.Name }}Input!): {{ .opts.Name }}
-  update{{ .opts.Name }}(id: ID!, input: Update{{ .opts.Name }}Input!): {{ .opts.Name }}
+  create{{ .opts.Name }}(input: {{ .opts.Name }}Input!): {{ .opts.Name }}
+  update{{ .opts.Name }}(id: ID!, input: {{ .opts.Name }}Input!): {{ .opts.Name }}
   delete{{ .opts.Name }}(id: ID!): {{ .opts.Name }}
 }
