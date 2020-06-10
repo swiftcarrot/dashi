@@ -16,6 +16,8 @@ create a up & down migration file pair under `/migrations`
 
 ### generate model [name]
 
+### generate schema [name]
+
 ### generate scafffold [name]
 
 ### generate graphql
