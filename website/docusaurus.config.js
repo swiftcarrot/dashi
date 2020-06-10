@@ -82,6 +82,12 @@ module.exports = {
     [
       '@docusaurus/preset-classic',
       {
+        theme: {
+          customCss: require.resolve('./src/css/custom.css'),
+          googleAnalytics: {
+            trackingID: 'UA-106179075-5',
+          },
+        },
         docs: {
           homePageId: 'installation',
           sidebarPath: require.resolve('./sidebars.js'),
@@ -90,12 +96,6 @@ module.exports = {
         blog: {
           showReadingTime: true,
           editUrl: 'https://github.com/swiftcarrot/dashi/edit/master/website/',
-        },
-        theme: {
-          customCss: require.resolve('./src/css/custom.css'),
-        },
-        googleAnalytics: {
-          trackingID: 'UA-106179075-5',
         },
       },
     ],
