@@ -8,7 +8,7 @@ sidebar_label: Installation
 
 Dashi requires you have following dependencies installed:
 
-- Go working environment
+- Go working environment (Go version >=1.13)
 - node
 - yarn
 
