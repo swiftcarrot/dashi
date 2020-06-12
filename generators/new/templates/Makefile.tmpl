@@ -6,6 +6,10 @@ fmt:
 	gofmt -w $(GOFMT_FILES)
 	yarn prettier --write '**/*.{js,json,graphql}' --loglevel warn
 
+lint:
+	go vet
+	yarn eslint packages
+
 image:
 	docker build -t {{ .opts.Name }} .
 

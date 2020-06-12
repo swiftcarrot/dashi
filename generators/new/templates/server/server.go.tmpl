@@ -6,7 +6,6 @@ import (
   "os"
 
   "github.com/99designs/gqlgen/graphql/handler"
-  "github.com/99designs/gqlgen/graphql/playground"
   "github.com/go-chi/chi"
   "github.com/go-chi/cors"
   "github.com/gobuffalo/pop"
@@ -73,12 +72,11 @@ func NewServer() (*Server, error) {
 
   router.Use(cors.Handler)
 
-  srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{
+  graphql := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{
     Conn: conn,
   }}))
 
-  router.Handle("/", playground.Handler("GraphQL playground", "/graphql"))
-  router.Handle("/graphql", srv)
+  router.Handle("/graphql", graphql)
 
   server.handler = router
 
