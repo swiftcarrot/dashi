@@ -1,8 +1,10 @@
 package dashboard
 
+import "github.com/gobuffalo/flect"
+
 // Options for generating dashboard
 type Options struct {
-	Name string
+	Name flect.Ident
 }
 
 // Validate that options are usuable

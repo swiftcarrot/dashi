@@ -1,1 +1,13 @@
-# {{ .opts.Name }}
+# {{ .opts.Name.Pascalize }}
+
+To start server:
+
+- Create database with `go run main.go db create`
+- Migrate database with `go run main.go db migrate`
+- Start server with `go run main.go server`
+
+## Learn more
+
+- Website: https://dashi.swiftcarrot.dev
+- Source: https://github.com/swiftcarrot/dashi
+

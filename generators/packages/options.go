@@ -1,8 +1,10 @@
 package packages
 
+import "github.com/gobuffalo/flect"
+
 // Options for generating packages
 type Options struct {
-	Name string
+	Name flect.Ident
 }
 
 // Validate that options are usuable
