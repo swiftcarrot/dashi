@@ -20,7 +20,7 @@ All yarn packages located in packages sharing node_modules through yarn workspac
 
 ## cmd
 
-## server
+## dashi
 
 ## config.yml
 

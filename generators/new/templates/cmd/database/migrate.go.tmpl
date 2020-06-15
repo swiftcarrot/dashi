@@ -2,14 +2,14 @@ package database
 
 import (
   "github.com/spf13/cobra"
-  "{{ .opts.Package }}/server"
+  "{{ .opts.Package }}/dashi"
 )
 
 var MigrateCmd = &cobra.Command{
   Use:   "migrate",
   Short: "Database migrate",
   RunE: func(cmd *cobra.Command, args []string) error {
-    s, err := server.NewServer()
+    s, err := dashi.NewServer()
     if err != nil {
       return err
     }

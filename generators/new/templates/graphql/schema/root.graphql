@@ -8,7 +8,6 @@ scalar UUID
 
 scalar Int64
 
-
 type Pagination {
   perPage: Int!
   total: Int!

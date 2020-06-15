@@ -2,14 +2,14 @@ package database
 
 import (
   "github.com/spf13/cobra"
-  "{{ .opts.Package }}/server"
+  "{{ .opts.Package }}/dashi"
 )
 
 var DropCmd = &cobra.Command{
   Use:   "drop",
   Short: "Database drop",
   RunE: func(cmd *cobra.Command, args []string) error {
-    s, err := server.NewServer()
+    s, err := dashi.NewServer()
     if err != nil {
       return err
     }
