@@ -20,8 +20,8 @@ input {{ .opts.Name.String }}Input {
 }
 
 extend type Query {
-	get{{ .opts.Name.Singularize }}(id: ID!): {{ .opts.Name }}
-	list{{ .opts.Name.Pluralize }}(page: Int, perPage: Int): {{.opts.Name.String}}Result
+	{{ .opts.Name.Singularize }}(id: ID!): {{ .opts.Name }}
+	{{ .opts.Name.Pluralize }}(page: Int, perPage: Int): {{.opts.Name.String}}Result
 }
 
 extend type Mutation {
