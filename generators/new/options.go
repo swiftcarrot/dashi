@@ -6,6 +6,7 @@ import "github.com/gobuffalo/flect"
 type Options struct {
 	Name    flect.Ident
 	Package string
+	APIOnly bool
 }
 
 // Validate that options are usuable

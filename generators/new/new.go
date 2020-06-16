@@ -37,21 +37,23 @@ func New(opts *Options) (*genny.Group, error) {
 	g.Transformer(genny.Dot())
 	gg.Add(g)
 
-	packages, err := packages.New(&packages.Options{
-		Name: opts.Name,
-	})
-	if err != nil {
-		return nil, err
-	}
-	gg.Add(packages)
+	if opts.APIOnly != true {
+		packages, err := packages.New(&packages.Options{
+			Name: opts.Name,
+		})
+		if err != nil {
+			return nil, err
+		}
+		gg.Add(packages)
 
-	dashboard, err := dashboard.New(&dashboard.Options{
-		Name: opts.Name,
-	})
-	if err != nil {
-		return nil, err
+		dashboard, err := dashboard.New(&dashboard.Options{
+			Name: opts.Name,
+		})
+		if err != nil {
+			return nil, err
+		}
+		gg.Add(dashboard)
 	}
-	gg.Add(dashboard)
 
 	make := genny.New()
 	make.Command(exec.Command("make"))
