@@ -10,8 +10,8 @@ import (
   "github.com/go-chi/cors"
   "github.com/gobuffalo/pop"
   "github.com/spf13/viper"
-  "{{ .opts.Package }}/graphql/generated"
-  "{{ .opts.Package }}/graphql/resolver"
+  "{{ .opts.Package }}/graphql"
+  "{{ .opts.Package }}/resolvers"
 )
 
 type Server struct {
@@ -72,7 +72,7 @@ func NewServer() (*Server, error) {
 
   router.Use(cors.Handler)
 
-  graphql := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &resolver.Resolver{
+  graphql := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{Resolvers: &resolvers.Resolver{
     Conn: conn,
   }}))
 
