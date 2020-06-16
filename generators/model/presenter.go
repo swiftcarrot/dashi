@@ -2,7 +2,7 @@ package model
 
 import (
 	"github.com/gobuffalo/flect/name"
-	"github.com/swiftcarrot/dashi/generators/scaffold/attrs"
+	"github.com/swiftcarrot/dashi/attrs"
 )
 
 type presenter struct {

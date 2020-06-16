@@ -1,12 +1,12 @@
 package model
 
 import (
-	"github.com/gobuffalo/flect"
-	"github.com/swiftcarrot/dashi/generators/scaffold/attrs"
 	"path/filepath"
 	"strings"
 
+	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
+	"github.com/swiftcarrot/dashi/attrs"
 )
 
 // Options for generating a new model

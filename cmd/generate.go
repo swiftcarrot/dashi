@@ -16,6 +16,7 @@ func init() {
 	generateCmd.AddCommand(generate.DashboardCmd)
 	generateCmd.AddCommand(generate.ScaffoldCmd)
 	generateCmd.AddCommand(generate.MigrationCmd)
+	generateCmd.AddCommand(generate.ModelCmd)
 
 	rootCmd.AddCommand(generateCmd)
 }
