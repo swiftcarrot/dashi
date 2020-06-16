@@ -12,6 +12,16 @@ Model files for database and graphql type.
 
 ## graphql
 
+generated graphql server codes from gqlgen
+
+## schema
+
+GraphQL schema definition
+
+## resolvers
+
+GraphQL resolver implementations
+
 ## packages
 
 All yarn packages located in packages sharing node_modules through yarn workspaces.
