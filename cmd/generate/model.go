@@ -6,7 +6,7 @@ import (
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
 	"github.com/spf13/cobra"
-	"github.com/swiftcarrot/dashi/attrs"
+	"github.com/swiftcarrot/dashi/generators/attrs"
 	"github.com/swiftcarrot/dashi/generators/model"
 )
 

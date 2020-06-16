@@ -6,7 +6,7 @@ import (
 
 	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
-	"github.com/swiftcarrot/dashi/attrs"
+	"github.com/swiftcarrot/dashi/generators/attrs"
 )
 
 // Options for generating a new model

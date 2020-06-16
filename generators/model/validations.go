@@ -1,6 +1,6 @@
 package model
 
-import "github.com/swiftcarrot/dashi/attrs"
+import "github.com/swiftcarrot/dashi/generators/attrs"
 
 func validatable(ats attrs.Attrs) attrs.Attrs {
 	var xats attrs.Attrs
