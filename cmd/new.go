@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
@@ -53,7 +54,7 @@ var newCmd = &cobra.Command{
 		}
 
 		gg, err := new.New(&new.Options{
-			Name:    name,
+			Name:    flect.New(name),
 			Package: rel,
 		})
 		if err != nil {

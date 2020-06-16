@@ -1,5 +1,5 @@
 type {{ .opts.Name.String }} {
-	{{- range .opts.Attrs -}}
+	{{- range .opts.Attrs }}
 		{{ .Name.String | camelize  }}: {{ .GraphqlType }}
 	{{- end }}
 	createdAt: Time!
@@ -11,17 +11,17 @@ type {{.opts.Name.String}}Result {
 	pagination: Pagination
 }
 
-extend type Query {
-	get{{ .opts.Name.Singularize }}(id: ID!): {{ .opts.Name }}
-	list{{ .opts.Name.Pluralize }}(page: Int, perPage: Int): {{.opts.Name.String}}Result
+input {{ .opts.Name.String }}Input {
+	{{- range .opts.Attrs -}}
+		{{- if ne .Name.Camelize.String "ID"  }}
+			{{ .Name.Camelize }}: {{ .GraphqlType }}
+		{{- end }}
+	{{- end }}
 }
 
-input {{ .opts.Name.String }}Input {
-	{{ range .opts.Attrs -}}
-		{{if ne .Name.Camelize.String "ID" -}}
-			{{ .Name.Camelize }}: {{ .GraphqlType }}
-		{{ end -}}
-	{{ end }}
+extend type Query {
+	{{ .opts.Name.Singularize }}(id: ID!): {{ .opts.Name }}
+	{{ .opts.Name.Pluralize }}(page: Int, perPage: Int): {{.opts.Name.String}}Result
 }
 
 extend type Mutation {

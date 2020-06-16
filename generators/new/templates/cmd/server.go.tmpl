@@ -2,14 +2,14 @@ package cmd
 
 import (
 	"github.com/spf13/cobra"
-	"{{ .opts.Package }}/server"
+	"{{ .opts.Package }}/dashi"
 )
 
 var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "Start server",
 	RunE: func(cmd *cobra.Command, args []string) error {
-   	server, err := server.NewServer()
+   	server, err := dashi.NewServer()
    	if err != nil {
    		return err
    	}
