@@ -16,9 +16,9 @@ func New(opts *Options) (*genny.Generator, error) {
 	mops := &Options{
 		Name:                   opts.Name,
 		Attrs:                  opts.Attrs,
-		Path:                   "graphql/model",
-		Package:                "model",
-		TestPackage:            "model",
+		Path:                   "models",
+		Package:                "models",
+		TestPackage:            "models",
 		Encoding:               "json",
 		ForceDefaultID:         true,
 		ForceDefaultTimestamps: true,

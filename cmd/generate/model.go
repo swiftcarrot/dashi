@@ -36,10 +36,6 @@ var ModelCmd = &cobra.Command{
 		g, err := model.New(&model.Options{
 			Name:  flect.New(name),
 			Attrs: atts,
-			// Path:                   modelCmdConfig.ModelPath,
-			// Encoding:               modelCmdConfig.StructTag,
-			ForceDefaultID:         true,
-			ForceDefaultTimestamps: true,
 		})
 		if err != nil {
 			return err
