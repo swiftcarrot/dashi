@@ -92,6 +92,7 @@ func (a Attr) GoType() string {
 func (a Attr) GraphqlType() string {
 	return graphqlType(a.inputType, false)
 }
+
 func withNullable(s string, nullable bool) string {
 	if nullable {
 		return s
@@ -99,6 +100,7 @@ func withNullable(s string, nullable bool) string {
 		return s + "!"
 	}
 }
+
 func graphqlType(s string, nullable bool) string {
 	switch strings.ToLower(s) {
 	case "int":

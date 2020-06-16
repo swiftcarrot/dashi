@@ -6,8 +6,8 @@ import (
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
 	"github.com/spf13/cobra"
+	"github.com/swiftcarrot/dashi/attrs"
 	"github.com/swiftcarrot/dashi/generators/model"
-	"github.com/swiftcarrot/dashi/generators/scaffold/attrs"
 )
 
 var ModelCmd = &cobra.Command{
@@ -15,21 +15,38 @@ var ModelCmd = &cobra.Command{
 	Short:   "Generate model",
 	Example: "dashi generate model post title:string content:text",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		as, err = attrs.ParseArgs(args[1:]...)
-		if err != nil {
-			return err
+		name := ""
+		if len(args) > 0 {
+			name = args[0]
 		}
 
-		modelGen, err := model.New(&model.Options{
-			Name:  flect.New(flect.Pascalize(n)).Singularize(),
-			Attrs: as,
+		var (
+			atts attrs.Attrs
+			err  error
+		)
+		if len(args) > 1 {
+			atts, err = attrs.ParseArgs(args[1:]...)
+			if err != nil {
+				return err
+			}
+		}
+
+		run := genny.WetRunner(context.Background())
+
+		g, err := model.New(&model.Options{
+			Name:  flect.New(name),
+			Attrs: atts,
+			// Path:                   modelCmdConfig.ModelPath,
+			// Encoding:               modelCmdConfig.StructTag,
+			ForceDefaultID:         true,
+			ForceDefaultTimestamps: true,
 		})
 		if err != nil {
 			return err
 		}
 
-		run := genny.WetRunner(context.Background())
 		run.With(g)
+
 		return run.Run()
 	},
 }

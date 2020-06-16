@@ -2,7 +2,7 @@ package scaffold
 
 import (
 	"github.com/gobuffalo/flect"
-	"github.com/swiftcarrot/dashi/generators/scaffold/attrs"
+	"github.com/swiftcarrot/dashi/attrs"
 )
 
 // Options for generating scaffold
