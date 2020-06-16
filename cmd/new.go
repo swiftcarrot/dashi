@@ -3,7 +3,6 @@ package cmd
 import (
 	"context"
 	"go/build"
-	"log"
 	"os"
 	"path/filepath"
 
@@ -55,8 +54,6 @@ var newCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-
-		log.Println("FlagNewAPI", FlagNewAPI)
 
 		gg, err := new.New(&new.Options{
 			Name:    flect.New(name),
