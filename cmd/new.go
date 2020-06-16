@@ -13,6 +13,8 @@ import (
 	"github.com/swiftcarrot/dashi/generators/new"
 )
 
+var FlagNewAPI bool
+
 // TODO: github.com/gobuffalo/envy
 func getGopath() string {
 	gopath := os.Getenv("GOPATH")
@@ -56,6 +58,7 @@ var newCmd = &cobra.Command{
 		gg, err := new.New(&new.Options{
 			Name:    flect.New(name),
 			Package: rel,
+			APIOnly: FlagNewAPI,
 		})
 		if err != nil {
 			return err
@@ -67,5 +70,7 @@ var newCmd = &cobra.Command{
 }
 
 func init() {
+	newCmd.Flags().BoolVar(&FlagNewAPI, "api", false, "API (GraphQL) only project")
+
 	rootCmd.AddCommand(newCmd)
 }

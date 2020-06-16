@@ -30,7 +30,7 @@ func (server *Server) ListenAndServe() error {
     port = defaultPort
   }
 
-  log.Printf("connect to http://localhost:%s/ for GraphQL playground", port)
+  log.Printf("listening on http://localhost:%s", port)
   log.Fatal(http.ListenAndServe(":"+port, server.handler))
   return nil
 }
