@@ -13,6 +13,15 @@ var GraphqlCmd = &cobra.Command{
 	Use:   "graphql",
 	Short: "generate a graphql server based on schema",
 	RunE: func(cmd *cobra.Command, args []string) error {
+		// cfg := config.Config{
+		// 	SchemaFilename: config.StringList{"schema/*.graphql"},
+		// 	Exec:           config.PackageConfig{},
+		// 	Model:          config.PackageConfig{},
+		// 	Resolver:       config.ResolverConfig{},
+		// 	AutoBind:       []string{},
+		// 	Models:         config.TypeMap{},
+		// }
+
 		cfg, err := config.LoadConfigFromDefaultLocations()
 		if os.IsNotExist(errors.Cause(err)) {
 			cfg = config.DefaultConfig()
@@ -20,10 +29,6 @@ var GraphqlCmd = &cobra.Command{
 			return err
 		}
 
-		if err = api.Generate(cfg); err != nil {
-			return err
-		}
-
-		return nil
+		return api.Generate(cfg)
 	},
 }
