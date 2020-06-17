@@ -111,7 +111,7 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 					typ, err = binder.FindTypeFromName(cfg.Models[field.Type.Name()].Model[0])
 					if !field.Type.NonNull && field.Type.NamedType != "" {
 						field.Type.NonNull = true
-						typ, err = binder.FindType("github.com/swiftcarrot/dashi/graphql", "Nulls"+field.Type.Name())
+						typ, err = binder.FindType("github.com/swiftcarrot/dashi/types", "Nulls"+field.Type.Name())
 					}
 					if err != nil {
 						return err
@@ -166,7 +166,7 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 				}
 
 				if isSlice(typ) && (fieldDef.Kind == ast.Scalar) {
-					typ, _ = binder.FindType("github.com/gobuffalo/pop/slices", field.Type.Name())
+					typ, _ = binder.FindType("github.com/gobuffalo/pop/v5/slices", field.Type.Name())
 				}
 				it.Fields = append(it.Fields, &Field{
 					Name:        name,

@@ -2,6 +2,7 @@ package generate
 
 import (
 	"context"
+	"github.com/swiftcarrot/dashi/generators/model"
 
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
@@ -22,6 +23,7 @@ var ScaffoldCmd = &cobra.Command{
 	TraverseChildren: true,
 	Args:             cobra.MinimumNArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
+		gg := &genny.Group{}
 		n := args[0]
 		var (
 			as  attrs.Attrs
@@ -46,29 +48,41 @@ var ScaffoldCmd = &cobra.Command{
 		if err := opts.Validate(); err != nil {
 			return err
 		}
+
 		schemaGen, err := schema.New(opts)
 		if err != nil {
 			return err
 		}
+		gg.Add(schemaGen)
+
+		modelGen, err := model.New(&model.Options{
+			Name:  flect.New(flect.Pascalize(n)).Singularize(),
+			Attrs: as,
+		})
+		if err != nil {
+			return err
+		}
+		gg.Add(modelGen)
+
 		graphqlGen, err := graphql.New()
 		if err != nil {
 			return err
 		}
+		gg.Add(graphqlGen)
+
 		migrationGen, err := migration.New(opts)
 		if err != nil {
 			return err
 		}
+		gg.Add(migrationGen)
 
 		dashboardGen, err := dashboard.New(opts)
 		if err != nil {
 			return err
 		}
+		gg.Add(dashboardGen)
 
-		err = run.With(schemaGen)
-		err = run.With(migrationGen)
-		err = run.With(graphqlGen)
-		err = run.With(dashboardGen)
-
+		run.WithGroup(gg)
 		return run.Run()
 	},
 }

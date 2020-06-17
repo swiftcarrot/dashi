@@ -1,21 +1,20 @@
 package model
 
 import (
-	"path"
 	"sort"
 	"strings"
 )
 
 func buildImports(opts *Options) []string {
 	imps := map[string]bool{
-		"github.com/gobuffalo/validate/v3": true,
-		"github.com/gobuffalo/pop/v5":      true,
+		//"github.com/gobuffalo/validate/v3": false,
+		//"github.com/gobuffalo/pop/v5":      false,
 	}
 	if opts.Encoding == "jsonapi" {
 		imps["github.com/google/jsonapi"] = true
 		imps["strings"] = true
 	} else {
-		imps[path.Join("encoding", strings.ToLower(opts.Encoding))] = true
+		//imps[path.Join("encoding", strings.ToLower(opts.Encoding))] = true
 	}
 	ats := opts.Attrs
 	for _, a := range ats {
