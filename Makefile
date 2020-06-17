@@ -1,6 +1,6 @@
 GOFMT_FILES?=$$(find . -name '*.go')
 
-all: fmt build
+all: fmt build install
 
 fmt:
 	gofmt -w $(GOFMT_FILES)
@@ -10,7 +10,9 @@ build:
 	go mod tidy
 	~/go/bin/packr2
 	go build -ldflags "-X github.com/swiftcarrot/dashi/cmd.Version=`git rev-parse HEAD`" -o bin/dashi
-	go install
+
+install:
+	install bin/dashi /usr/local/bin
 
 clean:
 	rm bin/dashi
