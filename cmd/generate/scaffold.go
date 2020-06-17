@@ -8,9 +8,9 @@ import (
 	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/attrs"
+	"github.com/swiftcarrot/dashi/generators/graphql"
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
-	"github.com/swiftcarrot/dashi/generators/scaffold/graphql"
 	"github.com/swiftcarrot/dashi/generators/scaffold/migration"
 	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
 )
@@ -50,7 +50,7 @@ var ScaffoldCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		graphqlGen, err := graphql.New(opts)
+		graphqlGen, err := graphql.New()
 		if err != nil {
 			return err
 		}

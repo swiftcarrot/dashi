@@ -13,7 +13,7 @@ import (
 	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/99designs/gqlgen/plugin"
 	"github.com/pkg/errors"
-	"github.com/swiftcarrot/dashi/generators/scaffold/graphql/rewrite"
+	"github.com/swiftcarrot/dashi/generators/graphql/rewrite"
 )
 
 func New() plugin.Plugin {

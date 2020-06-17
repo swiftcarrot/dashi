@@ -8,9 +8,8 @@ import (
 	"github.com/99designs/gqlgen/codegen/config"
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
-	"github.com/swiftcarrot/dashi/generators/scaffold"
-	"github.com/swiftcarrot/dashi/generators/scaffold/graphql/plugins/modelgen"
-	"github.com/swiftcarrot/dashi/generators/scaffold/graphql/plugins/resolvergen"
+	"github.com/swiftcarrot/dashi/generators/graphql/plugins/modelgen"
+	"github.com/swiftcarrot/dashi/generators/graphql/plugins/resolvergen"
 )
 
 // Defining mutation function
@@ -23,7 +22,7 @@ func mutateHook(b *modelgen.ModelBuild) *modelgen.ModelBuild {
 
 	return b
 }
-func New(opts *scaffold.Options) (*genny.Generator, error) {
+func New() (*genny.Generator, error) {
 
 	g := genny.New()
 	g.RunFn(func(r *genny.Runner) error {

@@ -1,34 +1,29 @@
 package generate
 
 import (
-	"os"
-
-	"github.com/99designs/gqlgen/api"
-	"github.com/99designs/gqlgen/codegen/config"
-	"github.com/pkg/errors"
+	"context"
+	"github.com/gobuffalo/genny/v2"
+	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
+	"github.com/swiftcarrot/dashi/generators/graphql"
 )
 
 var GraphqlCmd = &cobra.Command{
 	Use:   "graphql",
 	Short: "generate a graphql server based on schema",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		// cfg := config.Config{
-		// 	SchemaFilename: config.StringList{"schema/*.graphql"},
-		// 	Exec:           config.PackageConfig{},
-		// 	Model:          config.PackageConfig{},
-		// 	Resolver:       config.ResolverConfig{},
-		// 	AutoBind:       []string{},
-		// 	Models:         config.TypeMap{},
-		// }
+		run := genny.WetRunner(context.Background())
+		run.Logger = logger.New(logger.DebugLevel)
+		run.Logger.Infof("update server from schema")
 
-		cfg, err := config.LoadConfigFromDefaultLocations()
-		if os.IsNotExist(errors.Cause(err)) {
-			cfg = config.DefaultConfig()
-		} else if err != nil {
+		graphqlGen, err := graphql.New()
+		if err != nil {
 			return err
 		}
-
-		return api.Generate(cfg)
+		err = run.With(graphqlGen)
+		if err != nil {
+			return err
+		}
+		return run.Run()
 	},
 }
