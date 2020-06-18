@@ -2,6 +2,7 @@
 
 set -e
 
+make
 cd ~/go/src/github.com/swiftcarrot/pokemon
 rm -rf *
 dashi new
