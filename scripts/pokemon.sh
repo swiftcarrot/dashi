@@ -4,6 +4,7 @@ set -e
 
 make
 cd ~/go/src/github.com/swiftcarrot/pokemon
+git pull
 rm -rf *
 dashi new
 dashi g scaffold pokemon number:string name:string weight_min:string weight_max:string height_min:string height_max:string classification:string max_cp:integer max_hp:integer image:string
