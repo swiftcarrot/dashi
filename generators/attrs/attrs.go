@@ -45,6 +45,8 @@ func (a Attr) GoType() string {
 	}
 	switch strings.ToLower(a.inputType) {
 	//numeric, other numeric will be original name
+	case "integer":
+		return "int"
 	case "bigint":
 		return "int64"
 	case "decimal", "float":
@@ -103,7 +105,7 @@ func withNullable(s string, nullable bool) string {
 
 func graphqlType(s string, nullable bool) string {
 	switch strings.ToLower(s) {
-	case "int":
+	case "int", "integer":
 		return withNullable("Int", nullable)
 	case "bigint":
 		return withNullable("Int64", nullable)
@@ -140,7 +142,7 @@ func (a Attr) FizzType() string {
 
 func fizzColType(s string) string {
 	switch strings.ToLower(s) {
-	case "int":
+	case "int", "integer":
 		return "integer"
 	case "timestamp", "datetime", "date", "time":
 		return "timestamp"
