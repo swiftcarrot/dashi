@@ -8,4 +8,3 @@ FROM alpine
 WORKDIR /root
 COPY --from=builder /go/src/{{ .opts.Package }}/main .
 CMD ["./main"]
-FROM golang
