@@ -12,7 +12,6 @@ import (
 )
 
 func New() (*genny.Generator, error) {
-
 	g := genny.New()
 	g.RunFn(func(r *genny.Runner) error {
 		cfg, err := config.LoadConfigFromDefaultLocations()
