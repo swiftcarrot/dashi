@@ -2,7 +2,7 @@ package generate
 
 import (
 	"context"
-	"github.com/swiftcarrot/dashi/generators/model"
+	"os/exec"
 
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
@@ -10,6 +10,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/attrs"
 	"github.com/swiftcarrot/dashi/generators/graphql"
+	"github.com/swiftcarrot/dashi/generators/model"
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
 	"github.com/swiftcarrot/dashi/generators/scaffold/migration"
@@ -81,6 +82,13 @@ var ScaffoldCmd = &cobra.Command{
 			return err
 		}
 		gg.Add(dashboardGen)
+
+		fmt := genny.New()
+		fmt.RunFn(func(r *genny.Runner) error {
+			r.Exec(exec.Command("make", "fmt"))
+			return nil
+		})
+		gg.Add(fmt)
 
 		run.WithGroup(gg)
 		return run.Run()
