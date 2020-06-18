@@ -1,0 +1,11 @@
+FROM golang:1.13 AS builder
+WORKDIR /go/src/{{ .opts.Package }}
+ENV GO111MODULE=on CGO_ENABLED=0 GOOS=linux GOARCH=amd64
+ADD . .
+RUN go build -o main .
+
+FROM alpine
+WORKDIR /root
+COPY --from=builder /go/src/{{ .opts.Package }}/main .
+CMD ["./main"]
+FROM golang
