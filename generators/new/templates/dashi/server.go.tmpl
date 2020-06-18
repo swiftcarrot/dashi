@@ -3,7 +3,7 @@ package dashi
 import (
   "log"
   "net/http"
-  "os"
+  "strconv"
 
   "github.com/99designs/gqlgen/graphql/handler"
   "github.com/go-chi/chi"
@@ -20,18 +20,16 @@ type Server struct {
   handler http.Handler
 }
 
-const defaultPort = "8080"
-
 func (server *Server) ListenAndServe() error {
   defer server.db.Close()
 
-  port := os.Getenv("PORT")
-  if port == "" {
-    port = defaultPort
+  port := server.config.Server.Port
+  if port == 0 {
+    port = 8080
   }
 
-  log.Printf("listening on http://localhost:%s", port)
-  log.Fatal(http.ListenAndServe(":"+port, server.handler))
+  log.Printf("listening on http://localhost:%d", port)
+  log.Fatal(http.ListenAndServe(":"+strconv.Itoa(port), server.handler))
   return nil
 }
 
@@ -39,7 +37,7 @@ func GetConfig() (*Config, error) {
   config := Config{}
   err := viper.Unmarshal(&config)
   if err != nil {
-      return nil, err
+    return nil, err
   }
 
   return &config, nil
@@ -48,18 +46,18 @@ func GetConfig() (*Config, error) {
 func NewServer() (*Server, error) {
   config, err := GetConfig()
   if err != nil {
-      return nil, err
+    return nil, err
   }
 
   // TODO: context
   // ctx := context.Background()
   server := &Server{
-      config: config,
+    config: config,
   }
 
   conn, err := server.GetDatabase()
   if err != nil {
-      return nil, err
+    return nil, err
   }
 
   router := chi.NewRouter()
@@ -72,9 +70,11 @@ func NewServer() (*Server, error) {
 
   router.Use(cors.Handler)
 
-  graphql := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{Resolvers: &resolvers.Resolver{
-    Conn: conn,
-  }}))
+  graphql := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{
+    Resolvers: &resolvers.Resolver{
+      Conn: conn,
+    },
+  }))
 
   router.Handle("/graphql", graphql)
 

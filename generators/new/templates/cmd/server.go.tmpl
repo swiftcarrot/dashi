@@ -8,6 +8,7 @@ import (
 var serverCmd = &cobra.Command{
 	Use:   "server",
 	Short: "Start server",
+	Aliases: []string{"s"},
 	RunE: func(cmd *cobra.Command, args []string) error {
    	server, err := dashi.NewServer()
    	if err != nil {
