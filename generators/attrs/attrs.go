@@ -77,15 +77,16 @@ func (a Attr) GoType() string {
 		return "nulls.Bool"
 	case "json", "jsonb":
 		return "slices.Map"
-	// slices
-	case "slices.string":
-		return "slices.String"
-	case "slices.int":
-		return "slices.Int"
-	case "slices.float", "slices.float32", "slices.float64":
-		return "slices.Float"
 	case "blob":
 		return "[]byte"
+	case "[string]":
+		return "slices.String"
+	case "[integer]":
+		return "slices.Int"
+	case "[float]":
+		return "slices.Float"
+	case "[uuid]":
+		return "slices.UUID"
 	}
 	return a.inputType
 }
@@ -117,12 +118,14 @@ func graphqlType(s string, nullable bool) string {
 		return withNullable("String", nullable)
 	case "uuid.uuid", "uuid":
 		return withNullable("UUID", nullable)
-	case "slices.string":
+	case "[string]":
 		return "[String!]"
-	case "slices.float":
+	case "[float]":
 		return "[Float!]"
-	case "slices.int":
+	case "[integer]":
 		return "[Int!]"
+	case "[uuid]":
+		return "[UUID!]"
 	case "json", "jsonb":
 		return "Map!"
 	case "blob":
