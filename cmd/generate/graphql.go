@@ -2,6 +2,7 @@ package generate
 
 import (
 	"context"
+
 	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
