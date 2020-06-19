@@ -5,7 +5,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var packCmd = &cobra.Command{
+var PackCmd = &cobra.Command{
 	Use:   "pack",
 	Short: "Pack migration files with packr2",
 	RunE: func(cmd *cobra.Command, args []string) error {
@@ -14,5 +14,5 @@ var packCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(packCmd)
+	rootCmd.AddCommand(PackCmd)
 }
