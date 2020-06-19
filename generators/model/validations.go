@@ -5,7 +5,7 @@ import "github.com/swiftcarrot/dashi/generators/attrs"
 func validatable(ats attrs.Attrs) attrs.Attrs {
 	var xats attrs.Attrs
 	for _, a := range ats {
-		n := a.Name.Proper().String()
+		n := a.Name.Singularize().Pascalize().String()
 		if n == "CreatedAt" || n == "UpdatedAt" {
 			continue
 		}

@@ -4,12 +4,12 @@ import (
 	"strings"
 
 	"github.com/gobuffalo/flect"
-	"github.com/gobuffalo/flect/name"
+	"github.com/swiftcarrot/dashi/generators/attrs/database"
 )
 
 type Attr struct {
 	Original  string
-	Name      name.Ident
+	Name      flect.Ident
 	inputType string
 	goType    string
 }
@@ -136,6 +136,41 @@ func graphqlType(s string, nullable bool) string {
 		}
 		return flect.Pascalize(s)
 	}
+}
+
+func postgresType(s string) string {
+	switch strings.ToLower(s) {
+	case "int", "integer":
+		return "int"
+	case "timestamp", "datetime", "time":
+		return "timestamp"
+	case "text", "string":
+		return "text"
+	case "uuid.uuid", "uuid":
+		return "uuid"
+	case "[string]":
+		return "_text"
+	case "[float]":
+		return "_float"
+	case "[integer]", "[int]":
+		return "_int"
+	case "[uuid]":
+		return "_uuid"
+	default:
+		if strings.HasPrefix(s, "nulls.") {
+			return postgresType(strings.Replace(s, "nulls.", "", -1))
+		}
+		return flect.Underscore(s)
+	}
+}
+
+func (a Attr) PostgresColumn() database.Column {
+	return database.Column{
+		Name:     a.Name,
+		ColType:  postgresType(a.inputType),
+		Nullable: strings.HasPrefix(a.inputType, "nulls."),
+	}
+
 }
 
 //FizzType returns the  type of database migration,

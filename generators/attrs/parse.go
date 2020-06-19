@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/gobuffalo/flect/name"
+	"github.com/gobuffalo/flect"
 )
 
 // ErrRepeatedAttr is returned when parsing an array with repeated names
@@ -22,7 +22,7 @@ func Parse(arg string) (Attr, error) {
 	}
 
 	parts := strings.Split(arg, ":")
-	attr.Name = name.New(parts[0])
+	attr.Name = flect.New(parts[0])
 	if len(parts) > 1 {
 		attr.inputType = parts[1]
 	}
