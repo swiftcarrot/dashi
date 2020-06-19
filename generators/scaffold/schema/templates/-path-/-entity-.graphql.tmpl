@@ -6,8 +6,8 @@ type {{ .opts.Name.String }} {
 	updatedAt: Time!
 }
 
-type {{.opts.Name.String}}Result {
-	{{ .opts.Name.Pluralize.Camelize }}: [{{ .opts.Name.String }}]!
+type {{.opts.Name.String}}Items {
+	items: [{{ .opts.Name.String }}]!
 	pagination: Pagination
 }
 
@@ -29,7 +29,7 @@ input Update{{ .opts.Name.String }}Input {
 
 extend type Query {
 	{{ .opts.Name.Singularize.Camelize }}(id: ID!): {{ .opts.Name }}
-	{{ .opts.Name.Pluralize.Camelize }}(page: Int, perPage: Int): {{.opts.Name.String}}Result
+	{{ .opts.Name.Pluralize.Camelize }}(page: Int, perPage: Int): {{.opts.Name.String}}Items
 }
 
 extend type Mutation {
