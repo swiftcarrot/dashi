@@ -11,7 +11,15 @@ type {{.opts.Name.String}}Result {
 	pagination: Pagination
 }
 
-input {{ .opts.Name.String }}Input {
+input Create{{ .opts.Name.String }}Input {
+	{{- range .opts.Attrs -}}
+		{{- if ne .Name.Camelize.String "ID"  }}
+			{{ .Name.Camelize }}: {{ .GraphqlType }}
+		{{- end }}
+	{{- end }}
+}
+
+input Update{{ .opts.Name.String }}Input {
 	{{- range .opts.Attrs -}}
 		{{- if ne .Name.Camelize.String "ID"  }}
 			{{ .Name.Camelize }}: {{ .GraphqlType }}
@@ -25,7 +33,7 @@ extend type Query {
 }
 
 extend type Mutation {
-  create{{ .opts.Name }}(input: {{ .opts.Name }}Input!): {{ .opts.Name }}
-  update{{ .opts.Name }}(id: ID!, input: {{ .opts.Name }}Input!): {{ .opts.Name }}
+  create{{ .opts.Name }}(input: Create{{ .opts.Name }}Input!): {{ .opts.Name }}
+  update{{ .opts.Name }}(id: ID!, input: Update{{ .opts.Name }}Input!): {{ .opts.Name }}
   delete{{ .opts.Name }}(id: ID!): {{ .opts.Name }}
 }
