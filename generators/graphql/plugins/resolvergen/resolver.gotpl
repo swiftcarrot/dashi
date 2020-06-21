@@ -19,20 +19,20 @@
 {{ end }}
 
 {{ range $resolver := .Resolvers -}}
-	func (r *{{lcFirst $resolver.Object.Name}}{{ucFirst $.ResolverType}}) {{$resolver.Field.GoFieldName}}{{ $resolver.Field.ShortResolverDeclaration }} {
+	func (r *{{lcFirst $resolver.Object.Name}}{{ucFirst $.ResolverType}}) {{ $resolver.Field.GoFieldName }}{{ $resolver.Field.ShortResolverDeclaration }} {
 		{{ if (ne $resolver.Implementation "") }}
 			{{$resolver.Implementation}}
-		{{ else}}
+		{{ else }}
 			{{ if isCreate $resolver.Field.GoFieldName}}
-				{{ template  "create" $resolver}}
+				{{ template "create" $resolver}}
 			{{ else if isList $resolver.Field.GoFieldName}}
-				{{ template  "list" $resolver}}
+				{{ template "list" $resolver}}
 			{{ else if isGet $resolver.Field.GoFieldName}}
-				{{ template  "get" $resolver}}
+				{{ template "get" $resolver}}
 			{{ else if isUpdate $resolver.Field.GoFieldName}}
-				{{ template  "update" $resolver}}
+				{{ template "update" $resolver}}
 			{{ else if isDelete $resolver.Field.GoFieldName}}
-				{{ template  "delete" $resolver}}
+				{{ template "delete" $resolver}}
 			{{ else }}
 				return nil, nil
 			{{ end }}
@@ -85,7 +85,6 @@
 		return nil, err
 	}
 	{{ range $o := $input.TypeReference.Definition.Fields -}}
-		//{{$o.Type}}
 		{{$entity}}.{{$o.Name | go}} = {{$input.Name}}.{{ $o.Name | go }}
 	{{ end }}
 	err = r.Conn.Update({{$entity}})
@@ -94,7 +93,6 @@
 	}
 	return {{$entity}}, nil
 {{ end }}
-
 
 {{ define "delete" }}
 	{{ $entity := .Field.TypeReference.Definition.Name | lcFirst }}
@@ -145,7 +143,7 @@
 	}
 
 	return &models.{{$resultType}}{
-			{{$entity | ucFirst}}: *{{$entity}},
+			Items: *{{$entity}},
 			Pagination: &models.Pagination{
 				Total:            total,
 				CurrentPage:      *page,

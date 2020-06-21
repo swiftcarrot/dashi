@@ -4,6 +4,7 @@ set -e
 
 make
 cd ~/go/src/github.com/swiftcarrot/pokemon
+git checkout .
 git pull
 rm -rf *
 dashi new

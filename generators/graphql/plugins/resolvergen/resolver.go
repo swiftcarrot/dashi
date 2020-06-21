@@ -6,12 +6,11 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/gobuffalo/flect"
-
 	"github.com/99designs/gqlgen/codegen"
 	"github.com/99designs/gqlgen/codegen/config"
 	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/99designs/gqlgen/plugin"
+	"github.com/gobuffalo/flect"
 	"github.com/pkg/errors"
 	"github.com/swiftcarrot/dashi/generators/graphql/rewrite"
 )
