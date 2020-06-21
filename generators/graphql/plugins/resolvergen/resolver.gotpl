@@ -23,15 +23,15 @@
 		{{ if (ne $resolver.Implementation "") }}
 			{{$resolver.Implementation}}
 		{{ else }}
-			{{ if isCreate $resolver.Field.GoFieldName}}
+			{{ if isCRUDResolver $resolver.Field "create"}}
 				{{ template "create" $resolver}}
-			{{ else if isList $resolver.Field.GoFieldName}}
+			{{ else if isCRUDResolver $resolver.Field "list" }}
 				{{ template "list" $resolver}}
-			{{ else if isGet $resolver.Field.GoFieldName}}
+			{{ else if isCRUDResolver $resolver.Field "get" }}
 				{{ template "get" $resolver}}
-			{{ else if isUpdate $resolver.Field.GoFieldName}}
+			{{ else if isCRUDResolver $resolver.Field "update" }}
 				{{ template "update" $resolver}}
-			{{ else if isDelete $resolver.Field.GoFieldName}}
+			{{ else if isCRUDResolver $resolver.Field "delete" }}
 				{{ template "delete" $resolver}}
 			{{ else }}
 				return nil, nil

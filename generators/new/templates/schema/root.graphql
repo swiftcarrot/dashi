@@ -8,6 +8,8 @@ scalar UUID
 
 scalar Int64
 
+directive @generated(type: String!) on FIELD_DEFINITION
+
 type Pagination {
   perPage: Int!
   total: Int!

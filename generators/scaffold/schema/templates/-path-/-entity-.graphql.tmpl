@@ -28,12 +28,12 @@ input Update{{ .opts.Name.String }}Input {
 }
 
 extend type Query {
-	{{ .opts.Name.Singularize.Camelize }}(id: ID!): {{ .opts.Name }}
-	{{ .opts.Name.Pluralize.Camelize }}(page: Int, perPage: Int): {{.opts.Name.String}}Items
+	{{ .opts.Name.Singularize.Camelize }}(id: ID!): {{ .opts.Name }} @generated(type: "get")
+	{{ .opts.Name.Pluralize.Camelize }}(page: Int, perPage: Int): {{.opts.Name.String}}Items @generated(type: "list")
 }
 
 extend type Mutation {
-  create{{ .opts.Name }}(input: Create{{ .opts.Name }}Input!): {{ .opts.Name }}
-  update{{ .opts.Name }}(id: ID!, input: Update{{ .opts.Name }}Input!): {{ .opts.Name }}
-  delete{{ .opts.Name }}(id: ID!): {{ .opts.Name }}
+  create{{ .opts.Name }}(input: Create{{ .opts.Name }}Input!): {{ .opts.Name }} @generated(type: "create")
+  update{{ .opts.Name }}(id: ID!, input: Update{{ .opts.Name }}Input!): {{ .opts.Name }} @generated(type: "update")
+  delete{{ .opts.Name }}(id: ID!): {{ .opts.Name }} @generated(type: "delete")
 }

@@ -80,6 +80,15 @@ func (m *Plugin) generateSingleFile(data *codegen.Data) error {
 	})
 }
 
+func isCRUDResolver(field codegen.Field, kind string) bool {
+	for _, direct := range field.Directives {
+		if direct.Name == "generated" && direct.Args[0].Value == kind {
+			return true
+		}
+	}
+	return false
+}
+
 func (m *Plugin) generatePerSchema(data *codegen.Data) error {
 	rewriter, err := rewrite.New(data.Config.Resolver.ImportPath())
 	if err != nil {
@@ -138,12 +147,8 @@ func (m *Plugin) generatePerSchema(data *codegen.Data) error {
 				// This file will be automatically regenerated based on the schema, any resolver implementations
 				// will be copied through when generating and any unknown code will be moved to the end.`,
 			Funcs: template.FuncMap{
-				"isCreate":         func(s string) bool { return strings.HasPrefix(strings.ToLower(s), "create") },
-				"isList":           func(s string) bool { return strings.HasPrefix(strings.ToLower(s), "list") },
-				"isUpdate":         func(s string) bool { return strings.HasPrefix(strings.ToLower(s), "update") },
-				"isGet":            func(s string) bool { return strings.HasPrefix(strings.ToLower(s), "get") },
-				"isDelete":         func(s string) bool { return strings.HasPrefix(strings.ToLower(s), "delete") },
-				"entityFromResult": func(s string) string { return strings.ReplaceAll(s, "Result", "") },
+				"isCRUDResolver":   isCRUDResolver,
+				"entityFromResult": func(s string) string { return strings.ReplaceAll(s, "Items", "") },
 				"pluralize":        func(s string) string { return flect.Pluralize(s) },
 			},
 			Filename: filename,
@@ -153,6 +158,7 @@ func (m *Plugin) generatePerSchema(data *codegen.Data) error {
 		if err != nil {
 			return err
 		}
+
 	}
 
 	if _, err := os.Stat(data.Config.Resolver.Filename); os.IsNotExist(errors.Cause(err)) {
