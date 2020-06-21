@@ -3,7 +3,7 @@ import { Link } from 'kit';
 import { query } from 'api';
 import { useParams } from 'react-router-dom';
 
-const ToolPage = () => {
+const {{.opts.Name.Pascalize}}Page = () => {
   const { id } = useParams();
   const [state, setState] = useState({
     loading: true,
@@ -42,4 +42,4 @@ const ToolPage = () => {
   );
 };
 
-export default ToolPage;
+export default {{.opts.Name.Pascalize}}Page;

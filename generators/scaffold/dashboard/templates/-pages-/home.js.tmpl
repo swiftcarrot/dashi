@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'kit';
-import { ToolTable } from 'components';
 import { query, mutation } from 'api';
+import { {{.opts.Name.Pascalize}}Table } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
 
 const {{.opts.Name.Pascalize}}HomePage = () => {
 	const [state, setState] = useState({

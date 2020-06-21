@@ -1,5 +1,5 @@
 import './styles.scss';
-import React from 'react';
+import React, { Component } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { render } from 'react-dom';
 import { Layout } from 'layouts';
@@ -23,4 +23,34 @@ const NotFoundPage = () => {
   return <div>Page not found</div>;
 };
 
-render(<App />, document.getElementById('root'));
+class ErrorBoundary extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error) {
+    return { hasError: true };
+  }
+
+  // TODO: optional sentry integration
+  componentDidCatch(error, errorInfo) {}
+
+  render() {
+    if (this.state.hasError) {
+      return <h1>Something went wrong.</h1>;
+    }
+
+    return this.props.children;
+  }
+}
+
+const Root = () => {
+  return (
+    <ErrorBoundary>
+      <App />
+    </ErrorBoundary>
+  );
+};
+
+render(<Root />, document.getElementById('root'));

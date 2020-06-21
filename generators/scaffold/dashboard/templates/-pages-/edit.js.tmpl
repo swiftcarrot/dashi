@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'kit';
-import { ToolForm } from 'components';
 import { query, mutation } from 'api';
 import { useParams, useNavigate } from 'react-router-dom';
+import { {{.opts.Name.Pascalize}}Form } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
 
-const ToolEditPage = () => {
+const {{.opts.Name.Pascalize}}EditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [state, setState] = useState({
@@ -46,7 +46,7 @@ const ToolEditPage = () => {
     <div>
       <h2>Edit Tool</h2>
       <Link to="/tools">back</Link>
-      <ToolForm
+      <{{.opts.Name.Pascalize}}Form
         initialValues={{"{{"}}
           key: data.key,
           icon: data.icon,
@@ -60,4 +60,4 @@ const ToolEditPage = () => {
   );
 };
 
-export default ToolEditPage;
+export default {{.opts.Name.Pascalize}}EditPage;

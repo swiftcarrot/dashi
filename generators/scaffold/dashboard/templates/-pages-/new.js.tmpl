@@ -1,9 +1,9 @@
 import React from 'react';
-import { ToolForm } from 'components';
 import { mutation } from 'api';
 import { useNavigate } from 'react-router-dom';
+import { {{.opts.Name.Pascalize}}Form } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
 
-const ToolNewPage = (props) => {
+const {{.opts.Name.Pascalize}}NewPage = (props) => {
   const navigate = useNavigate();
 
   function handleSubmit(values, { setSubmitting }) {
@@ -22,7 +22,7 @@ const ToolNewPage = (props) => {
   return (
     <div>
       <h2>New Tool</h2>
-      <ToolForm
+      <{{.opts.Name.Pascalize}}Form
         initialValues={{"{{"}}
           key: '',
           icon: '',
@@ -36,4 +36,4 @@ const ToolNewPage = (props) => {
   );
 };
 
-export default ToolNewPage;
+export default {{.opts.Name.Pascalize}}NewPage;
