@@ -79,13 +79,13 @@ func (a Attr) GoType() string {
 		return "slices.Map"
 	case "blob":
 		return "[]byte"
-	case "[string]":
+	case "strings":
 		return "slices.String"
-	case "[integer]":
+	case "integers":
 		return "slices.Int"
-	case "[float]":
+	case "floats":
 		return "slices.Float"
-	case "[uuid]":
+	case "uuids":
 		return "slices.UUID"
 	}
 	return a.inputType
@@ -118,13 +118,13 @@ func graphqlType(s string, nullable bool) string {
 		return withNullable("String", nullable)
 	case "uuid.uuid", "uuid":
 		return withNullable("UUID", nullable)
-	case "[string]":
+	case "strings":
 		return "[String!]"
-	case "[float]":
+	case "floats":
 		return "[Float!]"
-	case "[integer]":
+	case "integers":
 		return "[Int!]"
-	case "[uuid]":
+	case "uuids":
 		return "[UUID!]"
 	case "json", "jsonb":
 		return "Map!"
@@ -148,13 +148,13 @@ func postgresType(s string) string {
 		return "text"
 	case "uuid.uuid", "uuid":
 		return "uuid"
-	case "[string]":
+	case "strings":
 		return "_text"
-	case "[float]":
+	case "floats":
 		return "_float"
-	case "[integer]", "[int]":
+	case "integers":
 		return "_int"
-	case "[uuid]":
+	case "uuids":
 		return "_uuid"
 	default:
 		if strings.HasPrefix(s, "nulls.") {

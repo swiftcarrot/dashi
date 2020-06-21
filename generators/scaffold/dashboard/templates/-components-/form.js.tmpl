@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, FormGroup, FormSubmit } from 'kit';
 
-const ToolForm = (props) => {
+const {{.opts.Name.Pascalize}}Form = (props) => {
   return (
     <Form {...props}>
       <FormGroup name="key" label="Key" />
@@ -14,4 +14,4 @@ const ToolForm = (props) => {
   );
 };
 
-export default ToolForm;
+export default {{.opts.Name.Pascalize}}Form;

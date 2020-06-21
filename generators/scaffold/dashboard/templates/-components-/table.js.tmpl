@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Table } from 'kit';
 
-const ToolTable = ({ tools, onDelete }) => {
+const {{.opts.Name.Pascalize}}Table = ({ tools, onDelete }) => {
   function handleClick(e, tool) {
     e.preventDefault();
 
@@ -40,4 +40,4 @@ const ToolTable = ({ tools, onDelete }) => {
   );
 };
 
-export default ToolTable;
+export default {{.opts.Name.Pascalize}}Table;
