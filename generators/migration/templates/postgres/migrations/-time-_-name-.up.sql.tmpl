@@ -1,0 +1,14 @@
+{{- if .table }}
+CREATE TABLE "{{.table.Name}}" (
+{{- range $index, $col := .table.Columns}}
+  {{- if $index}},{{- end}}
+  "{{.Name}}" {{.ColType}} {{- if .Primary}} primary key {{- end }} {{- if .Default.Valid}} default {{.Default.String}} {{- end}}
+{{-  end }}
+);
+{{- end }}
+
+{{- if .sequences}}
+{{range $seq := .sequences }}
+CREATE SEQUENCE IF NOT EXISTS {{$seq}};
+{{- end }}
+{{- end }}

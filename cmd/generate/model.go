@@ -33,10 +33,17 @@ var ModelCmd = &cobra.Command{
 
 		run := genny.WetRunner(context.Background())
 
-		g, err := model.New(&model.Options{
-			Name:  flect.New(name),
-			Attrs: atts,
-		})
+		mops := &model.Options{
+			Name:                   flect.New(flect.Pascalize(name)).Singularize(),
+			Attrs:                  atts,
+			Path:                   "models",
+			Package:                "models",
+			TestPackage:            "models",
+			Encoding:               "json",
+			ForceDefaultID:         true,
+			ForceDefaultTimestamps: true,
+		}
+		g, err := model.New(mops)
 		if err != nil {
 			return err
 		}

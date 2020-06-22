@@ -4,12 +4,13 @@ import (
 	"context"
 	"time"
 
+	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/migration"
 )
 
-func getTime() string {
+func GetTime() string {
 	t := time.Now()
 
 	return t.Format("20060102150405")
@@ -20,12 +21,14 @@ var MigrationCmd = &cobra.Command{
 	Short: "Generate new migration file",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		name := args[0]
-		time := getTime()
+		time := GetTime()
 
 		run := genny.WetRunner(context.Background())
+		//TODO remove hardcode postgres
 		g, err := migration.New(&migration.Options{
-			Name: name,
-			Time: time,
+			Name:    flect.New(name),
+			Time:    time,
+			Dialect: "postgres",
 		})
 		if err != nil {
 			return err

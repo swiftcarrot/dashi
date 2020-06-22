@@ -4,6 +4,7 @@ import (
 	"strings"
 
 	"github.com/gobuffalo/flect"
+	"github.com/gobuffalo/nulls"
 	"github.com/swiftcarrot/dashi/generators/attrs/database"
 )
 
@@ -165,10 +166,28 @@ func postgresType(s string) string {
 }
 
 func (a Attr) PostgresColumn() database.Column {
+	isSeq := false
+	primary := false
+	seqSuffix := ""
+	colType := postgresType(a.inputType)
+	defaultValue := nulls.String{
+		Valid: false,
+	}
+	if a.Name.String() == "id" {
+		primary = true
+	}
+	if a.Name.String() == "id" && colType != "uuid" {
+		isSeq = true
+		seqSuffix = "_" + a.Name.String() + "_seq"
+	}
 	return database.Column{
-		Name:     a.Name,
-		ColType:  postgresType(a.inputType),
-		Nullable: strings.HasPrefix(a.inputType, "nulls."),
+		Name:           a.Name,
+		IsSequence:     isSeq,
+		Default:        defaultValue,
+		ColType:        postgresType(a.inputType),
+		Nullable:       strings.HasPrefix(a.inputType, "nulls."),
+		Primary:        primary,
+		SequenceSuffix: seqSuffix,
 	}
 
 }

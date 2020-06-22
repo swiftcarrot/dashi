@@ -1,9 +1,16 @@
 package migration
 
+import (
+	"github.com/gobuffalo/flect"
+	"github.com/swiftcarrot/dashi/generators/attrs"
+)
+
 // Options for generating migration
 type Options struct {
-	Name string
-	Time string
+	Dialect string
+	Name    flect.Ident
+	Time    string
+	Attrs   attrs.Attrs `json:"attrs"`
 }
 
 // Validate that options are usuable

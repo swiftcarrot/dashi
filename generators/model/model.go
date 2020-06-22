@@ -10,30 +10,18 @@ import (
 	"github.com/gobuffalo/packr/v2"
 )
 
-func New(opts *Options) (*genny.Generator, error) {
+func New(mops *Options) (*genny.Generator, error) {
 	g := genny.New()
-
-	mops := &Options{
-		Name:                   opts.Name,
-		Attrs:                  opts.Attrs,
-		Path:                   "models",
-		Package:                "models",
-		TestPackage:            "models",
-		Encoding:               "json",
-		ForceDefaultID:         true,
-		ForceDefaultTimestamps: true,
-	}
 	if err := mops.Validate(); err != nil {
 		return g, err
 	}
-
 	if err := g.Box(packr.New("dashi:generators:model", "../model/templates")); err != nil {
 		return g, err
 	}
 
 	m := presenter{
-		Name:        name.New(opts.Name.String()),
-		Validations: validatable(opts.Attrs),
+		Name:        name.New(mops.Name.String()),
+		Validations: validatable(mops.Attrs),
 		Encoding:    name.New(mops.Encoding),
 		Imports:     buildImports(mops),
 	}

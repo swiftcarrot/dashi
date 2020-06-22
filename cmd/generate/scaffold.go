@@ -10,10 +10,10 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/attrs"
 	"github.com/swiftcarrot/dashi/generators/graphql"
+	"github.com/swiftcarrot/dashi/generators/migration"
 	"github.com/swiftcarrot/dashi/generators/model"
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
-	"github.com/swiftcarrot/dashi/generators/scaffold/migration"
 	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
 )
 
@@ -56,26 +56,44 @@ var ScaffoldCmd = &cobra.Command{
 		}
 		gg.Add(schemaGen)
 
-		modelGen, err := model.New(&model.Options{
-			Name:  flect.New(flect.Pascalize(n)).Singularize(),
-			Attrs: as,
-		})
+		mops := &model.Options{
+			Name:                   flect.New(flect.Pascalize(n)).Singularize(),
+			Attrs:                  as,
+			Path:                   "models",
+			Package:                "models",
+			TestPackage:            "models",
+			Encoding:               "json",
+			ForceDefaultID:         true,
+			ForceDefaultTimestamps: true,
+		}
+		if err := mops.Validate(); err != nil {
+			return err
+		}
+
+		modelGen, err := model.New(mops)
 		if err != nil {
 			return err
 		}
 		gg.Add(modelGen)
+
+		//TODO add mysql support, remove hardcode postgres
+		//migration attrs is from model opts which is validated and includes timestamp and default id column
+		migrationGen, err := migration.New(&migration.Options{
+			Dialect: "postgres",
+			Name:    opts.Name,
+			Time:    GetTime(),
+			Attrs:   mops.Attrs,
+		})
+		if err != nil {
+			return err
+		}
+		gg.Add(migrationGen)
 
 		graphqlGen, err := graphql.New()
 		if err != nil {
 			return err
 		}
 		gg.Add(graphqlGen)
-
-		migrationGen, err := migration.New(opts)
-		if err != nil {
-			return err
-		}
-		gg.Add(migrationGen)
 
 		dashboardGen, err := dashboard.New(opts)
 		if err != nil {
