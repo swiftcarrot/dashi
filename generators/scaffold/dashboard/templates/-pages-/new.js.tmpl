@@ -1,5 +1,4 @@
 import React from 'react';
-import { mutation } from 'api';
 import { useNavigate } from 'react-router-dom';
 import { {{.opts.Name.Pascalize}}Form } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
 import { useMutation } from '@apollo/react-hooks';
@@ -8,7 +7,6 @@ import { gql } from 'apollo-boost';
 const {{.opts.Name.Pascalize}}NewPage = (props) => {
   const navigate = useNavigate();
   const [mutate, { data }] = useMutation(CREATE_{{.opts.Name.ToUpper}});
-
 
   function handleSubmit(values, { setSubmitting }) {
     mutate({variables: { input: values }}).then(({data}) => {

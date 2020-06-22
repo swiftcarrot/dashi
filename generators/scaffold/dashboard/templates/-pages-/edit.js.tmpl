@@ -1,36 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'kit';
-import { query, mutation } from 'api';
 import { useParams, useNavigate } from 'react-router-dom';
 import { {{.opts.Name.Pascalize}}Form } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
+import { useQuery, useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 
 const {{.opts.Name.Pascalize}}EditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [state, setState] = useState({
-    loading: true,
-    data: null,
-    error: null,
-  });
-  const { loading, data, error } = state;
-
-  useEffect(() => {
-    query
-      .tool({ id })
-      .then((data) => {
-        setState({ loading: false, data, error: null });
-      })
-      .catch((error) => {
-        setState({ loading: false, data: null, error });
-      });
-  }, []);
+  const { loading, error, data } = useQuery(GET_{{.opts.Name.ToUpper}});
+  const [updateTodo] = useMutation(UPDATE_{{.opts.Name.ToUpper}});
 
   function handleSubmit(values, { setSubmitting }) {
-    mutation
-      .updateTool({ id, input: values })
-      .then(() => {
+    updateTodo({variables: { input: values }})
+      .then((data) => {
         setSubmitting(false);
-        navigate(`/tools/${id}`);
+      navigate(`/{{.opts.Name.Dasherize.Pluralize}}/${id}`)
       })
       .catch((err) => {
         console.warn(err);
@@ -38,26 +23,41 @@ const {{.opts.Name.Pascalize}}EditPage = () => {
       });
   }
 
-  if (loading) {
-    return <div>loading</div>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
   return (
     <div>
-      <h2>Edit Tool</h2>
-      <Link to="/tools">back</Link>
+      <h2>Edit {{.opts.Name.Pascalize}}</h2>
+      <Link to="/{{.opts.Name.Dasherize.Pluralize}}">Back</Link>
       <{{.opts.Name.Pascalize}}Form
         initialValues={{"{{"}}
-          key: data.key,
-          icon: data.icon,
-          name: data.name,
-          about: data.about,
-          website: data.website,
         {{"}}"}}
         onSubmit={handleSubmit}
       />
     </div>
   );
 };
+
+const GET_{{.opts.Name.ToUpper}} = gql`
+  query {{.opts.Name.Pascalize}}($id: ID!) {
+    {{.opts.Name.Dasherize.Pluralize}}(id: $id) {
+      {{.opts.Name}} {
+        {{ range .opts.Attrs }}
+          {{ .Name.Camelize }}
+        {{ end }}
+      }
+    }
+  }
+`
+
+const UPDATE_{{.opts.Name.ToUpper}} = gql`
+  mutation Update{{.opts.Name.Pascalize}}($input: Update{{.opts.Name.Pascalize}}Input!) {
+    update{{.opts.Name.Pascalize}}(input: $input) {
+      id
+    }
+  }
+`;
+
 
 export default {{.opts.Name.Pascalize}}EditPage;

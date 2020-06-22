@@ -5,31 +5,14 @@ import { gql } from 'apollo-boost';
 import { {{.opts.Name.Pascalize}}Table } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
 
 const {{.opts.Name.Pascalize}}HomePage = () => {
-  const { loading, data, error } = useQuery(gql`
-    query {{.opts.Name.Pascalize.Pluralize}} {
-      {{.opts.Name.Dasherize.Pluralize}} {
-        items {
-		      {{- range .opts.Attrs -}}
-		        {{- if ne .Name.Camelize.String "ID"  }}
-		          {{ .Name.Camelize }}
-		        {{- end }}
-		      {{- end }}
-        }
-      }
-    }
-  `);
+  const { loading, data, error } = useQuery(GET_{{.opts.Name.Pluralize.ToUpper}});
 
   function handleDelete(item) {}
 
   function handleEdit(item) {}
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error</div>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
   return (
     <div>
@@ -39,5 +22,17 @@ const {{.opts.Name.Pascalize}}HomePage = () => {
     </div>
   );
 };
+
+const GET_{{.opts.Name.Pluralize.ToUpper}} =  gql`
+  query {{.opts.Name.Pascalize.Pluralize}} {
+    {{.opts.Name.Dasherize.Pluralize}} {
+      items {
+        {{ range .opts.Attrs }}
+          {{ .Name.Camelize }}
+        {{ end }}
+      }
+    }
+  }
+`
 
 export default {{.opts.Name.Pascalize}}HomePage;
