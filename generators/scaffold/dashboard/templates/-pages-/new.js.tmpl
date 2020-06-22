@@ -2,38 +2,42 @@ import React from 'react';
 import { mutation } from 'api';
 import { useNavigate } from 'react-router-dom';
 import { {{.opts.Name.Pascalize}}Form } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
+import { useMutation } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 
 const {{.opts.Name.Pascalize}}NewPage = (props) => {
   const navigate = useNavigate();
+  const [mutate, { data }] = useMutation(CREATE_{{.opts.Name.ToUpper}});
+
 
   function handleSubmit(values, { setSubmitting }) {
-    mutation
-      .createTool({ input: values })
-      .then((data) => {
-        setSubmitting(false);
-        navigate(`/tools/${data.id}`);
-      })
-      .catch((err) => {
-        console.warn(err);
-        setSubmitting(false);
-      });
+    mutate({variables: { input: values }}).then(({data}) => {
+      setSubmitting(false)
+      navigate(`/{{.opts.Name.Dasherize.Pluralize}}/${id}`)
+    }).catch(err => {
+      console.warn(err);
+      setSubmitting(false)
+    })
   }
 
   return (
     <div>
-      <h2>New Tool</h2>
+      <h2>New {{.opts.Name.Pascalize}}</h2>
       <{{.opts.Name.Pascalize}}Form
         initialValues={{"{{"}}
-          key: '',
-          icon: '',
-          name: '',
-          about: '',
-          website: '',
         {{"}}"}}
         onSubmit={handleSubmit}
       />
     </div>
   );
 };
+
+const CREATE_{{.opts.Name.ToUpper}} = gql`
+  mutation Create{{.opts.Name.Pascalize}}($input: Create{{.opts.Name.Pascalize}}Input!) {
+    create{{.opts.Name.Pascalize}}(input: $input) {
+      id
+    }
+  }
+`;
 
 export default {{.opts.Name.Pascalize}}NewPage;

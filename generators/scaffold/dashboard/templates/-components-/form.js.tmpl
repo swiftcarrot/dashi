@@ -6,7 +6,7 @@ const {{.opts.Name.Pascalize}}Form = (props) => {
     <Form {...props}>
       {{- range .opts.Attrs -}}
         {{- if ne .Name.Camelize.String "ID"  }}
-          <FormGroup name="{{ .Name }}" label="{{ .Name.Pascalize }}" />
+          <FormGroup name="{{ .Name.Camelize }}" label="{{ .Name.Pascalize }}" />
         {{- end }}
       {{- end }}
       <FormSubmit />
