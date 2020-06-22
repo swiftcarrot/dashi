@@ -3,6 +3,8 @@ package generate
 import (
 	"context"
 
+	"github.com/swiftcarrot/dashi/generators/migration"
+
 	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
 	"github.com/spf13/cobra"
@@ -43,12 +45,26 @@ var ModelCmd = &cobra.Command{
 			ForceDefaultID:         true,
 			ForceDefaultTimestamps: true,
 		}
-		g, err := model.New(mops)
+		if err := mops.Validate(); err != nil {
+			return err
+		}
+		modelGen, err := model.New(mops)
 		if err != nil {
 			return err
 		}
 
-		run.With(g)
+		migrationGen, err := migration.New(&migration.Options{
+			Dialect: "postgres",
+			Name:    mops.Name,
+			Time:    GetTime(),
+			Attrs:   mops.Attrs,
+		})
+		if err != nil {
+			return err
+		}
+
+		run.With(modelGen)
+		run.With(migrationGen)
 
 		return run.Run()
 	},
