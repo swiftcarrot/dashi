@@ -1,48 +1,43 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'kit';
-import { query, mutation } from 'api';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
 import { {{.opts.Name.Pascalize}}Table } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
 
 const {{.opts.Name.Pascalize}}HomePage = () => {
-	const [state, setState] = useState({
-		loading: true,
-		data: null,
-		error: null,
-	});
-	const { loading, data, error } = state;
+  const { loading, data, error } = useQuery(gql`
+    query {{.opts.Name.Pascalize.Pluralize}} {
+      {{.opts.Name.Dasherize.Pluralize}} {
+        items {
+		      {{- range .opts.Attrs -}}
+		        {{- if ne .Name.Camelize.String "ID"  }}
+		          {{ .Name.Camelize }}
+		        {{- end }}
+		      {{- end }}
+        }
+      }
+    }
+  `);
 
-	useEffect(() => {
-		reload();
-	}, []);
+  function handleDelete(item) {}
 
-	function reload() {
-		query
-			.{{.opts.Name.Pluralize.Camelize}}({ page: 1, perPage: 20 })
-			.then((data) => {
-					setState({ loading: false, data, error: null });
-			})
-			.catch((error) => {
-					setState({ loading: false, data: null, error });
-			});
-	}
+  function handleEdit(item) {}
 
-	function handleDelete(entity) {
-			mutation.delete{{.opts.Name.Pascalize}}({ id: entity.id }).then(() => {
-				reload();
-			});
-	}
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
-	if (loading) {
-		return <div>loading</div>;
-	}
+  if (error) {
+    return <div>Error</div>;
+  }
 
-	return (
-		<div>
-			<h2>{{.opts.Name.Pluralize.Pascalize}}</h2>
-			<Link to="/tools/new">New {{.opts.Name.Pascalize}}</Link>
-			<{{.opts.Name.Pascalize}}Table {{.opts.Name.Pluralize.Camelize}}={data.{{.opts.Name.Pluralize.Camelize}}} onDelete={handleDelete} />
-		</div>
-	);
+  return (
+    <div>
+      <h2>{{.opts.Name.Pascalize.Pluralize}}</h2>
+      <Link to="/{{.opts.Name.Dasherize.Pluralize}}/new">New {{.opts.Name.Pascalize}}</Link>
+      <{{.opts.Name.Pascalize}}Table data={data.{{.opts.Name.Dasherize.Pluralize}}.items} onDelete={handleDelete} onEdit={handleEdit} />
+    </div>
+  );
 };
 
 export default {{.opts.Name.Pascalize}}HomePage;

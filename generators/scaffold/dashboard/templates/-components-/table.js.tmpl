@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Table } from 'kit';
 
-const {{.opts.Name.Pascalize}}Table = ({ tools, onDelete }) => {
+const {{.opts.Name.Pascalize}}Table = ({ data, onDelete }) => {
   function handleClick(e, tool) {
     e.preventDefault();
 
@@ -13,7 +13,7 @@ const {{.opts.Name.Pascalize}}Table = ({ tools, onDelete }) => {
   return (
     <Table
       keyExtractor={(row) => row.id}
-      data={tools}
+      data={data}
       columns={[
         { key: 'name', title: 'Name' },
         { key: 'key', title: 'Key' },
@@ -25,11 +25,11 @@ const {{.opts.Name.Pascalize}}Table = ({ tools, onDelete }) => {
         {
           key: 'action',
           title: 'Action',
-          render: (tool) => (
+          render: (item) => (
             <div>
-              <Link to={`/tools/${tool.id}`}>View</Link>
-              <Link to={`/tools/${tool.id}/edit`}>Edit</Link>
-              <a href="#" onClick={(e) => handleClick(e, tool)}>
+              <Link to={`/tools/${item.id}`}>View</Link>
+              <Link to={`/tools/${item.id}/edit`}>Edit</Link>
+              <a href="#" onClick={(e) => handleClick(e, item)}>
                 Delete
               </a>
             </div>
