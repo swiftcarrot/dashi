@@ -5,41 +5,31 @@ import { useParams } from 'react-router-dom';
 
 const {{.opts.Name.Pascalize}}Page = () => {
   const { id } = useParams();
-  const [state, setState] = useState({
-    loading: true,
-    data: null,
-    error: null,
-  });
-  const { loading, data, error } = state;
+  const { loading, error, data } = useQuery(GET_{{.opts.Name.ToUpper}});
 
-  useEffect(() => {
-    query
-      .tool({ id })
-      .then((data) => {
-        setState({ loading: false, data, error: null });
-      })
-      .catch((error) => {
-        setState({ loading: false, data: null, error });
-      });
-  }, []);
-
-  if (loading) {
-    return <div>loading</div>;
-  }
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error :(</p>;
 
   return (
     <div>
       <h2>Tool</h2>
-      <div>Key: {data.key}</div>
-      <div>Icon: {data.icon}</div>
-      <div>Name: {data.name}</div>
-      <div>About: {data.about}</div>
-      <div>Website: {data.website}</div>
-      <div>Created At: {data.created_at}</div>
-      <div>Updated At: {data.updated_at}</div>
-      <Link to={`/tools/${id}/edit`}>Edit</Link>
+
+      {{- range .opts.Attrs -}}
+        <div>{{ .Name.Pascalize }}: { data.{{ .Name.Camelize }} }</div>
+      {{- end }}
+      <Link to={`/{{.opts.Name.Dasherize.Pluralize}}/${id}/edit`}>Edit</Link>
     </div>
   );
 };
+
+const GET_{{.opts.Name.ToUpper}} = gql`
+  query {{.opts.Name.Pascalize}}($id: ID!) {
+    {{.opts.Name.ToLower}}(id: $id) {
+      {{- range .opts.Attrs }}
+        {{ .Name.Camelize }}
+      {{- end }}
+    }
+  }
+`
 
 export default {{.opts.Name.Pascalize}}Page;

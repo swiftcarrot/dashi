@@ -13,7 +13,7 @@ type {{.opts.Name.String}}Items {
 
 input Create{{ .opts.Name.String }}Input {
 	{{- range .opts.Attrs -}}
-		{{- if ne .Name.Camelize.String "ID"  }}
+		{{- if ne .Name.Camelize.String "ID" }}
 			{{ .Name.Camelize }}: {{ .GraphqlType }}
 		{{- end }}
 	{{- end }}

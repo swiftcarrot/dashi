@@ -27,9 +27,9 @@ const GET_{{.opts.Name.Pluralize.ToUpper}} =  gql`
   query {{.opts.Name.Pascalize.Pluralize}} {
     {{.opts.Name.Dasherize.Pluralize}} {
       items {
-        {{ range .opts.Attrs }}
+        {{- range .opts.Attrs }}
           {{ .Name.Camelize }}
-        {{ end }}
+        {{- end }}
       }
     }
   }

@@ -41,12 +41,10 @@ const {{.opts.Name.Pascalize}}EditPage = () => {
 
 const GET_{{.opts.Name.ToUpper}} = gql`
   query {{.opts.Name.Pascalize}}($id: ID!) {
-    {{.opts.Name.Dasherize.Pluralize}}(id: $id) {
-      {{.opts.Name}} {
-        {{ range .opts.Attrs }}
-          {{ .Name.Camelize }}
-        {{ end }}
-      }
+    {{.opts.Name.ToLower}}(id: $id) {
+      {{- range .opts.Attrs }}
+        {{ .Name.Camelize }}
+      {{- end }}
     }
   }
 `
