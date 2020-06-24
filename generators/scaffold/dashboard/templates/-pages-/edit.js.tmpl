@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from 'kit';
 import { useParams, useNavigate } from 'react-router-dom';
 import { {{.opts.Name.Pascalize}}Form } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
@@ -31,8 +31,7 @@ const {{.opts.Name.Pascalize}}EditPage = () => {
       <h2>Edit {{.opts.Name.Pascalize}}</h2>
       <Link to="/{{.opts.Name.Dasherize.Pluralize}}">Back</Link>
       <{{.opts.Name.Pascalize}}Form
-        initialValues={{"{{"}}
-        {{"}}"}}
+        initialValues={data}
         onSubmit={handleSubmit}
       />
     </div>
