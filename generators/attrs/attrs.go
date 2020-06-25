@@ -74,7 +74,9 @@ func (a Attr) GoType() string {
 	case "nulls.uuid":
 		return "nulls.UUID"
 	//bool
-	case "nulls.bool":
+	case "bool", "boolean":
+		return "bool"
+	case "nulls.bool", "nulls.boolean":
 		return "nulls.Bool"
 	case "json", "jsonb":
 		return "slices.Map"
@@ -119,6 +121,8 @@ func graphqlType(s string, nullable bool) string {
 		return withNullable("String", nullable)
 	case "uuid.uuid", "uuid":
 		return withNullable("UUID", nullable)
+	case "bool", "boolean":
+		return withNullable("Boolean", nullable)
 	case "strings":
 		return "[String!]"
 	case "floats":
@@ -149,6 +153,8 @@ func postgresType(s string) string {
 		return "text"
 	case "uuid.uuid", "uuid":
 		return "uuid"
+	case "bool", "boolean":
+		return "boolean"
 	case "strings":
 		return "_text"
 	case "floats":
