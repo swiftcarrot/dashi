@@ -2,7 +2,7 @@
 CREATE TABLE "{{.table.Name}}" (
 {{- range $index, $col := .table.Columns}}
   {{- if $index}},{{- end}}
-  "{{.Name}}" {{.ColType}} {{- if .Primary}} primary key {{- end }} {{- if .Default.Valid}} default {{.Default.String}} {{- end}}
+  "{{.Name}}" {{.ColType}} {{- if .Primary}} primary key {{- end }} {{- if .Default.Valid}} default {{.Default.String}} {{- end}} {{- if not .Nullable}} not null {{- end }}
 {{-  end }}
 );
 {{- end }}
