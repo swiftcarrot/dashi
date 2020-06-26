@@ -17,9 +17,9 @@ sidebar_label: model
 | float     |   float       |   float64  |         Float     |
 | bool/boolean   |     boolean     |   bool  |      Boolean        |
 | strings   |     _text     |   slices.String  |        [String!]      |
-| integers  |     _int     |   slices.Int  |         [Int!]     |
+| integers  |     _int4     |   slices.Int  |         [Int!]     |
 | uuids     |     _uuid     |   slices.UUID  |       [UUID!]       |
-| floats    |    _float      |   slices.Float  |     [Float!]         |
+| floats    |    _float8      |   slices.Float  |     [Float!]         |
 
 **For All attributes with `nulls` prefix**
    * **Go**: nulls.[OriginalType], support string, float, int, time, uuid, bool

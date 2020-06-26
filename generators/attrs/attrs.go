@@ -158,9 +158,9 @@ func postgresType(s string) string {
 	case "strings":
 		return "_text"
 	case "floats":
-		return "_float"
+		return "_float8"
 	case "integers":
-		return "_int"
+		return "_int4"
 	case "uuids":
 		return "_uuid"
 	default:
