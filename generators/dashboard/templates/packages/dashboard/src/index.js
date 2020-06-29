@@ -1,10 +1,11 @@
 import './styles.scss';
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { render } from 'react-dom';
-import { Layout } from 'layouts';
 import ApolloClient from 'apollo-boost';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { ErrorBoundary } from 'components';
+import { Layout } from 'layouts';
 import { HomePage, GraphiQLPage } from 'pages';
 
 const client = new ApolloClient({
@@ -30,28 +31,6 @@ const App = () => {
 const NotFoundPage = () => {
   return <div>Page not found</div>;
 };
-
-class ErrorBoundary extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { hasError: false };
-  }
-
-  static getDerivedStateFromError(error) {
-    return { hasError: true };
-  }
-
-  // TODO: optional sentry integration
-  componentDidCatch(error, errorInfo) {}
-
-  render() {
-    if (this.state.hasError) {
-      return <h1>Something went wrong.</h1>;
-    }
-
-    return this.props.children;
-  }
-}
 
 const Root = () => {
   return (
