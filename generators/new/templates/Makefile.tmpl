@@ -15,7 +15,7 @@ image:
 
 build:
 	find . -name ".DS_Store" -delete
-	~/go/bin/gqlgen generate
+	dashi g graphql
 	go mod tidy
 	go build -ldflags "-X {{ .opts.Package }}/cmd.Version=`git rev-parse HEAD`" -o bin/{{ .opts.Name }}
 	go install
