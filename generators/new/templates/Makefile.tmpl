@@ -1,5 +1,8 @@
 GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
 
+PID = ./{{ .opts.Name }}.pid
+APP = ./bin/{{ .opts.Name }}
+
 all: fmt build
 
 fmt:
@@ -17,5 +20,27 @@ build:
 	find . -name ".DS_Store" -delete
 	dashi g graphql
 	go mod tidy
-	go build -ldflags "-X {{ .opts.Package }}/cmd.Version=`git rev-parse HEAD`" -o bin/{{ .opts.Name }}
+	go build -ldflags "-X {{ .opts.Package }}/cmd.Version=`git rev-parse HEAD`" -o $(APP)
 	go install
+
+
+serve: kill graphql start watch
+
+watch:
+	fswatch -x -o --event Created --latency 5 --event Updated --event Renamed -r -e '.*' -i '.*\.go$$'  . | xargs -n1 -I{}  make restart  &
+	fswatch -x -o --event Created --latency 5 --event Updated --event Renamed -r -e '.*' -i '\.graphql$$'  . | xargs -n1 -I{}  make graphql || make kill
+
+kill:
+	kill `cat $(PID)` || true
+
+restart: kill start
+
+graphql:
+	dashi g graphql
+
+start:
+	#go mod vendor
+	go build -o $(APP)
+	$(APP) server & echo $$! > $(PID)
+
+.PHONY: start restart kill graphql watch_graphql watch_go serve
