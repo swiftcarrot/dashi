@@ -26,9 +26,7 @@ GraphQL resolver implementations
 
 All yarn packages located in packages sharing node_modules through yarn workspaces.
 
-### packages/kit
-
-### packages/api
+### packages/components
 
 ### packages/dashboard
 
