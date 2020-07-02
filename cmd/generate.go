@@ -18,6 +18,7 @@ func init() {
 	generateCmd.AddCommand(generate.MigrationCmd)
 	generateCmd.AddCommand(generate.ModelCmd)
 	generateCmd.AddCommand(generate.GraphqlCmd)
+	generateCmd.AddCommand(generate.WebpackerCmd)
 
 	rootCmd.AddCommand(generateCmd)
 }
