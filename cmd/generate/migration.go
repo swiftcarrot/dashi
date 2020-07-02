@@ -24,7 +24,7 @@ var MigrationCmd = &cobra.Command{
 		time := GetTime()
 
 		run := genny.WetRunner(context.Background())
-		//TODO remove hardcode postgres
+		// TODO remove hardcode postgres
 		g, err := migration.New(&migration.Options{
 			Name:    flect.New(name),
 			Time:    time,

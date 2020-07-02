@@ -11,7 +11,9 @@ class ErrorBoundary extends Component {
   }
 
   // TODO: optional sentry integration
-  componentDidCatch(error, errorInfo) {}
+  componentDidCatch(error, errorInfo) {
+    console.error(error);
+  }
 
   render() {
     if (this.state.hasError) {

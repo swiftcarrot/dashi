@@ -1,3 +1,7 @@
+scalar DateTime
+
+scalar Date
+
 scalar Time
 
 scalar Map
