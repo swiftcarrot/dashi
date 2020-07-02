@@ -1,3 +1,3 @@
-{{ if .table  }}
+{{ if .table  -}}
 drop table if exists {{.table.Name.Underscore.Pluralize}};
 {{ end }}
