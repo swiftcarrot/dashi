@@ -1,4 +1,9 @@
 import React from 'react';
-import { render } from 'react-dom';
 
-render(<div>{{.opts.Name}}</div>, document.getElementById('root'));
+const HomePage = () => {
+  return (
+    <div>{{.opts.Name}}</div>
+  );
+}
+
+export default HomePage;
