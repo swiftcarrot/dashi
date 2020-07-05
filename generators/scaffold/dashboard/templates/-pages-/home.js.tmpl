@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'components';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { {{.opts.Name.Pascalize}}Table } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
+import { {{.opts.Name.Pascalize}}Table } from 'components/src/{{.opts.Name.Dasherize.Pluralize}}';
 
 const {{.opts.Name.Pascalize}}HomePage = () => {
   const { loading, data, error } = useQuery(GET_{{.opts.Name.Pluralize.ToUpper}});

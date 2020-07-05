@@ -39,7 +39,7 @@ func New(opts *scaffold.Options) (*genny.Generator, error) {
 	name := opts.Name.Dasherize().Pluralize().String()
 
 	g.Transformer(genny.Replace("-pages-", "packages/dashboard/src/pages/"+name))
-	g.Transformer(genny.Replace("-components-", "packages/dashboard/src/components/"+name))
+	g.Transformer(genny.Replace("-components-", "packages/components/src/"+name))
 
 	err := g.Box(packr.New("scaffold:dashboard:templates", "../dashboard/templates"))
 	if err != nil {

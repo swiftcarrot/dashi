@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'components';
-import { query } from 'api';
 import { useParams } from 'react-router-dom';
+import { useQuery } from '@apollo/react-hooks';
+import { gql } from 'apollo-boost';
+import { {{.opts.Name.Pascalize}}Form } from 'components/src/{{.opts.Name.Dasherize.Pluralize}}';
 
 const {{.opts.Name.Pascalize}}Page = () => {
   const { id } = useParams();

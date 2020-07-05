@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { {{.opts.Name.Pascalize}}Form } from 'components/{{.opts.Name.Dasherize.Pluralize}}';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import { {{.opts.Name.Pascalize}}Form } from 'components/src/{{.opts.Name.Dasherize.Pluralize}}';
 
 const {{.opts.Name.Pascalize}}NewPage = (props) => {
   const navigate = useNavigate();
