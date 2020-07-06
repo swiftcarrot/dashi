@@ -43,7 +43,7 @@ func New(mops *Options) (*genny.Generator, error) {
 
 	t := gogen.TemplateTransformer(ctx, help)
 	g.Transformer(t)
-	g.Transformer(genny.Replace("-name-", mops.Name.Singularize().Dasherize().String()))
+	g.Transformer(genny.Replace("-name-", mops.Name.Singularize().ToLower().String()))
 	g.Transformer(genny.Replace("-path-", mops.Path))
 	return g, nil
 }

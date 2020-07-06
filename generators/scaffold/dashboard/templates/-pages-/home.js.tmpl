@@ -1,15 +1,21 @@
 import React from 'react';
 import { Link } from 'components';
-import { useQuery } from '@apollo/react-hooks';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 import { {{.opts.Name.Pascalize}}Table } from 'components/src/{{.opts.Name.Dasherize.Pluralize}}';
 
 const {{.opts.Name.Pascalize}}HomePage = () => {
-  const { loading, data, error } = useQuery(GET_{{.opts.Name.Pluralize.ToUpper}});
+  const { loading, data, error, refetch } = useQuery(GET_{{.opts.Name.Pluralize.ToUpper}});
+  const [delete{{.opts.Name.Pascalize}}] = useMutation(DELETE_{{.opts.Name.ToUpper}});
 
-  function handleDelete(item) {}
-
-  function handleEdit(item) {}
+  function handleDelete(item) {
+    delete{{.opts.Name.Pascalize}}({variables: { input: item.id }}).then(() => {
+      refetch();
+    }).catch(err => {
+      console.warn(err);
+      alert('Delete failed');
+    });
+  }
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
@@ -18,7 +24,7 @@ const {{.opts.Name.Pascalize}}HomePage = () => {
     <div>
       <h2>{{.opts.Name.Pascalize.Pluralize}}</h2>
       <Link to="/{{.opts.Name.Dasherize.Pluralize}}/new">New {{.opts.Name.Pascalize}}</Link>
-      <{{.opts.Name.Pascalize}}Table data={data.{{.opts.Name.Dasherize.Pluralize}}.items} onDelete={handleDelete} onEdit={handleEdit} />
+      <{{.opts.Name.Pascalize}}Table data={data.{{.opts.Name.Dasherize.Pluralize}}.items} onDelete={handleDelete} />
     </div>
   );
 };
@@ -31,6 +37,14 @@ const GET_{{.opts.Name.Pluralize.ToUpper}} =  gql`
           {{ .Name.Camelize }}
         {{- end }}
       }
+    }
+  }
+`
+
+const DELETE_{{.opts.Name.ToUpper}} = gql`
+  mutation Delete{{.opts.Name.Pascalize}} {
+    delete{{.opts.Name.Pascalize}}(input: $input) {
+      id
     }
   }
 `

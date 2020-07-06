@@ -9,13 +9,13 @@ const {{.opts.Name.Pascalize}}EditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { loading, error, data } = useQuery(GET_{{.opts.Name.ToUpper}});
-  const [updateTodo] = useMutation(UPDATE_{{.opts.Name.ToUpper}});
+  const [update{{.opts.Name.Pascalize}}] = useMutation(UPDATE_{{.opts.Name.ToUpper}});
 
   function handleSubmit(values, { setSubmitting }) {
-    updateTodo({variables: { input: values }})
+    update{{.opts.Name.Pascalize}}({variables: { input: values }})
       .then((data) => {
         setSubmitting(false);
-      navigate(`/{{.opts.Name.Dasherize.Pluralize}}/${id}`)
+        navigate(`/{{.opts.Name.Dasherize.Pluralize}}/${id}`)
       })
       .catch((err) => {
         console.warn(err);

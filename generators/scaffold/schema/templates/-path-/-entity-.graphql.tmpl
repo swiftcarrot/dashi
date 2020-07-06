@@ -20,11 +20,14 @@ input Create{{ .opts.Name.String }}Input {
 }
 
 input Update{{ .opts.Name.String }}Input {
+	id : ID!
 	{{- range .opts.Attrs -}}
-		{{- if ne .Name.Camelize.String "ID"  }}
-			{{ .Name.Camelize }}: {{ .GraphqlType }}
-		{{- end }}
+		{{ .Name.Camelize }}: {{ .GraphqlType }}
 	{{- end }}
+}
+
+input Delete{{ .opts.Name.String }}Input {
+	id: ID!
 }
 
 extend type Query {
@@ -34,6 +37,6 @@ extend type Query {
 
 extend type Mutation {
   create{{ .opts.Name }}(input: Create{{ .opts.Name }}Input!): {{ .opts.Name }} @generated(type: "create")
-  update{{ .opts.Name }}(id: ID!, input: Update{{ .opts.Name }}Input!): {{ .opts.Name }} @generated(type: "update")
-  delete{{ .opts.Name }}(id: ID!): {{ .opts.Name }} @generated(type: "delete")
+  update{{ .opts.Name }}(input: Update{{ .opts.Name }}Input!): {{ .opts.Name }} @generated(type: "update")
+  delete{{ .opts.Name }}(input: Delete{{ .opts.Name.String }}Input!): {{ .opts.Name }} @generated(type: "delete")
 }

@@ -15,11 +15,11 @@ const {{.opts.Name.Pascalize}}Table = ({ data, onDelete }) => {
       keyExtractor={(row) => row.id}
       data={data}
       columns={[
-        { key: 'name', title: 'Name' },
-        { key: 'key', title: 'Key' },
-        { key: 'icon', title: 'Icon' },
-        { key: 'about', title: 'About' },
-        { key: 'website', title: 'Website' },
+      {{- range .opts.Attrs -}}
+        {{- if ne .Name.Camelize.String "ID"  }}
+        { key: '{{ .Name.Camelize }}', title: '{{ .Name.Pascalize }}' },
+        {{- end }}
+      {{- end }}
         { key: 'created_at', title: 'CreatedAt' },
         { key: 'updated_at', title: 'UpdatedAt' },
         {
@@ -27,8 +27,8 @@ const {{.opts.Name.Pascalize}}Table = ({ data, onDelete }) => {
           title: 'Action',
           render: (item) => (
             <div>
-              <Link to={`/tools/${item.id}`}>View</Link>
-              <Link to={`/tools/${item.id}/edit`}>Edit</Link>
+              <Link to={`/{{.opts.Name.Dasherize.Pluralize}}/${item.id}`}>View</Link>
+              <Link to={`/{{.opts.Name.Dasherize.Pluralize}}/${item.id}/edit`}>Edit</Link>
               <a href="#" onClick={(e) => handleClick(e, item)}>
                 Delete
               </a>

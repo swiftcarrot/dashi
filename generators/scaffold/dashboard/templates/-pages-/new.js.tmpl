@@ -6,15 +6,16 @@ import { {{.opts.Name.Pascalize}}Form } from 'components/src/{{.opts.Name.Dasher
 
 const {{.opts.Name.Pascalize}}NewPage = (props) => {
   const navigate = useNavigate();
-  const [mutate, { data }] = useMutation(CREATE_{{.opts.Name.ToUpper}});
+  const [create{{.opts.Name.Pascalize}}, { data }] = useMutation(CREATE_{{.opts.Name.ToUpper}});
 
   function handleSubmit(values, { setSubmitting }) {
-    mutate({variables: { input: values }}).then(({data}) => {
+    create{{.opts.Name.Pascalize}}({variables: { input: values }}).then((resp) => {
       setSubmitting(false)
-      navigate(`/{{.opts.Name.Dasherize.Pluralize}}/${id}`)
+      navigate(`/{{.opts.Name.Dasherize.Pluralize}}/${resp.data.create{{.opts.Name.Pascalize}}.id}`)
     }).catch(err => {
       console.warn(err);
-      setSubmitting(false)
+      setSubmitting(false);
+      alert('Create failed')
     })
   }
 

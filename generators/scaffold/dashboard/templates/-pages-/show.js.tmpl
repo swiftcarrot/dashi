@@ -3,7 +3,6 @@ import { Link } from 'components';
 import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { {{.opts.Name.Pascalize}}Form } from 'components/src/{{.opts.Name.Dasherize.Pluralize}}';
 
 const {{.opts.Name.Pascalize}}Page = () => {
   const { id } = useParams();
@@ -14,8 +13,7 @@ const {{.opts.Name.Pascalize}}Page = () => {
 
   return (
     <div>
-      <h2>Tool</h2>
-
+      <h2>{{.opts.Name.Pascalize}}</h2>
       {{- range .opts.Attrs -}}
         <div>{{ .Name.Pascalize }}: { data.{{ .Name.Camelize }} }</div>
       {{- end }}

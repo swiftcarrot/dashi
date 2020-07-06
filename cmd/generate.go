@@ -15,6 +15,7 @@ var generateCmd = &cobra.Command{
 func init() {
 	generateCmd.AddCommand(generate.DashboardCmd)
 	generateCmd.AddCommand(generate.ScaffoldCmd)
+	generateCmd.AddCommand(generate.ScaffoldDashboardCmd)
 	generateCmd.AddCommand(generate.MigrationCmd)
 	generateCmd.AddCommand(generate.ModelCmd)
 	generateCmd.AddCommand(generate.GraphqlCmd)

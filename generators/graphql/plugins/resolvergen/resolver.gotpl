@@ -76,20 +76,22 @@
 {{ end }}
 
 {{ define "update" }}
-	{{ $input := index .Field.Args 1 -}}
+	{{ $input := index .Field.Args 0 -}}
 	{{ $entity := .Field.TypeReference.Definition.Name | lcFirst }}
 	{{ $entityType := .Field.TypeReference.Definition.Name | go }}
 	{{ $entity }} := &models.{{ $entityType -}}{}
-	err := r.Conn.Find({{$entity}}, id)
+	err := r.Conn.Find({{$entity}}, input.ID)
 	if err != nil {
 		return nil, err
 	}
 	{{ range $o := $input.TypeReference.Definition.Fields -}}
-		{{$entity}}.{{$o.Name | go}} = {{$input.Name}}.{{ $o.Name | go }}
+		{{- if ne $o.Name "id" }}
+			{{$entity}}.{{$o.Name | go}} = {{$input.Name}}.{{ $o.Name | go }}
+		{{- end }}
 	{{ end }}
 	err = r.Conn.Update({{$entity}})
 	if err != nil {
-	return nil, err
+		return nil, err
 	}
 	return {{$entity}}, nil
 {{ end }}
@@ -98,7 +100,7 @@
 	{{ $entity := .Field.TypeReference.Definition.Name | lcFirst }}
 	{{ $entityType := .Field.TypeReference.Definition.Name | go }}
 	{{$entity}} := &models.{{$entityType}}{}
-	err := r.Conn.Find({{$entity}}, id)
+	err := r.Conn.Find({{$entity}}, input.ID)
 	if err != nil {
 		return nil, err
 	}
