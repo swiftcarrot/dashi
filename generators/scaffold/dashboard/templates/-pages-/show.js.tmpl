@@ -15,7 +15,7 @@ const {{.opts.Name}}Page = () => {
     <div>
       <h2>{{.opts.Name}}</h2>
       {{- range .opts.Attrs -}}
-        <div>{{ .Name }}: { data.{{$.opts.Name.Camelize}}.{{ .Name.Camelize }} }</div>
+        <div>{{ .Name.Pascalize }}: { data.{{$.opts.Name.Camelize}}.{{ .Name.Camelize }} }</div>
       {{- end }}
       <Link to={`/{{.opts.Name.Pluralize.ToLower}}/${id}/edit`}>Edit</Link>
     </div>
