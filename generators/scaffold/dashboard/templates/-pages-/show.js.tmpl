@@ -4,32 +4,35 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
-const {{.opts.Name.Pascalize}}Page = () => {
+const {{.opts.Name}}Page = () => {
   const { id } = useParams();
-  const { loading, error, data } = useQuery(GET_{{.opts.Name.ToUpper}}, { variables: { id }});
+  const { loading, error, data } = useQuery(GET_{{.opts.Name.Underscore.ToUpper}}, { variables: { id }});
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error :(</p>;
 
   return (
     <div>
-      <h2>{{.opts.Name.Pascalize}}</h2>
+      <h2>{{.opts.Name}}</h2>
       {{- range .opts.Attrs -}}
-        <div>{{ .Name.Pascalize }}: { data.{{ .Name.Camelize }} }</div>
+        <div>{{ .Name }}: { data.{{$.opts.Name.Camelize}}.{{ .Name.Camelize }} }</div>
       {{- end }}
-      <Link to={`/{{.opts.Name.Dasherize.Pluralize}}/${id}/edit`}>Edit</Link>
+      <Link to={`/{{.opts.Name.Pluralize.ToLower}}/${id}/edit`}>Edit</Link>
     </div>
   );
 };
 
-const GET_{{.opts.Name.ToUpper}} = gql`
-  query {{.opts.Name.Pascalize}}($id: ID!) {
-    {{.opts.Name.ToLower}}(id: $id) {
+const GET_{{.opts.Name.Underscore.ToUpper}} = gql`
+  query {{.opts.Name}}($id: ID!) {
+    {{.opts.Name.Camelize}}(id: $id) {
+      id
       {{- range .opts.Attrs }}
         {{ .Name.Camelize }}
       {{- end }}
+      createdAt
+      updatedAt
     }
   }
 `
 
-export default {{.opts.Name.Pascalize}}Page;
+export default {{.opts.Name}}Page;

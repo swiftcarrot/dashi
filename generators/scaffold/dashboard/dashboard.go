@@ -9,26 +9,8 @@ import (
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 )
 
-// dashboard will be generated based on graphql schema, including basic component/page and api sdk
-// this one only handle newly created entity case(scaffold), we should also have one generator to sync between schema and js code
 func New(opts *scaffold.Options) (*genny.Generator, error) {
 	g := genny.New()
-	//TODO generate api using graphql
-	//cfg, err := config.LoadConfigFromDefaultLocations()
-	//if err != nil {
-	//	fmt.Fprintln(os.Stderr, "failed to load config", err.Error())
-	//	os.Exit(2)
-	//}
-	//g.RunFn(func(r *genny.Runner) error {
-	//	err = api.Generate(cfg, api.NoPlugins(),
-	//		api.AddPlugin(dashboardgen.New(opts.Name.String())))
-	//	if err != nil {
-	//		fmt.Fprintln(os.Stderr, "dashboard", err.Error())
-	//		os.Exit(3)
-	//	}
-	//	return nil
-	//})
-
 	data := map[string]interface{}{
 		"opts": opts,
 	}
@@ -36,7 +18,7 @@ func New(opts *scaffold.Options) (*genny.Generator, error) {
 	t := gogen.TemplateTransformer(data, helpers)
 	g.Transformer(t)
 
-	name := opts.Name.Dasherize().Pluralize().String()
+	name := opts.Name.Pascalize().Pluralize().ToLower().String()
 
 	g.Transformer(genny.Replace("-pages-", "packages/dashboard/src/pages/"+name))
 	g.Transformer(genny.Replace("-components-", "packages/components/src/"+name))

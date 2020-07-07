@@ -3,19 +3,19 @@ import { Link } from 'components';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { {{.opts.Name.Pascalize}}Form } from 'components/src/{{.opts.Name.Dasherize.Pluralize}}';
+import { {{.opts.Name}}Form } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
 
-const {{.opts.Name.Pascalize}}EditPage = () => {
+const {{.opts.Name}}EditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { loading, error, data } = useQuery(GET_{{.opts.Name.ToUpper}}, { variables: { id } });
-  const [update{{.opts.Name.Pascalize}}] = useMutation(UPDATE_{{.opts.Name.ToUpper}});
+  const { loading, error, data } = useQuery(GET_{{.opts.Name.Underscore.ToUpper}}, { variables: { id } });
+  const [update{{.opts.Name}}] = useMutation(UPDATE_{{.opts.Name.Underscore.ToUpper}});
 
   function handleSubmit(values, { setSubmitting }) {
-    update{{.opts.Name.Pascalize}}({variables: { input: values }})
+    update{{.opts.Name}}({variables: { input: values }})
       .then((data) => {
         setSubmitting(false);
-        navigate(`/{{.opts.Name.Dasherize.Pluralize}}/${id}`)
+        navigate(`/{{.opts.Name.Pluralize.ToLower}}/${id}`)
       })
       .catch((err) => {
         console.warn(err);
@@ -28,33 +28,36 @@ const {{.opts.Name.Pascalize}}EditPage = () => {
 
   return (
     <div>
-      <h2>Edit {{.opts.Name.Pascalize}}</h2>
-      <Link to="/{{.opts.Name.Dasherize.Pluralize}}">Back</Link>
-      <{{.opts.Name.Pascalize}}Form
-        initialValues={data}
+      <h2>Edit {{.opts.Name}}</h2>
+      <Link to="/{{.opts.Name.Pluralize.ToLower}}">Back</Link>
+      <{{.opts.Name}}Form
+        initialValues={data.{{.opts.Name.Camelize}}}
         onSubmit={handleSubmit}
       />
     </div>
   );
 };
 
-const GET_{{.opts.Name.ToUpper}} = gql`
-  query {{.opts.Name.Pascalize}}($id: ID!) {
-    {{.opts.Name.ToLower}}(id: $id) {
+const GET_{{.opts.Name.Underscore.ToUpper}} = gql`
+  query {{.opts.Name}}($id: ID!) {
+    {{.opts.Name.Camelize}}(id: $id) {
+      id
       {{- range .opts.Attrs }}
         {{ .Name.Camelize }}
       {{- end }}
+      createdAt
+      updatedAt
     }
   }
 `
 
-const UPDATE_{{.opts.Name.ToUpper}} = gql`
-  mutation Update{{.opts.Name.Pascalize}}($input: Update{{.opts.Name.Pascalize}}Input!) {
-    update{{.opts.Name.Pascalize}}(input: $input) {
+const UPDATE_{{.opts.Name.Underscore.ToUpper}} = gql`
+  mutation Update{{.opts.Name}}($input: Update{{.opts.Name}}Input!) {
+    update{{.opts.Name}}(input: $input) {
       id
     }
   }
 `;
 
 
-export default {{.opts.Name.Pascalize}}EditPage;
+export default {{.opts.Name}}EditPage;

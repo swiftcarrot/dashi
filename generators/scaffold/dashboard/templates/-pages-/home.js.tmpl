@@ -2,14 +2,14 @@ import React from 'react';
 import { Link } from 'components';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { {{.opts.Name.Pascalize}}Table } from 'components/src/{{.opts.Name.Dasherize.Pluralize}}';
+import { {{.opts.Name}}Table } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
 
-const {{.opts.Name.Pascalize}}HomePage = () => {
-  const { loading, data, error, refetch } = useQuery(GET_{{.opts.Name.Pluralize.ToUpper}});
-  const [delete{{.opts.Name.Pascalize}}] = useMutation(DELETE_{{.opts.Name.ToUpper}});
+const {{.opts.Name}}HomePage = () => {
+  const { loading, data, error, refetch } = useQuery(GET_{{.opts.Name.Pluralize.Underscore.ToUpper}});
+  const [delete{{.opts.Name}}] = useMutation(DELETE_{{.opts.Name.ToUpper}});
 
   function handleDelete(item) {
-    delete{{.opts.Name.Pascalize}}({variables: { input: item.id }}).then(() => {
+    delete{{.opts.Name}}({variables: { input: item.id }}).then(() => {
       refetch();
     }).catch(err => {
       console.warn(err);
@@ -22,20 +22,23 @@ const {{.opts.Name.Pascalize}}HomePage = () => {
 
   return (
     <div>
-      <h2>{{.opts.Name.Pascalize.Pluralize}}</h2>
-      <Link to="/{{.opts.Name.Dasherize.Pluralize}}/new">New {{.opts.Name.Pascalize}}</Link>
-      <{{.opts.Name.Pascalize}}Table data={data.{{.opts.Name.Dasherize.Pluralize}}.items} onDelete={handleDelete} />
+      <h2>{{.opts.Name.Pluralize}}</h2>
+      <Link to="/{{.opts.Name.Pluralize.ToLower}}/new">New {{.opts.Name}}</Link>
+      <{{.opts.Name}}Table data={data.{{.opts.Name.Camelize.Pluralize}}.items} onDelete={handleDelete} />
     </div>
   );
 };
 
-const GET_{{.opts.Name.Pluralize.ToUpper}} =  gql`
-  query {{.opts.Name.Pascalize.Pluralize}} {
-    {{.opts.Name.Dasherize.Pluralize}} {
+const GET_{{.opts.Name.Pluralize.Underscore.ToUpper}} =  gql`
+  query {{.opts.Name.Pluralize}} {
+    {{.opts.Name.Camelize.Pluralize}} {
       items {
+        id
         {{- range .opts.Attrs }}
           {{ .Name.Camelize }}
         {{- end }}
+        createdAt
+        updatedAt
       }
     }
   }

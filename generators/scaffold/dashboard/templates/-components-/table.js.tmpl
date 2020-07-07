@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, Table } from 'components';
 
-const {{.opts.Name.Pascalize}}Table = ({ data, onDelete }) => {
+const {{.opts.Name}}Table = ({ data, onDelete }) => {
   function handleClick(e, tool) {
     e.preventDefault();
 
@@ -20,15 +20,15 @@ const {{.opts.Name.Pascalize}}Table = ({ data, onDelete }) => {
         { key: '{{ .Name.Camelize }}', title: '{{ .Name.Pascalize }}' },
         {{- end }}
       {{- end }}
-        { key: 'created_at', title: 'CreatedAt' },
-        { key: 'updated_at', title: 'UpdatedAt' },
+        { key: 'createdAt', title: 'CreatedAt' },
+        { key: 'updatedAt', title: 'UpdatedAt' },
         {
           key: 'action',
           title: 'Action',
           render: (item) => (
             <div>
-              <Link to={`/{{.opts.Name.Dasherize.Pluralize}}/${item.id}`}>View</Link>
-              <Link to={`/{{.opts.Name.Dasherize.Pluralize}}/${item.id}/edit`}>Edit</Link>
+              <Link to={`/{{.opts.Name.Pluralize.ToLower}}/${item.id}`}>View</Link>
+              <Link to={`/{{.opts.Name.Pluralize.ToLower}}/${item.id}/edit`}>Edit</Link>
               <a href="#" onClick={(e) => handleClick(e, item)}>
                 Delete
               </a>
@@ -40,4 +40,4 @@ const {{.opts.Name.Pascalize}}Table = ({ data, onDelete }) => {
   );
 };
 
-export default {{.opts.Name.Pascalize}}Table;
+export default {{.opts.Name}}Table;

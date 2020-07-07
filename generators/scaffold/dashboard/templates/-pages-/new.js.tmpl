@@ -2,16 +2,16 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
-import { {{.opts.Name.Pascalize}}Form } from 'components/src/{{.opts.Name.Dasherize.Pluralize}}';
+import { {{.opts.Name}}Form } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
 
-const {{.opts.Name.Pascalize}}NewPage = (props) => {
+const {{.opts.Name}}NewPage = (props) => {
   const navigate = useNavigate();
-  const [create{{.opts.Name.Pascalize}}, { data }] = useMutation(CREATE_{{.opts.Name.ToUpper}});
+  const [create{{.opts.Name}}, { data }] = useMutation(CREATE_{{.opts.Name.ToUpper}});
 
   function handleSubmit(values, { setSubmitting }) {
-    create{{.opts.Name.Pascalize}}({variables: { input: values }}).then((resp) => {
+    create{{.opts.Name}}({variables: { input: values }}).then((resp) => {
       setSubmitting(false)
-      navigate(`/{{.opts.Name.Dasherize.Pluralize}}/${resp.data.create{{.opts.Name.Pascalize}}.id}`)
+      navigate(`/{{.opts.Name.Pluralize.ToLower}}/${resp.data.create{{.opts.Name}}.id}`)
     }).catch(err => {
       console.warn(err);
       setSubmitting(false);
@@ -21,8 +21,8 @@ const {{.opts.Name.Pascalize}}NewPage = (props) => {
 
   return (
     <div>
-      <h2>New {{.opts.Name.Pascalize}}</h2>
-      <{{.opts.Name.Pascalize}}Form
+      <h2>New {{.opts.Name}}</h2>
+      <{{.opts.Name}}Form
         initialValues={{"{{"}}
         {{"}}"}}
         onSubmit={handleSubmit}
@@ -32,11 +32,11 @@ const {{.opts.Name.Pascalize}}NewPage = (props) => {
 };
 
 const CREATE_{{.opts.Name.ToUpper}} = gql`
-  mutation Create{{.opts.Name.Pascalize}}($input: Create{{.opts.Name.Pascalize}}Input!) {
-    create{{.opts.Name.Pascalize}}(input: $input) {
+  mutation Create{{.opts.Name}}($input: Create{{.opts.Name}}Input!) {
+    create{{.opts.Name}}(input: $input) {
       id
     }
   }
 `;
 
-export default {{.opts.Name.Pascalize}}NewPage;
+export default {{.opts.Name}}NewPage;

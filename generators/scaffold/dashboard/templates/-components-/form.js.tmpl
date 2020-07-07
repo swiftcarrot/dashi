@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, FormGroup, FormSubmit } from 'components';
 
-const {{.opts.Name.Pascalize}}Form = (props) => {
+const {{.opts.Name}}Form = (props) => {
   return (
     <Form {...props}>
       {{- range .opts.Attrs -}}
@@ -14,4 +14,4 @@ const {{.opts.Name.Pascalize}}Form = (props) => {
   );
 };
 
-export default {{.opts.Name.Pascalize}}Form;
+export default {{.opts.Name}}Form;
