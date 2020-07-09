@@ -9,7 +9,7 @@ const {{.opts.Name}}NewPage = (props) => {
   const [create{{.opts.Name}}, { data }] = useMutation(CREATE_{{.opts.Name.ToUpper}});
 
   function handleSubmit(values, { setSubmitting }) {
-    create{{.opts.Name}}({variables: { input: values }}).then((resp) => {
+    return create{{.opts.Name}}({variables: { input: values }}).then((resp) => {
       setSubmitting(false)
       navigate(`/{{.opts.Name.Pluralize.ToLower}}/${resp.data.create{{.opts.Name}}.id}`)
     }).catch(err => {

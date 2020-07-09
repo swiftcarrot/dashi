@@ -1,18 +1,18 @@
 import React from 'react';
-import { Link } from 'components';
-import { useParams, useNavigate } from 'react-router-dom';
+import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import { Loading, Failure, PageHeader } from 'components/src'
 import { {{.opts.Name}}Form } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
 
 const {{.opts.Name}}EditPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { loading, error, data } = useQuery(GET_{{.opts.Name.Underscore.ToUpper}}, { variables: { id } });
+  const { loading, error, data, refetch } = useQuery(GET_{{.opts.Name.Underscore.ToUpper}}, { variables: { id } });
   const [update{{.opts.Name}}] = useMutation(UPDATE_{{.opts.Name.Underscore.ToUpper}});
 
   function handleSubmit(values, { setSubmitting }) {
-    update{{.opts.Name}}({variables: { input: values }})
+    return update{{.opts.Name}}({variables: { input: values }})
       .then((data) => {
         setSubmitting(false);
         navigate(`/{{.opts.Name.Pluralize.ToLower}}/${id}`)
@@ -23,13 +23,12 @@ const {{.opts.Name}}EditPage = () => {
       });
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <Loading />;
+  if (error) return <Failure error={error} refetch={refetch} />;
 
   return (
     <div>
-      <h2>Edit {{.opts.Name}}</h2>
-      <Link to="/{{.opts.Name.Pluralize.ToLower}}">Back</Link>
+      <PageHeader title="Edit {{.opts.Name}}" extra={<Link to="/{{.opts.Name.Pluralize.ToLower}}">Back</Link>} />
       <{{.opts.Name}}Form
         initialValues={data.{{.opts.Name.Camelize}}}
         onSubmit={handleSubmit}

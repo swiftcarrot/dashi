@@ -1,12 +1,12 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 import { Sidebar } from 'components';
 
 const Layout = ({ children }) => {
   return (
-    <Fragment>
+    <div className="app">
       <Sidebar />
       <div className="content">{children}</div>
-    </Fragment>
+    </div>
   );
 };
 

@@ -1,7 +1,8 @@
 import React from 'react';
-import { Link } from 'components';
+import { Link } from 'react-router-dom';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
+import { Loading, Failure, PageHeader } from 'components/src'
 import { {{.opts.Name}}Table } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
 
 const {{.opts.Name}}HomePage = () => {
@@ -9,7 +10,7 @@ const {{.opts.Name}}HomePage = () => {
   const [delete{{.opts.Name}}] = useMutation(DELETE_{{.opts.Name.ToUpper}});
 
   function handleDelete(item) {
-    delete{{.opts.Name}}({variables: { input: item.id }}).then(() => {
+    return delete{{.opts.Name}}({variables: { input: item.id }}).then(() => {
       refetch();
     }).catch(err => {
       console.warn(err);
@@ -17,13 +18,12 @@ const {{.opts.Name}}HomePage = () => {
     });
   }
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error :(</p>;
+  if (loading) return <Loading />;
+  if (error) return <Failure error={error} refetch={refetch} />;
 
   return (
     <div>
-      <h2>{{.opts.Name.Pluralize}}</h2>
-      <Link to="/{{.opts.Name.Pluralize.ToLower}}/new">New {{.opts.Name}}</Link>
+      <PageHeader title="{{.opts.Name.Pluralize}}" extra={<Link to="/{{.opts.Name.Pluralize.ToLower}}/new">New {{.opts.Name}}</Link>} />
       <{{.opts.Name}}Table data={data.{{.opts.Name.Camelize.Pluralize}}.items} onDelete={handleDelete} />
     </div>
   );
