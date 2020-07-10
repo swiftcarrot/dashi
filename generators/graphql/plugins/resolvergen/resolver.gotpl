@@ -144,9 +144,9 @@
 		return nil, err
 	}
 
-	return &models.{{$resultType}}{
+	return &generated.{{$resultType}}{
 			Items: *{{$entity}},
-			Pagination: &models.Pagination{
+			Pagination: &generated.Pagination{
 				Total:            total,
 				CurrentPage:      *page,
 				CurrentPageCount: len(*{{$entity}}),

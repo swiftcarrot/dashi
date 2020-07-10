@@ -78,7 +78,6 @@ func NewServer() (*Server, error) {
   }
   graphql := handler.NewDefaultServer(generated.NewExecutableSchema(graphqlConfig))
 
-
   router.Handle("/graphql", graphql)
 
   server.handler = router
