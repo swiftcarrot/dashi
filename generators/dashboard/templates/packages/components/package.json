@@ -4,6 +4,6 @@
   "main": "./src/index.js",
   "private": true,
   "dependencies": {
-    "@swiftcarrot/react-form": "^1.0.1"
+    "@swiftcarrot/react-form": "^1.0.3"
   }
 }
