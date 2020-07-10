@@ -1,4 +1,5 @@
 type {{ .opts.Name.String }} {
+	id: ID!
 	{{- range .opts.Attrs }}
 		{{ .Name.String | camelize  }}: {{ .GraphqlType }}
 	{{- end }}
