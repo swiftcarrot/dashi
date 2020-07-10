@@ -2,16 +2,16 @@ schema:
   - schema/*.graphql
 
 exec:
-  filename: graphql/generated.go
-  package: graphql
+  filename: generated/graphql.go
+  package: generated
 
 model:
-  filename: models/generated.go
-  package: models
+  filename: generated/models.go
+  package: generated
 
 resolver:
   layout: follow-schema
-  dir: resolvers
+  dir: api/resolvers
   package: resolvers
 
 autobind:

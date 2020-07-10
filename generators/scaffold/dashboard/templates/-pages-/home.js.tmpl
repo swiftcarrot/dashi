@@ -10,7 +10,7 @@ const {{.opts.Name}}HomePage = () => {
   const [delete{{.opts.Name}}] = useMutation(DELETE_{{.opts.Name.ToUpper}});
 
   function handleDelete(item) {
-    return delete{{.opts.Name}}({variables: { input: item.id }}).then(() => {
+    return delete{{.opts.Name}}({variables: { input: { id: item.id } }}).then(() => {
       refetch();
     }).catch(err => {
       console.warn(err);
@@ -45,7 +45,7 @@ const GET_{{.opts.Name.Pluralize.Underscore.ToUpper}} =  gql`
 `
 
 const DELETE_{{.opts.Name.ToUpper}} = gql`
-  mutation Delete{{.opts.Name.Pascalize}} {
+  mutation Delete{{.opts.Name.Pascalize}}($input: Delete{{.opts.Name}}Input!) {
     delete{{.opts.Name.Pascalize}}(input: $input) {
       id
     }

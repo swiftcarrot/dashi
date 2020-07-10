@@ -2,18 +2,12 @@ package database
 
 import (
 	"github.com/spf13/cobra"
- 	"{{ .opts.Package }}/dashi"
 )
 
 var CreateCmd = &cobra.Command{
 	Use:   "create",
 	Short: "Database create",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		s, err := dashi.NewServer()
-		if err != nil {
-			return err
-		}
-
-		return s.DatabaseCreate()
+		return DatabaseCreate()
 	},
 }

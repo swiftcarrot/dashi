@@ -1,0 +1,74 @@
+package database
+
+import (
+  "github.com/gobuffalo/packr/v2"
+  "github.com/gobuffalo/pop"
+  "{{ .opts.Package }}/api"
+)
+
+func Connect() (*pop.Connection, error) {
+  config, err := api.GetConfig()
+  if err != nil {
+    return nil, err
+  }
+
+  conn, err := pop.NewConnection(config.Database)
+  if err != nil {
+    return nil, err
+  }
+
+  err = conn.Open()
+  if err != nil {
+    return nil, err
+  }
+
+  return conn, nil
+}
+
+func DatabaseCreate() error {
+  conn, err := Connect()
+  defer conn.Close()
+  if err != nil {
+    return err
+  }
+
+  return pop.CreateDB(conn)
+}
+
+func DatabaseDrop() error {
+  conn, err := Connect()
+  defer conn.Close()
+  if err != nil {
+    return err
+  }
+
+  return pop.DropDB(conn)
+}
+
+func DatabaseMigrate() error {
+  conn, err := Connect()
+  defer conn.Close()
+  if err != nil {
+    return err
+  }
+
+  mig, err := pop.NewMigrationBox(packr.New("Migrations", "../../migrations"), conn)
+  if err != nil {
+    return err
+  }
+  return mig.Up()
+}
+
+func DatabaseRollback() error {
+  conn, err := Connect()
+  defer conn.Close()
+  if err != nil {
+    return err
+  }
+
+  mig, err := pop.NewMigrationBox(packr.New("Migrations", "../../migrations"), conn)
+  if err != nil {
+    return err
+  }
+  return mig.Down(1)
+}

@@ -1,0 +1,25 @@
+package api
+
+import (
+	"github.com/gobuffalo/pop"
+	"github.com/spf13/viper"
+)
+
+type ServerConfig struct {
+	Port int `mapstructure:"port"`
+}
+
+type Config struct {
+	Server   *ServerConfig          `mapstructure:"server"`
+	Database *pop.ConnectionDetails `mapstructure:"database"`
+}
+
+func GetConfig() (*Config, error) {
+	config := Config{}
+	err := viper.Unmarshal(&config)
+	if err != nil {
+		return nil, err
+	}
+
+	return &config, nil
+}

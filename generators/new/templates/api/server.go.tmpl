@@ -1,17 +1,18 @@
-package dashi
+package api
 
 import (
+  "context"
   "log"
   "net/http"
   "strconv"
 
+  "github.com/99designs/gqlgen/graphql"
   "github.com/99designs/gqlgen/graphql/handler"
   "github.com/go-chi/chi"
   "github.com/go-chi/cors"
   "github.com/gobuffalo/pop"
-  "github.com/spf13/viper"
-  "{{ .opts.Package }}/graphql"
-  "{{ .opts.Package }}/resolvers"
+  "{{ .opts.Package }}/api/resolvers"
+  "{{ .opts.Package }}/generated"
 )
 
 type Server struct {
@@ -33,16 +34,6 @@ func (server *Server) ListenAndServe() error {
   return nil
 }
 
-func GetConfig() (*Config, error) {
-  config := Config{}
-  err := viper.Unmarshal(&config)
-  if err != nil {
-    return nil, err
-  }
-
-  return &config, nil
-}
-
 func NewServer() (*Server, error) {
   config, err := GetConfig()
   if err != nil {
@@ -55,10 +46,17 @@ func NewServer() (*Server, error) {
     config: config,
   }
 
-  conn, err := server.GetDatabase()
+  conn, err := pop.NewConnection(config.Database)
   if err != nil {
     return nil, err
   }
+
+  err = conn.Open()
+  if err != nil {
+    return nil, err
+  }
+
+  server.db = conn
 
   router := chi.NewRouter()
 
@@ -70,11 +68,16 @@ func NewServer() (*Server, error) {
 
   router.Use(cors.Handler)
 
-  graphql := handler.NewDefaultServer(graphql.NewExecutableSchema(graphql.Config{
+  graphqlConfig := generated.Config{
     Resolvers: &resolvers.Resolver{
       Conn: conn,
     },
-  }))
+  }
+  graphqlConfig.Directives.Generated = func(ctx context.Context, obj interface{}, next graphql.Resolver, typeArg string) (interface{}, error) {
+    return next(ctx)
+  }
+  graphql := handler.NewDefaultServer(generated.NewExecutableSchema(graphqlConfig))
+
 
   router.Handle("/graphql", graphql)
 

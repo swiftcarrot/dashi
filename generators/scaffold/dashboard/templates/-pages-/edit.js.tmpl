@@ -12,7 +12,7 @@ const {{.opts.Name}}EditPage = () => {
   const [update{{.opts.Name}}] = useMutation(UPDATE_{{.opts.Name.Underscore.ToUpper}});
 
   function handleSubmit(values, { setSubmitting }) {
-    return update{{.opts.Name}}({variables: { input: values }})
+    return update{{.opts.Name}}({variables: { input: { ...values, id } }})
       .then((data) => {
         setSubmitting(false);
         navigate(`/{{.opts.Name.Pluralize.ToLower}}/${id}`)
