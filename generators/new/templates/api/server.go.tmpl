@@ -9,6 +9,7 @@ import (
   "github.com/99designs/gqlgen/graphql"
   "github.com/99designs/gqlgen/graphql/handler"
   "github.com/go-chi/chi"
+  "github.com/go-chi/chi/middleware"
   "github.com/go-chi/cors"
   "github.com/gobuffalo/pop"
   "{{ .opts.Package }}/api/resolvers"
@@ -59,6 +60,10 @@ func NewServer() (*Server, error) {
   server.db = conn
 
   router := chi.NewRouter()
+  router.Use(middleware.RequestID)
+  router.Use(middleware.RealIP)
+  router.Use(middleware.Logger)
+  router.Use(middleware.Recoverer)
 
   cors := cors.New(cors.Options{
     AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},

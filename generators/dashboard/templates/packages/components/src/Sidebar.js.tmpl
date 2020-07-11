@@ -1,15 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 const Sidebar = () => {
   return (
     <div className="sidebar">
-      <h1 className="logo">{{ .opts.Name }}</h1>
-
-      <Link className="sidebar-item" to="/">
+      <div className="sidebar-logo">{{ .opts.Name }}</div>
+      <NavLink className="sidebar-item" to="/">
         Home
       </Link>
-      <Link className="sidebar-item" to="/graphiql">
+      <NavLink className="sidebar-item" to="/graphiql">
         GraphiQL
       </Link>
     </div>
