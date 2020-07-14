@@ -1,10 +1,14 @@
+{{ $idType := "ID"}}
+{{- range .opts.Attrs -}}
+    {{- if eq .Name.Camelize.String "ID" }}
+        {{ $idType = .GraphqlType  }}
+    {{- end }}
+{{- end }}
+
 type {{ .opts.Name.String }} {
-	id: ID!
 	{{- range .opts.Attrs }}
 		{{ .Name.String | camelize  }}: {{ .GraphqlType }}
 	{{- end }}
-	createdAt: Time!
-	updatedAt: Time!
 }
 
 type {{.opts.Name.String}}Items {
@@ -21,18 +25,17 @@ input Create{{ .opts.Name.String }}Input {
 }
 
 input Update{{ .opts.Name.String }}Input {
-	id : ID!
 	{{- range .opts.Attrs -}}
 		{{ .Name.Camelize }}: {{ .GraphqlType }}
 	{{- end }}
 }
 
 input Delete{{ .opts.Name.String }}Input {
-	id: ID!
+	ID: {{ $idType }}
 }
 
 extend type Query {
-	{{ .opts.Name.Singularize.Camelize }}(id: ID!): {{ .opts.Name }} @generated(type: "get")
+	{{ .opts.Name.Singularize.Camelize }}(id: {{ $idType }}): {{ .opts.Name }} @generated(type: "get")
 	{{ .opts.Name.Pluralize.Camelize }}(page: Int, perPage: Int): {{.opts.Name.String}}Items @generated(type: "list")
 }
 

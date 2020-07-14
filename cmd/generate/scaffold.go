@@ -2,6 +2,7 @@ package generate
 
 import (
 	"context"
+	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
 	"os/exec"
 
 	"github.com/gobuffalo/flect"
@@ -14,7 +15,6 @@ import (
 	"github.com/swiftcarrot/dashi/generators/model"
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
-	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
 )
 
 func getOptions(args []string) (*scaffold.Options, error) {
@@ -87,12 +87,6 @@ var ScaffoldCmd = &cobra.Command{
 			return err
 		}
 
-		schemaGen, err := schema.New(opts)
-		if err != nil {
-			return err
-		}
-		gg.Add(schemaGen)
-
 		mops := &model.Options{
 			Name:                   opts.Name,
 			Attrs:                  opts.Attrs,
@@ -112,6 +106,15 @@ var ScaffoldCmd = &cobra.Command{
 			return err
 		}
 		gg.Add(modelGen)
+
+		schemaGen, err := schema.New(&scaffold.Options{
+			Name:  opts.Name,
+			Attrs: mops.Attrs,
+		})
+		if err != nil {
+			return err
+		}
+		gg.Add(schemaGen)
 
 		// TODO add mysql support, remove hardcode postgres
 		// migration attrs is from model opts which is validated and includes timestamp and default id column
