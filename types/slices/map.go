@@ -4,6 +4,9 @@ import (
 	"database/sql/driver"
 	"encoding/json"
 	"fmt"
+	"io"
+
+	"github.com/99designs/gqlgen/graphql"
 )
 
 // Map is a map[string]interface.
@@ -65,4 +68,21 @@ func (m Map) UnmarshalText(text []byte) error {
 		return err
 	}
 	return nil
+}
+
+func MarshalMap(val map[string]interface{}) graphql.Marshaler {
+	return graphql.WriterFunc(func(w io.Writer) {
+		err := json.NewEncoder(w).Encode(val)
+		if err != nil {
+			panic(err)
+		}
+	})
+}
+
+func UnmarshalMap(v interface{}) (map[string]interface{}, error) {
+	if m, ok := v.(map[string]interface{}); ok {
+		return m, nil
+	}
+
+	return nil, fmt.Errorf("%T is not a map", v)
 }

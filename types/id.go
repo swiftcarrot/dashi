@@ -5,10 +5,12 @@ import (
 	"fmt"
 	"io"
 	"strconv"
+
+	"github.com/99designs/gqlgen/graphql"
 )
 
-func MarshalID(s string) Marshaler {
-	return WriterFunc(func(w io.Writer) {
+func MarshalID(s string) graphql.Marshaler {
+	return graphql.WriterFunc(func(w io.Writer) {
 		io.WriteString(w, strconv.Quote(s))
 	})
 }
