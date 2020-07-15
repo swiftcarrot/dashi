@@ -78,7 +78,6 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 		PackageName: cfg.Model.Package,
 	}
 
-	hasEntity := false
 	for _, schemaType := range cfg.Schema.Types {
 		if cfg.Models.UserDefined(schemaType.Name) {
 			continue
@@ -106,16 +105,14 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 			for _, field := range schemaType.Fields {
 				var typ types.Type
 				fieldDef := cfg.Schema.Types[field.Type.Name()]
+
 				if cfg.Models.UserDefined(field.Type.Name()) {
 					var err error
 					typ, err = binder.FindTypeFromName(cfg.Models[field.Type.Name()].Model[0])
-					if !field.Type.NonNull && field.Type.NamedType != "" {
-						field.Type.NonNull = true
-						typ, err = binder.FindType("github.com/swiftcarrot/dashi/types", "Nulls"+field.Type.Name())
-					}
 					if err != nil {
 						return err
 					}
+
 				} else {
 					switch fieldDef.Kind {
 					case ast.Scalar:
@@ -159,15 +156,13 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 				if nameOveride := cfg.Models[schemaType.Name].Fields[field.Name].FieldName; nameOveride != "" {
 					name = nameOveride
 				}
+
 				typ = binder.CopyModifiersFromAst(field.Type, typ)
 
 				if isStruct(typ) && (fieldDef.Kind == ast.Object || fieldDef.Kind == ast.InputObject) {
 					typ = types.NewPointer(typ)
 				}
 
-				if isSlice(typ) && (fieldDef.Kind == ast.Scalar) {
-					typ, _ = binder.FindType("github.com/gobuffalo/pop/v5/slices", field.Type.Name())
-				}
 				it.Fields = append(it.Fields, &Field{
 					Name:        name,
 					Type:        typ,
@@ -194,13 +189,6 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 		case ast.Scalar:
 			b.Scalars = append(b.Scalars, schemaType.Name)
 		}
-	}
-	if hasEntity {
-		it := &Interface{
-			Description: "_Entity represents all types with @key",
-			Name:        "_Entity",
-		}
-		b.Interfaces = append(b.Interfaces, it)
 	}
 	sort.Slice(b.Enums, func(i, j int) bool { return b.Enums[i].Name < b.Enums[j].Name })
 	sort.Slice(b.Models, func(i, j int) bool { return b.Models[i].Name < b.Models[j].Name })
@@ -238,10 +226,5 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 
 func isStruct(t types.Type) bool {
 	_, is := t.Underlying().(*types.Struct)
-	return is
-}
-
-func isSlice(t types.Type) bool {
-	_, is := t.Underlying().(*types.Slice)
 	return is
 }

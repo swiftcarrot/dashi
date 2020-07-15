@@ -2,10 +2,8 @@ package generate
 
 import (
 	"context"
-	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
 	"os/exec"
 
-	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
@@ -15,6 +13,8 @@ import (
 	"github.com/swiftcarrot/dashi/generators/model"
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
+	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
+	"github.com/swiftcarrot/flect"
 )
 
 func getOptions(args []string) (*scaffold.Options, error) {

@@ -20,36 +20,24 @@ autobind:
 models:
   ID:
     model:
-      - github.com/99designs/gqlgen/graphql.ID
+      - github.com/swiftcarrot/dashi/types.ID
       - github.com/swiftcarrot/dashi/types.UUID
-      - github.com/99designs/gqlgen/graphql.Int
-      - github.com/99designs/gqlgen/graphql.Int64
-      - github.com/99designs/gqlgen/graphql.Int32
   Int:
     model:
       - github.com/99designs/gqlgen/graphql.Int
-      - github.com/99designs/gqlgen/graphql.Int64
-      - github.com/99designs/gqlgen/graphql.Int32
-      - github.com/swiftcarrot/dashi/types.NullsInt32
-      - github.com/swiftcarrot/dashi/types.NullsInt64
-      - github.com/swiftcarrot/dashi/types.NullsInt
-  Time:
-    model:
-      - github.com/99designs/gqlgen/graphql.Time
-      - github.com/swiftcarrot/dashi/types.NullsTime
-  Int64:
-    model:
-      - github.com/99designs/gqlgen/graphql.Int64
-      - github.com/swiftcarrot/dashi/types.NullsInt64
-  Float:
-    model:
-      - github.com/99designs/gqlgen/graphql.Float
-      - github.com/swiftcarrot/dashi/types.NullsFloat
-  String:
-    model:
-      - github.com/swiftcarrot/dashi/types.String
-      - github.com/swiftcarrot/dashi/types.NullsString
   UUID:
     model:
       - github.com/swiftcarrot/dashi/types.UUID
-      - github.com/swiftcarrot/dashi/types.NullsUUID
+  String:
+    model:
+      - github.com/swiftcarrot/dashi/types.String
+  Float:
+    model:
+      - github.com/99designs/gqlgen/graphql.Float
+  Time:
+    model:
+      - github.com/99designs/gqlgen/graphql.Time
+  Map:
+    model:
+      - github.com/99designs/gqlgen/graphql.Map
+      - github.com/swiftcarrot/dashi/types/slices.Map

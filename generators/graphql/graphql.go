@@ -16,17 +16,15 @@ func New() (*genny.Generator, error) {
 	g.RunFn(func(r *genny.Runner) error {
 		cfg, err := config.LoadConfigFromDefaultLocations()
 		if err != nil {
-			fmt.Fprintln(os.Stderr, "failed to load config", err.Error())
+			fmt.Fprintln(os.Stderr, "Failed to load config", err.Error())
 			os.Exit(2)
 		}
-		err = api.Generate(cfg, api.NoPlugins(),
+
+		return api.Generate(cfg,
+			api.NoPlugins(),
 			api.AddPlugin(modelgen.New()),
-			api.AddPlugin(resolvergen.New()))
-		if err != nil {
-			fmt.Fprintln(os.Stderr, err.Error())
-			os.Exit(3)
-		}
-		return nil
+			api.AddPlugin(resolvergen.New()),
+		)
 	})
 
 	return g, nil

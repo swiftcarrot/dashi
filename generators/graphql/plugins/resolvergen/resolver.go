@@ -4,13 +4,12 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"text/template"
 
 	"github.com/99designs/gqlgen/codegen"
 	"github.com/99designs/gqlgen/codegen/config"
 	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/99designs/gqlgen/plugin"
-	"github.com/gobuffalo/flect"
+	"github.com/gobuffalo/packr/v2"
 	"github.com/pkg/errors"
 	"github.com/swiftcarrot/dashi/generators/graphql/rewrite"
 )
@@ -71,22 +70,20 @@ func (m *Plugin) generateSingleFile(data *codegen.Data) error {
 		HasRoot:      true,
 	}
 
+	box := packr.New("dashi:graphql:templates", "./templates")
+	resolverTemplate, err := box.FindString("resolver.tmpl")
+	if err != nil {
+		return err
+	}
+
 	return templates.Render(templates.Options{
 		PackageName: data.Config.Resolver.Package,
 		FileNotice:  `// THIS CODE IS A STARTING POINT ONLY. IT WILL NOT BE UPDATED WITH SCHEMA CHANGES.`,
 		Filename:    data.Config.Resolver.Filename,
 		Data:        resolverBuild,
 		Packages:    data.Config.Packages,
+		Template:    resolverTemplate,
 	})
-}
-
-func isCRUDResolver(field codegen.Field, kind string) bool {
-	for _, direct := range field.Directives {
-		if direct.Name == "generated" && direct.Args[0].Value == kind {
-			return true
-		}
-	}
-	return false
 }
 
 func (m *Plugin) generatePerSchema(data *codegen.Data) error {
@@ -115,9 +112,19 @@ func (m *Plugin) generatePerSchema(data *codegen.Data) error {
 
 			structName := templates.LcFirst(o.Name) + templates.UcFirst(data.Config.Resolver.Type)
 			implementation := strings.TrimSpace(rewriter.GetMethodBody(structName, f.GoFieldName))
-			//if implementation == "" {
-			//	implementation = `panic(fmt.Errorf("not implemented"))`
-			//}
+			if implementation == "" {
+				code, err := renderCRUD(f)
+				if err != nil {
+					return err
+				}
+
+				if code != "" {
+					implementation = code
+				} else {
+					implementation = `panic(fmt.Errorf("not implemented"))`
+				}
+			}
+
 			resolver := Resolver{o, f, implementation}
 			fn := gqlToResolverName(data.Config.Resolver.Dir(), f.Position.Src.Name)
 			if files[fn] == nil {
@@ -140,25 +147,25 @@ func (m *Plugin) generatePerSchema(data *codegen.Data) error {
 			ResolverType: data.Config.Resolver.Type,
 		}
 
-		//resolverBuild.Resolvers[0].Field.Args[0].Name
-		err := templates.Render(templates.Options{
-			PackageName: data.Config.Resolver.Package,
-			FileNotice: `
-				// This file will be automatically regenerated based on the schema, any resolver implementations
-				// will be copied through when generating and any unknown code will be moved to the end.`,
-			Funcs: template.FuncMap{
-				"isCRUDResolver":   isCRUDResolver,
-				"entityFromResult": func(s string) string { return strings.ReplaceAll(s, "Items", "") },
-				"pluralize":        func(s string) string { return flect.Pluralize(s) },
-			},
-			Filename: filename,
-			Data:     resolverBuild,
-			Packages: data.Config.Packages,
-		})
+		box := packr.New("dashi:graphql:templates", "./templates")
+		resolverTemplate, err := box.FindString("resolver.tmpl")
 		if err != nil {
 			return err
 		}
 
+		err = templates.Render(templates.Options{
+			PackageName: data.Config.Resolver.Package,
+			FileNotice: `
+				// This file will be automatically regenerated based on the schema, any resolver implementations
+				// will be copied through when generating and any unknown code will be moved to the end.`,
+			Filename: filename,
+			Data:     resolverBuild,
+			Packages: data.Config.Packages,
+			Template: resolverTemplate,
+		})
+		if err != nil {
+			return err
+		}
 	}
 
 	if _, err := os.Stat(data.Config.Resolver.Filename); os.IsNotExist(errors.Cause(err)) {
@@ -217,5 +224,5 @@ func gqlToResolverName(base string, gqlname string) string {
 	gqlname = filepath.Base(gqlname)
 	ext := filepath.Ext(gqlname)
 
-	return filepath.Join(base, strings.TrimSuffix(gqlname, ext)+".resolvers.go")
+	return filepath.Join(base, strings.TrimSuffix(gqlname, ext)+".go")
 }

@@ -1,6 +1,6 @@
 package packages
 
-import "github.com/gobuffalo/flect"
+import "github.com/swiftcarrot/flect"
 
 // Options for generating packages
 type Options struct {

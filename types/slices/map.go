@@ -70,7 +70,7 @@ func (m Map) UnmarshalText(text []byte) error {
 	return nil
 }
 
-func MarshalMap(val map[string]interface{}) graphql.Marshaler {
+func MarshalMap(val Map) graphql.Marshaler {
 	return graphql.WriterFunc(func(w io.Writer) {
 		err := json.NewEncoder(w).Encode(val)
 		if err != nil {
@@ -79,8 +79,8 @@ func MarshalMap(val map[string]interface{}) graphql.Marshaler {
 	})
 }
 
-func UnmarshalMap(v interface{}) (map[string]interface{}, error) {
-	if m, ok := v.(map[string]interface{}); ok {
+func UnmarshalMap(v interface{}) (Map, error) {
+	if m, ok := v.(Map); ok {
 		return m, nil
 	}
 

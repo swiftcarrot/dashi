@@ -3,9 +3,9 @@ package attrs
 import (
 	"strings"
 
-	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/nulls"
 	"github.com/swiftcarrot/dashi/generators/attrs/database"
+	"github.com/swiftcarrot/flect"
 )
 
 type Attr struct {

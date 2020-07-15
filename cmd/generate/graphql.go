@@ -15,7 +15,6 @@ var GraphqlCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		run := genny.WetRunner(context.Background())
 		run.Logger = logger.New(logger.DebugLevel)
-		run.Logger.Infof("update server from schema")
 
 		graphqlGen, err := graphql.New()
 		if err != nil {

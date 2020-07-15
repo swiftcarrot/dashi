@@ -1,13 +1,6 @@
-{{ $idType := "ID"}}
-{{- range .opts.Attrs -}}
-    {{- if eq .Name.Camelize.String "ID" }}
-        {{ $idType = .GraphqlType  }}
-    {{- end }}
-{{- end }}
-
 type {{ .opts.Name.String }} {
 	{{- range .opts.Attrs }}
-		{{ .Name.String | camelize  }}: {{ .GraphqlType }}
+		{{ .Name.Camelize  }}: {{ .GraphqlType }}
 	{{- end }}
 }
 
@@ -18,7 +11,7 @@ type {{.opts.Name.String}}Items {
 
 input Create{{ .opts.Name.String }}Input {
 	{{- range .opts.Attrs -}}
-		{{- if ne .Name.Camelize.String "ID" }}
+		{{- if and (ne .Name.String "id") (ne .Name.String "created_at") ((ne .Name.String "updated_at")) }}
 			{{ .Name.Camelize }}: {{ .GraphqlType }}
 		{{- end }}
 	{{- end }}
@@ -26,16 +19,18 @@ input Create{{ .opts.Name.String }}Input {
 
 input Update{{ .opts.Name.String }}Input {
 	{{- range .opts.Attrs -}}
-		{{ .Name.Camelize }}: {{ .GraphqlType }}
+		{{- if and (ne .Name.String "created_at") ((ne .Name.String "updated_at")) }}
+			{{ .Name.Camelize }}: {{ .GraphqlType }}
+		{{- end }}
 	{{- end }}
 }
 
 input Delete{{ .opts.Name.String }}Input {
-	ID: {{ $idType }}
+	id: ID!
 }
 
 extend type Query {
-	{{ .opts.Name.Singularize.Camelize }}(id: {{ $idType }}): {{ .opts.Name }} @generated(type: "get")
+	{{ .opts.Name.Singularize.Camelize }}(id: ID!): {{ .opts.Name }} @generated(type: "get")
 	{{ .opts.Name.Pluralize.Camelize }}(page: Int, perPage: Int): {{.opts.Name.String}}Items @generated(type: "list")
 }
 

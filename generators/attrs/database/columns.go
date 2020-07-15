@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/nulls"
+	"github.com/swiftcarrot/flect"
 )
 
 //TODO implement default and unique
