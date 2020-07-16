@@ -7,6 +7,7 @@ import (
 	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
+	"github.com/swiftcarrot/dashi/flect"
 	"github.com/swiftcarrot/dashi/generators/attrs"
 	"github.com/swiftcarrot/dashi/generators/graphql"
 	"github.com/swiftcarrot/dashi/generators/migration"
@@ -14,7 +15,6 @@ import (
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
 	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
-	"github.com/swiftcarrot/flect"
 )
 
 func getOptions(args []string) (*scaffold.Options, error) {

@@ -1,6 +1,6 @@
 package webpacker
 
-import "github.com/swiftcarrot/flect"
+import "github.com/swiftcarrot/dashi/flect"
 
 // Options for generating webpacker
 type Options struct {

@@ -6,8 +6,8 @@ import (
 
 	"github.com/gobuffalo/genny/v2"
 	"github.com/spf13/cobra"
+	"github.com/swiftcarrot/dashi/flect"
 	"github.com/swiftcarrot/dashi/generators/migration"
-	"github.com/swiftcarrot/flect"
 )
 
 func GetTime() string {

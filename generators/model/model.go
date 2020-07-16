@@ -6,8 +6,8 @@ import (
 	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/genny/v2/gogen"
 	"github.com/gobuffalo/packr/v2"
-	"github.com/swiftcarrot/flect"
-	"github.com/swiftcarrot/flect/name"
+	"github.com/swiftcarrot/dashi/flect"
+	"github.com/swiftcarrot/dashi/flect/name"
 )
 
 func New(mops *Options) (*genny.Generator, error) {

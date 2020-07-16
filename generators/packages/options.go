@@ -1,6 +1,6 @@
 package packages
 
-import "github.com/swiftcarrot/flect"
+import "github.com/swiftcarrot/dashi/flect"
 
 // Options for generating packages
 type Options struct {

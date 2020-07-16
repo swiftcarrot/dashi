@@ -1,6 +1,6 @@
 package dashboard
 
-import "github.com/swiftcarrot/flect"
+import "github.com/swiftcarrot/dashi/flect"
 
 // Options for generating dashboard
 type Options struct {

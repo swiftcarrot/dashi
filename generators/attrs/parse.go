@@ -4,7 +4,7 @@ import (
 	"errors"
 	"strings"
 
-	"github.com/swiftcarrot/flect"
+	"github.com/swiftcarrot/dashi/flect"
 )
 
 // ErrRepeatedAttr is returned when parsing an array with repeated names

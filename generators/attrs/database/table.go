@@ -1,6 +1,6 @@
 package database
 
-import "github.com/swiftcarrot/flect"
+import "github.com/swiftcarrot/dashi/flect"
 
 type Table struct {
 	Columns []Column
