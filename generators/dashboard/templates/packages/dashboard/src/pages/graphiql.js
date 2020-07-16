@@ -1,6 +1,7 @@
+import 'graphiql/graphiql.min.css';
 import React from 'react';
 import GraphiQL from 'graphiql';
-import 'graphiql/graphiql.min.css';
+import PageHeader from 'components/src/PageHeader';
 
 function graphQLFetcher(graphQLParams) {
   return fetch('http://localhost:8080/graphql', {
@@ -13,6 +14,7 @@ function graphQLFetcher(graphQLParams) {
 const GraphiQLPage = () => {
   return (
     <div className="graphiql">
+      <PageHeader title="GraphiQL" />
       <GraphiQL fetcher={graphQLFetcher} />
     </div>
   );
