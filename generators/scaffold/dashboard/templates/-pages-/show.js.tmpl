@@ -1,7 +1,6 @@
 import React from 'react';
+import { gql, useQuery } from '@apollo/client'
 import { Link, useParams } from 'react-router-dom';
-import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import { Loading, Failure, PageHeader } from 'components/src'
 
 const {{.opts.Name}}Page = () => {
