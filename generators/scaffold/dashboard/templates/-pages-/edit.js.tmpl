@@ -1,7 +1,6 @@
 import React from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client'
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useQuery, useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
 import { Loading, Failure, PageHeader } from 'components/src'
 import { {{.opts.Name}}Form } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
 

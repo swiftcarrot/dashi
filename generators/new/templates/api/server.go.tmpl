@@ -13,11 +13,12 @@ import (
   "github.com/go-chi/cors"
   "github.com/gobuffalo/pop"
   "{{ .opts.Package }}/api/resolvers"
+  "{{ .opts.Package }}/config"
   "{{ .opts.Package }}/generated"
 )
 
 type Server struct {
-  config  *Config
+  config  *config.Config
   db      *pop.Connection
   handler http.Handler
 }
@@ -36,7 +37,7 @@ func (server *Server) ListenAndServe() error {
 }
 
 func NewServer() (*Server, error) {
-  config, err := GetConfig()
+  config, err := config.Load()
   if err != nil {
     return nil, err
   }
@@ -75,7 +76,8 @@ func NewServer() (*Server, error) {
 
   graphqlConfig := generated.Config{
     Resolvers: &resolvers.Resolver{
-      Conn: conn,
+      Conn:   conn,
+      Config: config,
     },
   }
   graphqlConfig.Directives.Generated = func(ctx context.Context, obj interface{}, next graphql.Resolver, typeArg string) (interface{}, error) {
