@@ -11,15 +11,8 @@ Dashi is a framework for building GraphQL application in Go and React.
 
 ## Documentation
 
-- https://dashi.swiftcarrot.dev
-
-## Quick Start
-
 - Installation
 - Create first dashi project
+- Scaffold code generation
 
-## Contributing
-
-Contributions are always welcome.
-
-### Build from source
+## Installation

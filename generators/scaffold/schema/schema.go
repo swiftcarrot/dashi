@@ -30,7 +30,7 @@ func New(opts *scaffold.Options) (*genny.Generator, error) {
 	}
 	t := gogen.TemplateTransformer(data, helpers)
 	g.Transformer(t)
-	g.Transformer(genny.Replace("-entity-", opts.Name.Underscore().String()))
+	g.Transformer(genny.Replace("-entity-", opts.Name.Singularize().ToLower().String()))
 	g.Transformer(genny.Replace("-path-", "schema"))
 	if err := g.Box(packr.New("scaffold:schema:templates", "../schema/templates")); err != nil {
 		return g, err
