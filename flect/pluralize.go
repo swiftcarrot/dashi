@@ -1,7 +1,6 @@
 package flect
 
 import (
-	"strings"
 	"sync"
 )
 
@@ -37,11 +36,10 @@ func (i Ident) Pluralize() Ident {
 	pluralMoot.RLock()
 	defer pluralMoot.RUnlock()
 
-	ls := strings.ToLower(s)
-	if _, ok := pluralToSingle[ls]; ok {
+	if _, ok := pluralToSingle[s]; ok {
 		return i
 	}
-	if p, ok := singleToPlural[ls]; ok {
+	if p, ok := singleToPlural[s]; ok {
 		return New(p)
 	}
 
