@@ -1,5 +1,7 @@
 # Dashi
 
+[![go-doc](https://godoc.org/github.com/swiftcarrot/dashi?status.svg)](https://godoc.org/github.com/swiftcarrot/dashi)
+
 Dashi is a framework for building GraphQL application in Go and React.
 
 ## Features
