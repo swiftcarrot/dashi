@@ -1,11 +1,19 @@
 package flect
 
 import (
-	"strings"
 	"sync"
 )
 
 var pluralMoot = &sync.RWMutex{}
+
+func pluralize(str string) string {
+	for _, inflection := range compiledPluralMaps {
+		if inflection.regexp.MatchString(str) {
+			return inflection.regexp.ReplaceAllString(str, inflection.replace)
+		}
+	}
+	return str
+}
 
 // Pluralize returns a plural version of the string
 //	user = users
@@ -28,22 +36,12 @@ func (i Ident) Pluralize() Ident {
 	pluralMoot.RLock()
 	defer pluralMoot.RUnlock()
 
-	ls := strings.ToLower(s)
-	if _, ok := pluralToSingle[ls]; ok {
+	if _, ok := pluralToSingle[s]; ok {
 		return i
 	}
-	if p, ok := singleToPlural[ls]; ok {
+	if p, ok := singleToPlural[s]; ok {
 		return New(p)
 	}
-	for _, r := range pluralRules {
-		if strings.HasSuffix(ls, r.suffix) {
-			return New(r.fn(s))
-		}
-	}
 
-	if strings.HasSuffix(ls, "s") {
-		return i
-	}
-
-	return New(i.String() + "s")
+	return New(pluralize(s))
 }

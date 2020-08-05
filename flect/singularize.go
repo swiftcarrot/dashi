@@ -1,11 +1,19 @@
 package flect
 
 import (
-	"strings"
 	"sync"
 )
 
 var singularMoot = &sync.RWMutex{}
+
+func singularize(str string) string {
+	for _, inflection := range compiledSingularMaps {
+		if inflection.regexp.MatchString(str) {
+			return inflection.regexp.ReplaceAllString(str, inflection.replace)
+		}
+	}
+	return str
+}
 
 // Singularize returns a singular version of the string
 //	users = user
@@ -27,21 +35,13 @@ func (i Ident) Singularize() Ident {
 
 	singularMoot.RLock()
 	defer singularMoot.RUnlock()
-	ls := strings.ToLower(s)
-	if p, ok := pluralToSingle[ls]; ok {
+
+	if p, ok := pluralToSingle[s]; ok {
 		return New(p)
 	}
-	if _, ok := singleToPlural[ls]; ok {
+	if _, ok := singleToPlural[s]; ok {
 		return i
 	}
-	for _, r := range singularRules {
-		if strings.HasSuffix(ls, r.suffix) {
-			return New(r.fn(s))
-		}
-	}
 
-	if strings.HasSuffix(s, "s") {
-		return New(s[:len(s)-1])
-	}
-	return i
+	return New(singularize(s))
 }

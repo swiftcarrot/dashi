@@ -60,7 +60,7 @@ func LoadAcronyms(r io.Reader) error {
 	return nil
 }
 
-//LoadInflections loads rules from io.Reader param
+// LoadInflections loads rules from io.Reader param
 func LoadInflections(r io.Reader) error {
 	m := map[string]string{}
 
