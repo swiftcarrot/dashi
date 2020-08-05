@@ -236,6 +236,13 @@ var singularToPluralSuffix = map[string]string{
 
 var pluralToSingle = map[string]string{}
 
+func buildInflection(str string, replace string) *inflection {
+	return &inflection{
+		regexp:  regexp.MustCompile("([^0-9A-Za-z])" + str + "$"),
+		replace: "${1}" + replace,
+	}
+}
+
 func compile() {
 	compiledPluralMaps = []inflection{}
 	compiledSingularMaps = []inflection{}
@@ -244,19 +251,19 @@ func compile() {
 		pluralToSingle[v] = k
 
 		compiledPluralMaps = append(compiledPluralMaps, []inflection{
-			{regexp: regexp.MustCompile(" " + strings.Title(k) + "$"), replace: strings.Title(v)},
-			{regexp: regexp.MustCompile(" " + strings.ToUpper(k) + "$"), replace: strings.ToUpper(v)},
-			{regexp: regexp.MustCompile(" " + k + "$"), replace: v},
+			*buildInflection(strings.Title(k), strings.Title(v)),
+			*buildInflection(strings.ToUpper(k), strings.ToUpper(v)),
+			*buildInflection(k, v),
 
-			{regexp: regexp.MustCompile(" " + strings.Title(v) + "$"), replace: strings.Title(v)},
-			{regexp: regexp.MustCompile(" " + strings.ToUpper(v) + "$"), replace: strings.ToUpper(v)},
-			{regexp: regexp.MustCompile(" " + v + "$"), replace: v},
+			*buildInflection(strings.Title(v), strings.Title(v)),
+			*buildInflection(strings.ToUpper(v), strings.ToUpper(v)),
+			*buildInflection(v, v),
 		}...)
 
 		compiledSingularMaps = append(compiledSingularMaps, []inflection{
-			{regexp: regexp.MustCompile(" " + strings.Title(v) + "$"), replace: strings.Title(k)},
-			{regexp: regexp.MustCompile(" " + strings.ToUpper(v) + "$"), replace: strings.ToUpper(k)},
-			{regexp: regexp.MustCompile(" " + v + "$"), replace: k},
+			*buildInflection(strings.Title(v), strings.Title(k)),
+			*buildInflection(strings.ToUpper(v), strings.ToUpper(k)),
+			*buildInflection(v, k),
 		}...)
 	}
 
