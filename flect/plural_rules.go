@@ -2,6 +2,7 @@ package flect
 
 import (
 	"regexp"
+	"strings"
 )
 
 type inflection struct {
@@ -93,6 +94,8 @@ func compile() {
 	for i := len(pluralInflections) - 1; i >= 0; i-- {
 		value := pluralInflections[i]
 		infs := []inflection{
+			// {regexp: regexp.MustCompile(strings.Title(value.find)), replace: strings.Title(value.replace)},
+			{regexp: regexp.MustCompile(strings.ToUpper(value.find)), replace: strings.ToUpper(value.replace)},
 			{regexp: regexp.MustCompile(value.find), replace: value.replace},
 			{regexp: regexp.MustCompile("(?i)" + value.find), replace: value.replace},
 		}
@@ -102,9 +105,12 @@ func compile() {
 	for i := len(singularInflections) - 1; i >= 0; i-- {
 		value := singularInflections[i]
 		infs := []inflection{
+			// {regexp: regexp.MustCompile(strings.Title(value.find)), replace: strings.Title(value.replace)},
+			{regexp: regexp.MustCompile(strings.ToUpper(value.find)), replace: strings.ToUpper(value.replace)},
 			{regexp: regexp.MustCompile(value.find), replace: value.replace},
 			{regexp: regexp.MustCompile("(?i)" + value.find), replace: value.replace},
 		}
+
 		compiledSingularMaps = append(compiledSingularMaps, infs...)
 	}
 }
@@ -259,22 +265,27 @@ var singularToPluralSuffix = map[string]string{
 var pluralToSingle = map[string]string{}
 
 func init() {
-	compile()
-
 	for k, v := range singleToPlural {
 		pluralToSingle[v] = k
 
-		AddPlural(" "+k+"$", v)
-		AddPlural(" "+v+"$", v)
-		AddSingular(" "+v+"$", k)
+		pluralInflections = append(pluralInflections,
+			Regular{" " + k + "$", v},
+			Regular{" " + v + "$", v},
+		)
+
+		singularInflections = append(singularInflections, Regular{" " + v + "$", k})
 	}
 
 	for k, v := range singularToPluralSuffix {
 		singleToPlural[k] = v
 		pluralToSingle[v] = k
+		pluralInflections = append(pluralInflections,
+			Regular{k + "$", v},
+			Regular{v + "$", v},
+		)
 
-		AddPlural(k+"$", v)
-		AddPlural(v+"$", v)
-		AddSingular(v+"$", k)
+		singularInflections = append(singularInflections, Regular{v + "$", k})
 	}
+
+	compile()
 }

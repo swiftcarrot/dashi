@@ -188,7 +188,10 @@ var singlePluralAssertions = []tt{
 	// more tests
 	{"video", "videos"},
 	{"post video", "post videos"},
-	// {"Person", "People"},
+	{"Person", "People"},
+	{"PERSON", "PEOPLE"},
+	{"FancyPerson", "FancyPeople"},
+	{"FANCYPERSON", "FANCYPEOPLE"},
 }
 var pluralSingularAssertions = []tt{}
 
