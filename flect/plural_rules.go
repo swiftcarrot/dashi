@@ -1,23 +1,124 @@
 package flect
 
-var pluralRules = []rule{}
+import (
+	"regexp"
+)
 
-// AddPlural adds a rule that will replace the given suffix with the replacement suffix.
-func AddPlural(suffix string, repl string) {
-	pluralMoot.Lock()
-	defer pluralMoot.Unlock()
-	pluralRules = append(pluralRules, rule{
-		suffix: suffix,
-		fn: func(s string) string {
-			s = s[:len(s)-len(suffix)]
-			return s + repl
-		},
-	})
+type inflection struct {
+	regexp  *regexp.Regexp
+	replace string
+}
 
-	pluralRules = append(pluralRules, rule{
-		suffix: repl,
-		fn:     noop,
-	})
+// Regular is a regexp find replace inflection
+type Regular struct {
+	find    string
+	replace string
+}
+
+// Irregular is a hard replace inflection,
+// containing both singular and plural forms
+type Irregular struct {
+	singular string
+	plural   string
+}
+
+// RegularSlice is a slice of Regular inflections
+type RegularSlice []Regular
+
+// IrregularSlice is a slice of Irregular inflections
+type IrregularSlice []Irregular
+
+var pluralInflections = RegularSlice{
+	{"([a-z])$", "${1}s"},
+	{"s$", "s"},
+	{"^(ax|test)is$", "${1}es"},
+	{"(octop|vir)us$", "${1}i"},
+	{"(octop|vir)i$", "${1}i"},
+	{"(alias|status)$", "${1}es"},
+	{"(bu)s$", "${1}ses"},
+	{"(buffal|tomat)o$", "${1}oes"},
+	{"([ti])um$", "${1}a"},
+	{"([ti])a$", "${1}a"},
+	{"sis$", "ses"},
+	{"(?:([^f])fe|([lr])f)$", "${1}${2}ves"},
+	{"(hive)$", "${1}s"},
+	{"([^aeiouy]|qu)y$", "${1}ies"},
+	{"(o|z|x|ch|ss|sh)$", "${1}es"},
+	{"(matr|vert|ind)(?:ix|ex)$", "${1}ices"},
+	{"^(m|l)ouse$", "${1}ice"},
+	{"^(m|l)ice$", "${1}ice"},
+	{"^(ox)$", "${1}en"},
+	{"^(oxen)$", "${1}"},
+	{"(quiz)$", "${1}zes"},
+}
+
+var singularInflections = RegularSlice{
+	{"s$", ""},
+	{"(ss)$", "${1}"},
+	{"(n)ews$", "${1}ews"},
+	{"([ti])a$", "${1}um"},
+	{"((a)naly|(b)a|(d)iagno|(p)arenthe|(p)rogno|(s)ynop|(t)he)(sis|ses)$", "${1}sis"},
+	{"(^analy)(sis|ses)$", "${1}sis"},
+	{"([^f])ves$", "${1}fe"},
+	{"(hive)s$", "${1}"},
+	{"(tive)s$", "${1}"},
+	{"([lr])ves$", "${1}f"},
+	{"([^aeiouy]|qu)ies$", "${1}y"},
+	{"(s)eries$", "${1}eries"},
+	{"(m)ovies$", "${1}ovie"},
+	{"(c)ookies$", "${1}ookie"},
+	{"(z|x|ch|ss|sh)es$", "${1}"},
+	{"^(m|l)ice$", "${1}ouse"},
+	{"(bus)(es)?$", "${1}"},
+	{"(o)es$", "${1}"},
+	{"(shoe)s$", "${1}"},
+	{"(cris|test)(is|es)$", "${1}is"},
+	{"^(a)x[ie]s$", "${1}xis"},
+	{"(octop|vir)(us|i)$", "${1}us"},
+	{"(alias|status)(es)?$", "${1}"},
+	{"^(ox)en", "${1}"},
+	{"(vert|ind)ices$", "${1}ex"},
+	{"(matr)ices$", "${1}ix"},
+	{"(quiz)zes$", "${1}"},
+	{"(database)s$", "${1}"},
+}
+
+var compiledPluralMaps []inflection
+var compiledSingularMaps []inflection
+
+func compile() {
+	compiledPluralMaps = []inflection{}
+	compiledSingularMaps = []inflection{}
+
+	for i := len(pluralInflections) - 1; i >= 0; i-- {
+		value := pluralInflections[i]
+		infs := []inflection{
+			{regexp: regexp.MustCompile(value.find), replace: value.replace},
+			{regexp: regexp.MustCompile("(?i)" + value.find), replace: value.replace},
+		}
+		compiledPluralMaps = append(compiledPluralMaps, infs...)
+	}
+
+	for i := len(singularInflections) - 1; i >= 0; i-- {
+		value := singularInflections[i]
+		infs := []inflection{
+			{regexp: regexp.MustCompile(value.find), replace: value.replace},
+			{regexp: regexp.MustCompile("(?i)" + value.find), replace: value.replace},
+		}
+		compiledSingularMaps = append(compiledSingularMaps, infs...)
+	}
+}
+
+// AddPlural adds a plural inflection
+func AddPlural(find, replace string) {
+	pluralInflections = append(pluralInflections, Regular{find, replace})
+	compile()
+}
+
+// AddSingular adds a singular inflection
+func AddSingular(find, replace string) {
+	singularInflections = append(singularInflections, Regular{find, replace})
+	compile()
 }
 
 var singleToPlural = map[string]string{
@@ -38,15 +139,16 @@ var singleToPlural = map[string]string{
 	"bison":       "bison",
 	"bureau":      "bureaus",
 	"bus":         "buses",
+	"cactus":      "cacti",
 	"campus":      "campuses",
 	"caucus":      "caucuses",
-	"child":       "children",
 	"château":     "châteaux",
 	"circus":      "circuses",
 	"codex":       "codices",
 	"concerto":    "concertos",
 	"corpus":      "corpora",
 	"crisis":      "crises",
+	"criterion":   "criteria",
 	"curriculum":  "curriculums",
 	"datum":       "data",
 	"dear":        "dear",
@@ -65,6 +167,7 @@ var singleToPlural = map[string]string{
 	"foot":        "feet",
 	"formula":     "formulas",
 	"fungus":      "fungi",
+	"gas":         "gasses",
 	"genus":       "genera",
 	"goose":       "geese",
 	"graffito":    "graffiti",
@@ -76,7 +179,6 @@ var singleToPlural = map[string]string{
 	"hypothesis":  "hypotheses",
 	"index":       "indices",
 	"information": "information",
-	"jeans":       "jeans",
 	"larva":       "larvae",
 	"libretto":    "librettos",
 	"loaf":        "loaves",
@@ -87,6 +189,7 @@ var singleToPlural = map[string]string{
 	"money":       "money",
 	"moose":       "moose",
 	"mouse":       "mice",
+	"move":        "moves", // avoid moves => mofe
 	"nebula":      "nebulae",
 	"news":        "news",
 	"nucleus":     "nuclei",
@@ -103,6 +206,8 @@ var singleToPlural = map[string]string{
 	"piano":       "pianos",
 	"plus":        "pluses",
 	"police":      "police",
+	"portfolio":   "portfolios",
+	"prize":       "prizes", // avoid prizes => priz
 	"prognosis":   "prognoses",
 	"prometheus":  "prometheuses",
 	"quiz":        "quizzes",
@@ -114,7 +219,6 @@ var singleToPlural = map[string]string{
 	"sex":         "sexes",
 	"series":      "series",
 	"sheep":       "sheep",
-	"shoe":        "shoes",
 	"shrimp":      "shrimp",
 	"species":     "species",
 	"stimulus":    "stimuli",
@@ -136,151 +240,41 @@ var singleToPlural = map[string]string{
 	"vortex":      "vortices",
 	"wharf":       "wharves",
 	"wife":        "wives",
-	"woman":       "women",
 	"wolf":        "wolves",
 	"you":         "you",
+}
+
+// words can be suffix of other words
+//  salesperson -> salespeople
+var singularToPluralSuffix = map[string]string{
+	"child":  "children",
+	"jeans":  "jeans",
+	"man":    "men",
+	"person": "people",
+	"shoe":   "shoes",
+	"video":  "videos",
+	"woman":  "women",
 }
 
 var pluralToSingle = map[string]string{}
 
 func init() {
+	compile()
+
 	for k, v := range singleToPlural {
 		pluralToSingle[v] = k
+
+		AddPlural(" "+k+"$", v)
+		AddPlural(" "+v+"$", v)
+		AddSingular(" "+v+"$", k)
 	}
-}
 
-type singularToPluralSuffix struct {
-	singular string
-	plural   string
-}
+	for k, v := range singularToPluralSuffix {
+		singleToPlural[k] = v
+		pluralToSingle[v] = k
 
-var singularToPluralSuffixList = []singularToPluralSuffix{
-	{"iterion", "iteria"},
-	{"campus", "campuses"},
-	{"genera", "genus"},
-	{"person", "people"},
-	{"phylum", "phyla"},
-	{"randum", "randa"},
-	{"actus", "acti"},
-	{"adium", "adia"},
-	{"alias", "aliases"},
-	{"basis", "basis"},
-	{"child", "children"},
-	{"chive", "chives"},
-	{"focus", "foci"},
-	{"hello", "hellos"},
-	{"jeans", "jeans"},
-	{"louse", "lice"},
-	{"mouse", "mice"},
-	{"movie", "movies"},
-	{"oasis", "oasis"},
-	{"atum", "ata"},
-	{"atus", "atuses"},
-	{"base", "bases"},
-	{"cess", "cesses"},
-	{"dium", "diums"},
-	{"eses", "esis"},
-	{"half", "halves"},
-	{"hive", "hives"},
-	{"iano", "ianos"},
-	{"irus", "iri"},
-	{"isis", "ises"},
-	{"leus", "li"},
-	{"mnus", "mni"},
-	{"move", "moves"},
-	{"news", "news"},
-	{"odex", "odice"},
-	{"oose", "eese"},
-	{"ouse", "ouses"},
-	{"ovum", "ova"},
-	{"rion", "ria"},
-	{"shoe", "shoes"},
-	{"stis", "stes"},
-	{"tive", "tives"},
-	{"wife", "wives"},
-	{"afe", "aves"},
-	{"bfe", "bves"},
-	{"box", "boxes"},
-	{"cfe", "cves"},
-	{"dfe", "dves"},
-	{"dge", "dges"},
-	{"efe", "eves"},
-	{"gfe", "gves"},
-	{"hfe", "hves"},
-	{"ife", "ives"},
-	{"itz", "itzes"},
-	{"ium", "ia"},
-	{"ize", "izes"},
-	{"jfe", "jves"},
-	{"kfe", "kves"},
-	{"man", "men"},
-	{"mfe", "mves"},
-	{"nfe", "nves"},
-	{"nna", "nnas"},
-	{"oaf", "oaves"},
-	{"oci", "ocus"},
-	{"ode", "odes"},
-	{"ofe", "oves"},
-	{"oot", "eet"},
-	{"pfe", "pves"},
-	{"pse", "psis"},
-	{"qfe", "qves"},
-	{"quy", "quies"},
-	{"rfe", "rves"},
-	{"sfe", "sves"},
-	{"tfe", "tves"},
-	{"tum", "ta"},
-	{"tus", "tuses"},
-	{"ufe", "uves"},
-	{"ula", "ulae"},
-	{"ula", "ulas"},
-	{"uli", "ulus"},
-	{"use", "uses"},
-	{"uss", "usses"},
-	{"vfe", "vves"},
-	{"wfe", "wves"},
-	{"xfe", "xves"},
-	{"yfe", "yves"},
-	{"you", "you"},
-	{"zfe", "zves"},
-	{"by", "bies"},
-	{"ch", "ches"},
-	{"cy", "cies"},
-	{"dy", "dies"},
-	{"ex", "ices"},
-	{"fy", "fies"},
-	{"gy", "gies"},
-	{"hy", "hies"},
-	{"io", "ios"},
-	{"jy", "jies"},
-	{"ky", "kies"},
-	{"lf", "lves"},
-	{"ly", "lies"},
-	{"my", "mies"},
-	{"ny", "nies"},
-	{"ox", "oxen"},
-	{"py", "pies"},
-	{"qy", "qies"},
-	{"rf", "rves"},
-	{"ry", "ries"},
-	{"sh", "shes"},
-	{"ss", "sses"},
-	{"sy", "sies"},
-	{"ty", "ties"},
-	{"tz", "tzes"},
-	{"va", "vae"},
-	{"vy", "vies"},
-	{"wy", "wies"},
-	{"xy", "xies"},
-	{"zy", "zies"},
-	{"zz", "zzes"},
-	{"o", "oes"},
-	{"x", "xes"},
-}
-
-func init() {
-	for _, suffix := range singularToPluralSuffixList {
-		AddPlural(suffix.singular, suffix.plural)
-		AddSingular(suffix.plural, suffix.singular)
+		AddPlural(k+"$", v)
+		AddPlural(v+"$", v)
+		AddSingular(v+"$", k)
 	}
 }

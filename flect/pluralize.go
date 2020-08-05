@@ -7,6 +7,15 @@ import (
 
 var pluralMoot = &sync.RWMutex{}
 
+func pluralize(str string) string {
+	for _, inflection := range compiledPluralMaps {
+		if inflection.regexp.MatchString(str) {
+			return inflection.regexp.ReplaceAllString(str, inflection.replace)
+		}
+	}
+	return str
+}
+
 // Pluralize returns a plural version of the string
 //	user = users
 //	person = people
@@ -35,15 +44,6 @@ func (i Ident) Pluralize() Ident {
 	if p, ok := singleToPlural[ls]; ok {
 		return New(p)
 	}
-	for _, r := range pluralRules {
-		if strings.HasSuffix(ls, r.suffix) {
-			return New(r.fn(s))
-		}
-	}
 
-	if strings.HasSuffix(ls, "s") {
-		return i
-	}
-
-	return New(i.String() + "s")
+	return New(pluralize(s))
 }
