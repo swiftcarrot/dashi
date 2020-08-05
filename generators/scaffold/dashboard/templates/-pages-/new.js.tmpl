@@ -1,12 +1,12 @@
 import React from 'react';
+import { gql, useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router-dom';
-import { useMutation } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+import { Loading, Failure, PageHeader } from 'components/src';
 import { {{.opts.Name}}Form } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
 
 const {{.opts.Name}}NewPage = (props) => {
   const navigate = useNavigate();
-  const [create{{.opts.Name}}, { data }] = useMutation(CREATE_{{.opts.Name.ToUpper}});
+  const [create{{.opts.Name}}] = useMutation(CREATE_{{.opts.Name.ToUpper}});
 
   function handleSubmit(values, { setSubmitting }) {
     return create{{.opts.Name}}({variables: { input: values }}).then((resp) => {
@@ -21,7 +21,7 @@ const {{.opts.Name}}NewPage = (props) => {
 
   return (
     <div>
-      <h2>New {{.opts.Name}}</h2>
+      <PageHeader title="New {{.opts.Name}}" />
       <{{.opts.Name}}Form
         initialValues={{"{{"}}
         {{"}}"}}

@@ -2,8 +2,13 @@ import './styles.scss';
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { render } from 'react-dom';
-import ApolloClient from 'apollo-boost';
-import { ApolloProvider } from '@apollo/react-hooks';
+import {
+  ApolloProvider,
+  ApolloClient,
+  InMemoryCache,
+  createHttpLink,
+} from '@apollo/client';
+import { setContext } from '@apollo/client/link/context';
 import { ErrorBoundary } from 'components';
 import { Layout } from 'layouts';
 import { HomePage, GraphiQLPage } from 'pages';
@@ -13,16 +18,23 @@ const ENDPOINT =
     ? 'http://localhost:8080'
     : 'https://api.yousite.com/graphql';
 
-const client = new ApolloClient({
+const httpLink = createHttpLink({
   uri: ENDPOINT + '/graphql',
-  request: (operation) => {
-    const token = localStorage.getItem('token');
-    operation.setContext({
-      headers: {
-        authorization: token ? `Bearer ${token}` : '',
-      },
-    });
-  },
+});
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem('token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
 });
 
 // TODO: defaultOptions in constructor not working

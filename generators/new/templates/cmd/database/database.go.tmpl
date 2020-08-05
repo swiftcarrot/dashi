@@ -3,11 +3,11 @@ package database
 import (
   "github.com/gobuffalo/packr/v2"
   "github.com/gobuffalo/pop"
-  "{{ .opts.Package }}/api"
+  "{{ .opts.Package }}/config"
 )
 
 func Connect() (*pop.Connection, error) {
-  config, err := api.GetConfig()
+  config, err := config.Load()
   if err != nil {
     return nil, err
   }

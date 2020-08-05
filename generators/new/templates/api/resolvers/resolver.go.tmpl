@@ -1,13 +1,17 @@
 package resolvers
 
-import "github.com/gobuffalo/pop"
+import (
+	"github.com/gobuffalo/pop"
+  "{{ .opts.Package }}/config"
+)
 
 // This file will not be regenerated automatically.
 //
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 type Resolver struct {
-	Conn *pop.Connection
+	Conn   *pop.Connection
+	Config *config.Config
 }
 
 var PerPage = 20
