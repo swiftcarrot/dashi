@@ -9,8 +9,8 @@ import (
 	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
-	"github.com/swiftcarrot/dashi/flect"
 	"github.com/swiftcarrot/dashi/generators/new"
+	"github.com/swiftcarrot/flect"
 )
 
 var FlagNewAPI bool

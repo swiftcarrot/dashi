@@ -7,8 +7,8 @@ import (
 
 	"github.com/99designs/gqlgen/codegen"
 	"github.com/99designs/gqlgen/codegen/templates"
-	"github.com/gobuffalo/flect"
 	"github.com/gobuffalo/packr/v2"
+	"github.com/swiftcarrot/flect"
 )
 
 type crudResolver struct {

@@ -1,8 +1,8 @@
 package migration
 
 import (
-	"github.com/swiftcarrot/dashi/flect"
 	"github.com/swiftcarrot/dashi/generators/attrs"
+	"github.com/swiftcarrot/flect"
 )
 
 // Options for generating migration

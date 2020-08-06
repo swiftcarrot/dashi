@@ -1,8 +1,8 @@
 package model
 
 import (
-	"github.com/swiftcarrot/dashi/flect/name"
 	"github.com/swiftcarrot/dashi/generators/attrs"
+	"github.com/swiftcarrot/flect/name"
 )
 
 type presenter struct {

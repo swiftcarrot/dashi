@@ -5,8 +5,8 @@ import (
 	"strings"
 
 	"github.com/pkg/errors"
-	"github.com/swiftcarrot/dashi/flect"
 	"github.com/swiftcarrot/dashi/generators/attrs"
+	"github.com/swiftcarrot/flect"
 )
 
 // Options for generating a new model

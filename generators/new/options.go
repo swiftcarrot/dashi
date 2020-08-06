@@ -1,6 +1,6 @@
 package new
 
-import "github.com/swiftcarrot/dashi/flect"
+import "github.com/swiftcarrot/flect"
 
 // Options for generating new
 type Options struct {

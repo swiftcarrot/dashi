@@ -2,7 +2,7 @@ package database
 
 import (
 	"github.com/gobuffalo/nulls"
-	"github.com/swiftcarrot/dashi/flect"
+	"github.com/swiftcarrot/flect"
 )
 
 //TODO implement default and unique
