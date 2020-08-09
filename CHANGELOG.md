@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+- improve error handling with handler type
+- generating a `GET /_health` endpoint
+
 ## 0.2.0
 
 - add `g storybook:install`
