@@ -18,7 +18,7 @@ func WriteJSONResponse(w http.ResponseWriter, status int, value interface{}) err
 	w.Header().Set("Content-Type", "application/json")
 	b, err := json.Marshal(value)
 	if err != nil {
-		return Error(http.StatusInternalServerError, "internal", fmt.Sprintf("Error encoding json response: %v", value))
+		return internalServerError(fmt.Sprintf("Error encoding json response: %v", value))
 	}
 	w.WriteHeader(status)
 	_, err = w.Write(b)
