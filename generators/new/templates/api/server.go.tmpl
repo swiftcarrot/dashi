@@ -74,6 +74,8 @@ func NewServer() (*Server, error) {
 
   router.Use(cors.Handler)
 
+  router.Method("GET", "/_health", Handler(server.HealthCheck))
+
   graphqlConfig := generated.Config{
     Resolvers: &resolvers.Resolver{
       Conn:   conn,
