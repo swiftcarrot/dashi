@@ -2,8 +2,11 @@
 
 ## Unreleased
 
-- improve error handling with handler type
+## 0.2.1
+
+- improve error handling in handler
 - generating a `GET /_health` endpoint
+- add `dashi/server` package
 
 ## 0.2.0
 
