@@ -18,3 +18,13 @@ Dashi is a framework for building GraphQL application in Go and React.
 - Scaffold code generation
 
 ## Installation
+
+Install the latest version of `dashi` with:
+
+```sh
+curl -sf https://gobinaries.com/swiftcarrot/dashi | sh
+```
+
+## License
+
+[Apache License 2.0](https://github.com/swiftcarrot/dashi/blob/master/LICENSE)
