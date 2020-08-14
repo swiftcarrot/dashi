@@ -1,95 +1,96 @@
 package api
 
 import (
-  "context"
-  "log"
-  "net/http"
-  "strconv"
+	"context"
+	"log"
+	"net/http"
+	"strconv"
 
-  "github.com/99designs/gqlgen/graphql"
-  "github.com/99designs/gqlgen/graphql/handler"
-  "github.com/go-chi/chi"
-  "github.com/go-chi/chi/middleware"
-  "github.com/go-chi/cors"
-  "github.com/gobuffalo/pop"
-  "{{ .opts.Package }}/api/resolvers"
-  "{{ .opts.Package }}/config"
-  "{{ .opts.Package }}/generated"
+	"github.com/99designs/gqlgen/graphql"
+	"github.com/99designs/gqlgen/graphql/handler"
+	"github.com/go-chi/chi"
+	"github.com/go-chi/chi/middleware"
+	"github.com/go-chi/cors"
+	"github.com/gobuffalo/pop"
+	"github.com/swiftcarrot/dashi/server"
+	"{{ .opts.Package }}/api/resolvers"
+	"{{ .opts.Package }}/config"
+	"{{ .opts.Package }}/generated"
 )
 
 type Server struct {
-  config  *config.Config
-  db      *pop.Connection
-  handler http.Handler
+	config  *config.Config
+	db      *pop.Connection
+	handler http.Handler
 }
 
-func (server *Server) ListenAndServe() error {
-  defer server.db.Close()
+func (s *Server) ListenAndServe() error {
+	defer s.db.Close()
 
-  port := server.config.Server.Port
-  if port == 0 {
-    port = 8080
-  }
+	port := s.config.Server.Port
+	if port == 0 {
+		port = 8080
+	}
 
-  log.Printf("listening on http://localhost:%d", port)
-  log.Fatal(http.ListenAndServe(":"+strconv.Itoa(port), server.handler))
-  return nil
+	log.Printf("listening on http://localhost:%d", port)
+	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(port), s.handler))
+	return nil
 }
 
 func NewServer() (*Server, error) {
-  config, err := config.Load()
-  if err != nil {
-    return nil, err
-  }
+	config, err := config.Load()
+	if err != nil {
+		return nil, err
+	}
 
-  // TODO: context
-  // ctx := context.Background()
-  server := &Server{
-    config: config,
-  }
+	// TODO: context
+	// ctx := context.Background()
+	s := &Server{
+		config: config,
+	}
 
-  conn, err := pop.NewConnection(config.Database)
-  if err != nil {
-    return nil, err
-  }
+	conn, err := pop.NewConnection(config.Database)
+	if err != nil {
+		return nil, err
+	}
 
-  err = conn.Open()
-  if err != nil {
-    return nil, err
-  }
+	err = conn.Open()
+	if err != nil {
+		return nil, err
+	}
 
-  server.db = conn
+	s.db = conn
 
-  router := chi.NewRouter()
-  router.Use(middleware.RequestID)
-  router.Use(middleware.RealIP)
-  router.Use(middleware.Logger)
-  router.Use(middleware.Recoverer)
+	router := chi.NewRouter()
+	router.Use(middleware.RequestID)
+	router.Use(middleware.RealIP)
+	router.Use(middleware.Logger)
+	router.Use(middleware.Recoverer)
 
-  cors := cors.New(cors.Options{
-    AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
-    AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
-    AllowCredentials: true,
-  })
+	cors := cors.New(cors.Options{
+		AllowedMethods:   []string{http.MethodGet, http.MethodPost, http.MethodPut, http.MethodDelete},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type"},
+		AllowCredentials: true,
+	})
 
-  router.Use(cors.Handler)
+	router.Use(cors.Handler)
 
-  router.Method("GET", "/_health", Handler(server.HealthCheck))
+	router.Method("GET", "/_health", server.Handler(s.HealthCheck))
 
-  graphqlConfig := generated.Config{
-    Resolvers: &resolvers.Resolver{
-      Conn:   conn,
-      Config: config,
-    },
-  }
-  graphqlConfig.Directives.Generated = func(ctx context.Context, obj interface{}, next graphql.Resolver, typeArg string) (interface{}, error) {
-    return next(ctx)
-  }
-  graphql := handler.NewDefaultServer(generated.NewExecutableSchema(graphqlConfig))
+	graphqlConfig := generated.Config{
+		Resolvers: &resolvers.Resolver{
+			Conn:   conn,
+			Config: config,
+		},
+	}
+	graphqlConfig.Directives.Generated = func(ctx context.Context, obj interface{}, next graphql.Resolver, typeArg string) (interface{}, error) {
+		return next(ctx)
+	}
+	graphql := handler.NewDefaultServer(generated.NewExecutableSchema(graphqlConfig))
 
-  router.Handle("/graphql", graphql)
+	router.Handle("/graphql", graphql)
 
-  server.handler = router
+	s.handler = router
 
-  return server, nil
+	return s, nil
 }
