@@ -1,0 +1,31 @@
+{
+  "name": "webpacker",
+  "version": "0.1.0",
+  "main": "./src/main.js",
+  "bin": "./src/main.js",
+  "private": true,
+  "dependencies": {
+    "@babel/core": "^7.11.1",
+    "@svgr/webpack": "^5.4.0",
+    "@swiftcarrot/yaml-loader": "^0.2.2",
+    "babel-loader": "^8.1.0",
+    "commander": "^6.0.0",
+    "css-loader": "^4.2.1",
+    "file-loader": "^6.0.0",
+    "fs-extra": "^9.0.1",
+    "html-webpack-plugin": "^4.3.0",
+    "mini-css-extract-plugin": "^0.10.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "postcss-flexbugs-fixes": "^4.2.1",
+    "postcss-loader": "^3.0.0",
+    "postcss-normalize": "^9.0.0",
+    "postcss-preset-env": "^6.7.0",
+    "resolve-url-loader": "^3.1.1",
+    "sass": "^1.26.10",
+    "sass-loader": "^9.0.3",
+    "style-loader": "^1.2.1",
+    "webpack": "^4.44.1",
+    "webpack-assets-manifest": "^3.1.1",
+    "webpack-dev-server": "^3.11.0"
+  }
+}

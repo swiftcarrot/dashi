@@ -13,11 +13,15 @@ var DashboardCmd = &cobra.Command{
 	Short: "Generate dashboard under packages",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		run := genny.WetRunner(context.Background())
+		gg := &genny.Group{}
+
 		g, err := dashboard.New(&dashboard.Options{})
 		if err != nil {
 			return err
 		}
-		run.With(g)
+
+		gg.Add(g)
+		run.WithGroup(gg)
 		return run.Run()
 	},
 }
