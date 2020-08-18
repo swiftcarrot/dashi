@@ -10,7 +10,6 @@ module.exports = {
     ...base.output,
     filename: 'static/[name].[chunkhash:8].js',
     chunkFilename: 'static/[name].[chunkhash:8].chunk.js',
-    publicPath: '/',
   },
 
   optimization: {

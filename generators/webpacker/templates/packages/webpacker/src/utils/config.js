@@ -13,7 +13,10 @@ const paths = {
   appBuild: resolveApp('build'),
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  publicUrlOrPath: '',
+  publicUrlOrPath:
+    require(resolveApp('package.json')).homepage ||
+    process.env.PUBLIC_URL ||
+    '/',
 };
 
 module.exports = {

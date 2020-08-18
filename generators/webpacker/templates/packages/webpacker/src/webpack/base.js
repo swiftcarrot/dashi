@@ -11,6 +11,7 @@ module.exports = {
   },
   output: {
     path: paths.appBuild,
+    publicPath: paths.publicUrlOrPath,
   },
   module: {
     rules: rules,
