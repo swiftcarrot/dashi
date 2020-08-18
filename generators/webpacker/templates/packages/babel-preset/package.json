@@ -13,8 +13,6 @@
     "@babel/preset-env": "^7.6.3",
     "@babel/preset-flow": "^7.0.0",
     "@babel/preset-react": "^7.6.3",
-    "babel-plugin-emotion": "^10.0.21",
-    "babel-plugin-preval": "^3.0.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24"
   }
 }

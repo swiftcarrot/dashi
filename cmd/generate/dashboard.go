@@ -6,7 +6,6 @@ import (
 	"github.com/gobuffalo/genny/v2"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/dashboard"
-	"github.com/swiftcarrot/dashi/generators/webpacker"
 )
 
 var DashboardCmd = &cobra.Command{
@@ -16,18 +15,12 @@ var DashboardCmd = &cobra.Command{
 		run := genny.WetRunner(context.Background())
 		gg := &genny.Group{}
 
-		g1, err := webpacker.New(&webpacker.Options{})
+		g, err := dashboard.New(&dashboard.Options{})
 		if err != nil {
 			return err
 		}
 
-		g2, err := dashboard.New(&dashboard.Options{})
-		if err != nil {
-			return err
-		}
-
-		gg.Add(g1)
-		gg.Add(g2)
+		gg.Add(g)
 		run.WithGroup(gg)
 		return run.Run()
 	},

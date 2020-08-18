@@ -10,8 +10,8 @@ import {
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
 import { ErrorBoundary } from 'components';
-import { Layout } from 'layouts';
-import { HomePage, GraphiQLPage } from 'pages';
+import { Layout } from 'src/layouts';
+import { HomePage, GraphiQLPage } from 'src/pages';
 
 const ENDPOINT =
   process.env.NODE_ENV === 'development'
