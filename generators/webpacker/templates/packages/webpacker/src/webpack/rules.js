@@ -39,7 +39,7 @@ module.exports = [
     exclude: /node_modules/,
     loader: require.resolve('babel-loader'),
     options: {
-      presets: [require.resolve('babel-preset-releasekit')],
+      presets: [require.resolve('babel-preset')],
       cacheDirectory: true,
     },
   },

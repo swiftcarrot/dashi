@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "./packs/index.js",
   "scripts": {
-    "start": "NODE_ENV=development webpacker dev-server -l http://localhost:8000",
+    "start": "NODE_ENV=development webpacker serve -l http://localhost:8000",
     "build": "NODE_ENV=production webpacker build"
   },
   "private": true,
@@ -16,8 +16,5 @@
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router-dom": "^6.0.0-beta.0"
-  },
-  "devDependencies": {
-    "@swiftcarrot/webpacker": "^3.0.1"
   }
 }
