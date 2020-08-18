@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- add `g webpacker:install` for custom webpack & babel configs
+
 ## 0.2.1
 
 - improve error handling in handler
