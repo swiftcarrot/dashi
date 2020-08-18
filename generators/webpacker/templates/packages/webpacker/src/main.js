@@ -19,9 +19,13 @@ program
     'http://0.0.0.0:3000'
   )
   .action(serve);
-program.command('build').description('Webpack build').action(build);
-program.command('watch').description('Webpack watch').action(watch);
+program
+  .command('build')
+  .description('Webpack build')
+  .action(build);
+program
+  .command('watch')
+  .description('Webpack watch')
+  .action(watch);
 
 program.parse(process.argv);
-
-// console.log('webpacker');
