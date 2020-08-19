@@ -2,7 +2,12 @@
   "name": "webpacker",
   "version": "0.1.0",
   "main": "./src/main.js",
-  "bin": "./src/main.js",
+  "bin": {
+    "webpacker": "src/main.js"
+  },
+  "files": [
+    "src"
+  ],
   "private": true,
   "dependencies": {
     "@babel/core": "^7.11.1",
