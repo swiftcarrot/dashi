@@ -5,9 +5,7 @@ const { paths } = require('../utils/config');
 const webpackConfig = require('../webpack');
 
 module.exports = (cmd) => {
-  console.log('listen', cmd.args[0]);
-  const listen = cmd.args[0];
-
+  const listen = cmd.args[0] || 'http://0.0.0.0:3000';
   const compiler = webpack(webpackConfig);
   const server = new Server(compiler, {
     contentBase: paths.appPublic,
