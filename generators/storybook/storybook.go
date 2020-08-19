@@ -28,7 +28,7 @@ func New(opts *Options) (*genny.Generator, error) {
 	t := gogen.TemplateTransformer(data, helpers)
 	g.Transformer(t)
 	g.Transformer(genny.Dot())
-	g.Command(exec.Command("yarn", "add", "@babel/core", "babel-loader", "babel-preset-swiftcarrot", "@storybook/addon-actions", "@storybook/addon-links", "@storybook/addons", "@storybook/react", "glob", "--dev", "-W"))
+	g.Command(exec.Command("yarn", "add", "@babel/core", "babel-loader", "@storybook/addon-actions", "@storybook/addon-links", "@storybook/addons", "@storybook/react", "glob", "--dev", "-W"))
 
 	// TODO: add storybook scripts to package.json
 	g.RunFn(func(r *genny.Runner) error {
