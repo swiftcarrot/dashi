@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- webpacker & storybook improvements
+
 ## 0.3.0
 
 - add `g webpacker:install` for custom webpack & babel configs
