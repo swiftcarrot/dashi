@@ -3,8 +3,9 @@
 ## Unreleased
 
 - webpacker & storybook improvements
-- storybook integration with default
+- default storybook integration
 - storybook v6
+- add `storybook-preset` package
 
 ## 0.3.0
 
