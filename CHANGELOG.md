@@ -3,6 +3,8 @@
 ## Unreleased
 
 - webpacker & storybook improvements
+- storybook integration with default
+- storybook v6
 
 ## 0.3.0
 
