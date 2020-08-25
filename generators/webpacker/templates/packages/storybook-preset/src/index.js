@@ -12,9 +12,16 @@ const alias = glob
   }, {});
 
 const webpack = (webpackConfig = {}, options = { lessOptions: {} }) => {
-  const { module = {} } = webpackConfig;
+  const { module = {}, resolve = {} } = webpackConfig;
   return {
     ...webpackConfig,
+    resolve: {
+      ...resolve,
+      alias: {
+        ...resolve.alias,
+        ...alias,
+      },
+    },
     module: {
       ...module,
       rules: [...(module.rules || []), ...rules],
@@ -22,10 +29,12 @@ const webpack = (webpackConfig = {}, options = { lessOptions: {} }) => {
   };
 };
 
-const babel = (config = {}) => {
+// Don't use Storybook's default Babel config.
+const babelDefault = (config = {}) => {
   return {
-    presets: ['module:babel-preset', ...config.presets],
+    presets: [],
+    plugins: [],
   };
 };
 
-module.exports = { webpack, babel };
+module.exports = { webpack, babelDefault };

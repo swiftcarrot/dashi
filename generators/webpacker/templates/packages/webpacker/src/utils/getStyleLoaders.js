@@ -54,7 +54,8 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
         loader: require.resolve('resolve-url-loader'),
         options: {
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
-          root: paths.appSrc,
+          // TODO: removed for storybook-preset
+          // root: paths.appSrc,
         },
       },
       {

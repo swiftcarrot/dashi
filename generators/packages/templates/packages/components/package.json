@@ -4,6 +4,7 @@
   "main": "./src/index.js",
   "private": true,
   "dependencies": {
-    "clsx": "^1.1.1"
+    "clsx": "^1.1.1",
+    "prop-types": "^15.7.2"
   }
 }
