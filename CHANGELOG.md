@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 0.4.1
+
+- remove `g webpacker:install`
+- move webpacker generator to packages generator
+
 ## 0.4.0
 
 - remove `g storybook:install`

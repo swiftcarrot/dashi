@@ -9,7 +9,6 @@ import (
 	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/dashi/generators/dashboard"
 	"github.com/swiftcarrot/dashi/generators/packages"
-	"github.com/swiftcarrot/dashi/generators/webpacker"
 )
 
 func New(opts *Options) (*genny.Group, error) {
@@ -46,12 +45,6 @@ func New(opts *Options) (*genny.Group, error) {
 			return nil, err
 		}
 		gg.Add(packages)
-
-		webpacker, err := webpacker.New(&webpacker.Options{})
-		if err != nil {
-			return nil, err
-		}
-		gg.Add(webpacker)
 
 		dashboard, err := dashboard.New(&dashboard.Options{
 			Name: opts.Name,
