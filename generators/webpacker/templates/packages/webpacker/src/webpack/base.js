@@ -40,10 +40,30 @@ module.exports = {
       writeToDisk: true,
     }),
 
-    new HtmlWebpackPlugin({
-      filename: 'index.html',
-      minify: true,
-      template: paths.appHtml,
-    }),
+    new HtmlWebpackPlugin(
+      Object.assign(
+        {},
+        {
+          inject: true,
+          template: paths.appHtml,
+        },
+        isEnvProduction
+          ? {
+              minify: {
+                removeComments: true,
+                collapseWhitespace: true,
+                removeRedundantAttributes: true,
+                useShortDoctype: true,
+                removeEmptyAttributes: true,
+                removeStyleLinkTypeAttributes: true,
+                keepClosingSlash: true,
+                minifyJS: true,
+                minifyCSS: true,
+                minifyURLs: true,
+              },
+            }
+          : undefined
+      )
+    ),
   ],
 };
