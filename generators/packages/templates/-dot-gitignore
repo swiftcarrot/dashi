@@ -1,0 +1,11 @@
+node_modules
+build
+/bin
+/dist
+.DS_Store
+.idea
+*.tmp
+yarn-debug.log*
+yarn-error.log*
+*.pid
+storybook-static
