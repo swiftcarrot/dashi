@@ -6,6 +6,7 @@
 
 - remove `g webpacker:install`
 - move webpacker generator to packages generator
+- add `packages/app` by default
 
 ## 0.4.0
 
