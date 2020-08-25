@@ -2,11 +2,13 @@
 
 ## Unreleased
 
-- webpacker & storybook improvements
+## 0.4.0
+
+- remove `g storybook:install`
+- add `g packages`
 - default storybook integration
 - storybook v6
 - add `storybook-preset` package
-- add `g packages`
 - fix html minify options in webpacker
 
 ## 0.3.0
