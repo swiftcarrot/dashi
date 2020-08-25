@@ -15,7 +15,7 @@ import (
 
 var FlagNewAPI bool
 
-// TODO: github.com/gobuffalo/envy
+// TODO: use github.com/gobuffalo/envy
 func getGopath() string {
 	gopath := os.Getenv("GOPATH")
 	if gopath == "" {

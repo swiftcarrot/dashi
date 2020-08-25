@@ -20,7 +20,7 @@ func init() {
 	generateCmd.AddCommand(generate.ModelCmd)
 	generateCmd.AddCommand(generate.GraphqlCmd)
 	generateCmd.AddCommand(generate.WebpackerInstallCmd)
-	generateCmd.AddCommand(generate.StorybookInstallCmd)
+	generateCmd.AddCommand(generate.PackagesCmd)
 
 	rootCmd.AddCommand(generateCmd)
 }

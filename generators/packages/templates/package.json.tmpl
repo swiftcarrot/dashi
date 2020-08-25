@@ -1,22 +1,31 @@
 {
   "name": "{{ .opts.Name }}",
   "version": "0.1.0",
+  "private": true,
   "workspaces": [
     "packages/*"
   ],
-  "private": true,
+  "scripts": {
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
+  },
   "dependencies": {},
   "devDependencies": {
+    "@babel/core": "7.x",
+    "@storybook/addon-actions": "6.x",
+    "@storybook/addon-essentials": "6.x",
+    "@storybook/addon-links": "6.x",
+    "@storybook/react": "6.x",
     "@typescript-eslint/eslint-plugin": "2.x",
     "@typescript-eslint/parser": "2.x",
     "babel-eslint": "10.x",
     "eslint": "6.x",
-    "eslint-config-react-app": "^5.2.1",
+    "eslint-config-react-app": "5.x",
     "eslint-plugin-flowtype": "4.x",
     "eslint-plugin-import": "2.x",
     "eslint-plugin-jsx-a11y": "6.x",
     "eslint-plugin-react": "7.x",
     "eslint-plugin-react-hooks": "2.x",
-    "prettier": "^2.0.5"
+    "prettier": "2.x"
   }
 }

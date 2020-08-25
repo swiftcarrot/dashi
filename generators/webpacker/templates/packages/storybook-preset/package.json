@@ -1,10 +1,9 @@
 {
-  "name": "components",
+  "name": "storybook-preset",
   "version": "0.1.0",
   "main": "./src/index.js",
   "private": true,
   "dependencies": {
-    "clsx": "^1.1.1",
-    "prop-types": "^15.7.2"
+    "glob": "^7.1.6"
   }
 }

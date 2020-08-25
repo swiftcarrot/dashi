@@ -3,6 +3,11 @@
 ## Unreleased
 
 - webpacker & storybook improvements
+- default storybook integration
+- storybook v6
+- add `storybook-preset` package
+- add `g packages`
+- fix html minify options in webpacker
 
 ## 0.3.0
 
