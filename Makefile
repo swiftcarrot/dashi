@@ -4,6 +4,7 @@ all: fmt build install
 
 fmt:
 	gofmt -w $(GOFMT_FILES)
+	yarn prettier --write '**/*.{js,json,jsx,ts,tsx,graphql,yaml,yml,md}' --loglevel warn
 
 build:
 	find . -name ".DS_Store" -delete

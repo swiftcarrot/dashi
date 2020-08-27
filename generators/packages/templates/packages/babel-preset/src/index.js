@@ -1,4 +1,4 @@
-module.exports = function(api, { production }) {
+module.exports = function (api, { production }) {
   const prod = production || process.env.NODE_ENV === 'production';
 
   return {
