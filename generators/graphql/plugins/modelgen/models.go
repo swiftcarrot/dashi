@@ -8,6 +8,7 @@ import (
 	"github.com/99designs/gqlgen/codegen/config"
 	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/99designs/gqlgen/plugin"
+	"github.com/gobuffalo/packr/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
 
@@ -215,12 +216,19 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 		b = m.MutateHook(b)
 	}
 
+	box := packr.New("dashi:graphql:model", "./templates")
+	modelTemplate, err := box.FindString("model.tmpl")
+	if err != nil {
+		return err
+	}
+
 	return templates.Render(templates.Options{
 		PackageName:     cfg.Model.Package,
 		Filename:        cfg.Model.Filename,
 		Data:            b,
 		GeneratedHeader: true,
 		Packages:        cfg.Packages,
+		Template:        modelTemplate,
 	})
 }
 

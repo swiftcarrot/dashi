@@ -2,6 +2,10 @@
 
 ## Unreleased
 
+## 0.4.2
+
+- fix gqlgen model plugin missing
+
 ## 0.4.1
 
 - remove `g webpacker:install`

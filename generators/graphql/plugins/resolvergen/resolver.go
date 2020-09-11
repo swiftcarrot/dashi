@@ -70,7 +70,7 @@ func (m *Plugin) generateSingleFile(data *codegen.Data) error {
 		HasRoot:      true,
 	}
 
-	box := packr.New("dashi:graphql:templates", "./templates")
+	box := packr.New("dashi:graphql:resolver", "./templates")
 	resolverTemplate, err := box.FindString("resolver.tmpl")
 	if err != nil {
 		return err
