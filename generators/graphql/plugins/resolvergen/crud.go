@@ -23,9 +23,8 @@ func renderCRUD(field *codegen.Field) (string, error) {
 	}
 
 	t, err := template.New("crud.tmpl").Funcs(template.FuncMap{
-		"lcFirst": templates.LcFirst,
-		"go":      templates.ToGo,
-
+		"lcFirst":          templates.LcFirst,
+		"go":               templates.ToGo,
 		"isCRUDResolver":   isCRUDResolver,
 		"entityFromResult": func(s string) string { return strings.ReplaceAll(s, "Items", "") },
 		"pluralize":        func(s string) string { return flect.Pluralize(s) },
