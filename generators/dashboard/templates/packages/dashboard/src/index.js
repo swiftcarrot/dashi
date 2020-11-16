@@ -16,7 +16,7 @@ import { HomePage, GraphiQLPage } from 'src/pages';
 const ENDPOINT =
   process.env.NODE_ENV === 'development'
     ? 'http://localhost:8080'
-    : 'https://api.yousite.com/graphql';
+    : 'https://api.yousite.com';
 
 const httpLink = createHttpLink({
   uri: ENDPOINT + '/graphql',
