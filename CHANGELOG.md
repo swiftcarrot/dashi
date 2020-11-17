@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- remove Pagination & items in scaffold
+
 ## 0.4.2
 
 - fix gqlgen model plugin missing
