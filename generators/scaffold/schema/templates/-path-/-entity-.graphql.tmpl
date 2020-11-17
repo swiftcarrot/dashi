@@ -4,11 +4,6 @@ type {{ .opts.Name.String }} {
 	{{- end }}
 }
 
-type {{.opts.Name.String}}Items {
-	items: [{{ .opts.Name.String }}]!
-	pagination: Pagination
-}
-
 input Create{{ .opts.Name.String }}Input {
 	{{- range .opts.Attrs -}}
 		{{- if and (ne .Name.String "id") (ne .Name.String "created_at") ((ne .Name.String "updated_at")) }}
@@ -31,7 +26,7 @@ input Delete{{ .opts.Name.String }}Input {
 
 extend type Query {
 	{{ .opts.Name.Singularize.Camelize }}(id: ID!): {{ .opts.Name }} @generated(type: "get")
-	{{ .opts.Name.Pluralize.Camelize }}(page: Int, perPage: Int): {{.opts.Name.String}}Items @generated(type: "list")
+	{{ .opts.Name.Pluralize.Camelize }}(page: Int, perPage: Int): [{{.opts.Name.String}}!]! @generated(type: "list")
 }
 
 extend type Mutation {

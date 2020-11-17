@@ -86,28 +86,10 @@
 	{{- $entityType :=  $resultType | entityFromResult -}}
 	{{- $entity := $entityType | lcFirst | pluralize -}}
 	{{$entity}} := &[]*models.{{$entityType}}{}
-	if page == nil {
-		page = &Page
-	}
-	if perPage == nil {
-		perPage = &PerPage
-	}
-	err := r.Conn.Paginate(*page, *perPage).All({{$entity}})
+	err := r.Conn.All({{$entity}})
 	if err != nil {
 		return nil, err
 	}
 
-	total, err := r.Conn.Count({{$entity}})
-	if err != nil {
-		return nil, err
-	}
-
-	return &generated.{{$resultType}}{
-			Items: *{{$entity}},
-			Pagination: &generated.Pagination{
-				Total:            total,
-				CurrentPage:      *page,
-				CurrentPageCount: len(*{{$entity}}),
-				PerPage:          *perPage,
-			}}, nil
+	return *{{$entity}}, nil
 {{ end }}

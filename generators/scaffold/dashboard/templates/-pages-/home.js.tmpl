@@ -23,7 +23,7 @@ const {{.opts.Name}}HomePage = () => {
   return (
     <div>
       <PageHeader title="{{.opts.Name.Pluralize}}" extra={<Link to="/{{.opts.Name.Pluralize.ToLower}}/new">New {{.opts.Name}}</Link>} />
-      <{{.opts.Name}}Table data={data.{{.opts.Name.Camelize.Pluralize}}.items} onDelete={handleDelete} />
+      <{{.opts.Name}}Table data={data.{{.opts.Name.Camelize.Pluralize}}} onDelete={handleDelete} />
     </div>
   );
 };
@@ -31,14 +31,12 @@ const {{.opts.Name}}HomePage = () => {
 const GET_{{.opts.Name.Pluralize.Underscore.ToUpper}} =  gql`
   query {{.opts.Name.Pluralize}} {
     {{.opts.Name.Camelize.Pluralize}} {
-      items {
-        id
-        {{- range .opts.Attrs }}
-          {{ .Name.Camelize }}
-        {{- end }}
-        createdAt
-        updatedAt
-      }
+      id
+      {{- range .opts.Attrs }}
+        {{ .Name.Camelize }}
+      {{- end }}
+      createdAt
+      updatedAt
     }
   }
 `

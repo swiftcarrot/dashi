@@ -7,13 +7,6 @@ scalar Time
 scalar Map
 scalar Any
 
-type Pagination {
-  perPage: Int!
-  total: Int!
-  currentPageCount: Int!
-  currentPage: Int!
-}
-
 type Mutation {
   any: Any
 }
