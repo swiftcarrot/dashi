@@ -17,7 +17,7 @@ const {{.opts.Name}}EditPage = () => {
         navigate(`/{{.opts.Name.Pluralize.ToLower}}/${id}`)
       })
       .catch((err) => {
-        console.warn(err);
+        console.error(err);
         setSubmitting(false);
       });
   }

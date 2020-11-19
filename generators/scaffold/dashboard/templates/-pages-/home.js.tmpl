@@ -11,8 +11,8 @@ const {{.opts.Name}}HomePage = () => {
   function handleDelete(item) {
     return delete{{.opts.Name}}({variables: { input: { id: item.id } }}).then(() => {
       refetch();
-    }).catch(err => {
-      console.warn(err);
+    }).catch((err) => {
+      console.error(err);
       alert('Delete failed');
     });
   }

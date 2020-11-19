@@ -12,8 +12,8 @@ const {{.opts.Name}}NewPage = (props) => {
     return create{{.opts.Name}}({variables: { input: values }}).then((resp) => {
       setSubmitting(false)
       navigate(`/{{.opts.Name.Pluralize.ToLower}}/${resp.data.create{{.opts.Name}}.id}`)
-    }).catch(err => {
-      console.warn(err);
+    }).catch((err) => {
+      console.error(err);
       setSubmitting(false);
       alert('Create failed')
     })
