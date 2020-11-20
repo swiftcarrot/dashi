@@ -13,6 +13,7 @@ const {{.opts.Name}}Page = () => {
   return (
     <div>
       <PageHeader title="{{.opts.Name}}" extra={<Link to={`/{{.opts.Name.Pluralize.ToLower}}/${id}/edit`}>Edit</Link>} />
+      <div>ID: {data.{{$.opts.Name.Camelize}}.id}</div>
       {{- range .opts.Attrs -}}
         <div>{{ .Name.Pascalize }}: { data.{{$.opts.Name.Camelize}}.{{ .Name.Camelize }} }</div>
       {{- end }}
