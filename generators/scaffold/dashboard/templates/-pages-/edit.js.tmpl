@@ -18,6 +18,7 @@ const {{.opts.Name}}EditPage = () => {
       })
       .catch((err) => {
         console.error(err);
+        alert('Update failed');
         setSubmitting(false);
       });
   }
