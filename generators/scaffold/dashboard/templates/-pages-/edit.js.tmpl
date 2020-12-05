@@ -12,9 +12,9 @@ const {{.opts.Name}}EditPage = () => {
 
   function handleSubmit(values, { setSubmitting }) {
     return update{{.opts.Name}}({variables: { input: { ...values, id } }})
-      .then((data) => {
+      .then((resp) => {
         setSubmitting(false);
-        navigate(`/{{.opts.Name.Pluralize.ToLower}}/${id}`)
+        navigate(`/{{.opts.Name.Pluralize.ToLower}}/${resp.data.update{{.opts.Name}}.id}`)
       })
       .catch((err) => {
         console.error(err);
