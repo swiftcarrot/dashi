@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, FormGroup, FormSubmit } from 'components';
 
-const {{.opts.Name}}Form = (props) => {
+export default function {{.opts.Name}}Form(props) {
   return (
     <Form {...props}>
       {{- range .opts.Attrs -}}
@@ -13,5 +13,3 @@ const {{.opts.Name}}Form = (props) => {
     </Form>
   );
 };
-
-export default {{.opts.Name}}Form;

@@ -3,7 +3,7 @@ import { gql, useQuery } from '@apollo/client'
 import { Link, useParams } from 'react-router-dom';
 import { Loading, Failure, PageHeader } from 'components/src'
 
-const {{.opts.Name}}Page = () => {
+export default function {{.opts.Name}}Page() {
   const { id } = useParams();
   const { loading, error, data, refetch } = useQuery(GET_{{.opts.Name.Underscore.ToUpper}}, { variables: { id }});
 
@@ -33,5 +33,3 @@ const GET_{{.opts.Name.Underscore.ToUpper}} = gql`
     }
   }
 `
-
-export default {{.opts.Name}}Page;

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Loading, Failure, PageHeader } from 'components/src'
 import { {{.opts.Name}}Table } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
 
-const {{.opts.Name}}HomePage = () => {
+export default function {{.opts.Name}}HomePage() {
   const { loading, data, error, refetch } = useQuery(GET_{{.opts.Name.Pluralize.Underscore.ToUpper}});
   const [delete{{.opts.Name}}] = useMutation(DELETE_{{.opts.Name.ToUpper}});
 
@@ -48,5 +48,3 @@ const DELETE_{{.opts.Name.ToUpper}} = gql`
     }
   }
 `
-
-export default {{.opts.Name.Pascalize}}HomePage;

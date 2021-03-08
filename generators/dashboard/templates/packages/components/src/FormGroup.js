@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormLabel, FormControl, FormError } from '@swiftcarrot/react-form';
 
-const FormGroup = ({ name, label, ...props }) => {
+export default function FormGroup({ name, label, ...props }) {
   return (
     <div className="form-group">
       {label ? (
@@ -13,6 +13,4 @@ const FormGroup = ({ name, label, ...props }) => {
       <FormError name={name} className="form-error" />
     </div>
   );
-};
-
-export default FormGroup;
+}

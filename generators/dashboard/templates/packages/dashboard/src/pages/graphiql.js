@@ -11,13 +11,11 @@ function graphQLFetcher(graphQLParams) {
   }).then((response) => response.json());
 }
 
-const GraphiQLPage = () => {
+export default function GraphiQLPage() {
   return (
     <div className="graphiql">
       <PageHeader title="GraphiQL" />
       <GraphiQL fetcher={graphQLFetcher} />
     </div>
   );
-};
-
-export default GraphiQLPage;
+}

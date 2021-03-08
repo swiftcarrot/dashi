@@ -1,7 +1,7 @@
 import React from 'react';
 import get from 'lodash/get';
 
-const Table = ({ keyExtractor, columns, data, ...props }) => {
+export default function Table({ keyExtractor, columns, data, ...props }) {
   return (
     <table {...props}>
       <thead>
@@ -25,7 +25,7 @@ const Table = ({ keyExtractor, columns, data, ...props }) => {
       </tbody>
     </table>
   );
-};
+}
 
 function renderCell(col, row) {
   if (col.render) {
@@ -34,5 +34,3 @@ function renderCell(col, row) {
 
   return get(row, col.key);
 }
-
-export default Table;

@@ -4,7 +4,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { Loading, Failure, PageHeader } from 'components/src'
 import { {{.opts.Name}}Form } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
 
-const {{.opts.Name}}EditPage = () => {
+export default function {{.opts.Name}}EditPage() {
   const { id } = useParams();
   const navigate = useNavigate();
   const { loading, error, data, refetch } = useQuery(GET_{{.opts.Name.Underscore.ToUpper}}, { variables: { id } });
@@ -57,6 +57,3 @@ const UPDATE_{{.opts.Name.Underscore.ToUpper}} = gql`
     }
   }
 `;
-
-
-export default {{.opts.Name}}EditPage;

@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { PageHeader } from 'components/src';
 import { {{.opts.Name}}Form } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
 
-const {{.opts.Name}}NewPage = (props) => {
+export default function {{.opts.Name}}NewPage(props) {
   const navigate = useNavigate();
   const [create{{.opts.Name}}] = useMutation(CREATE_{{.opts.Name.ToUpper}});
 
@@ -38,5 +38,3 @@ const CREATE_{{.opts.Name.ToUpper}} = gql`
     }
   }
 `;
-
-export default {{.opts.Name}}NewPage;

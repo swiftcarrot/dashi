@@ -3,6 +3,7 @@
 ## Unreleased
 
 - remove Pagination & items in scaffold
+- js `export default function()` one liner
 
 ## 0.4.2
 
