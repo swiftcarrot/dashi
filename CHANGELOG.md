@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 0.5.0
 
 - remove Pagination & items in scaffold
 - js `export default function()` one liner
