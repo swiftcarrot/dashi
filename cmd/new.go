@@ -26,7 +26,7 @@ func getGopath() string {
 
 var newCmd = &cobra.Command{
 	Use:   "new",
-	Short: "Create new project",
+	Short: "Create new dashi project",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		pwd, err := os.Getwd()
 		if err != nil {

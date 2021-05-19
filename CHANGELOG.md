@@ -1,6 +1,7 @@
 # CHANGELOG
 
 - fix `defer` in database template
+- rm `cmd/pack`
 
 ## 0.5.0
 
