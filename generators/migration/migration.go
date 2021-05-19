@@ -1,11 +1,11 @@
 package migration
 
 import (
-	"github.com/gobuffalo/genny/v2"
-	"github.com/gobuffalo/genny/v2/gogen"
 	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/dashi/generators/attrs/database"
+	"github.com/swiftcarrot/dashi/genny"
+	"github.com/swiftcarrot/dashi/genny/gogen"
 )
 
 type MigrationError struct {

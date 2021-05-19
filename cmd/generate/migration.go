@@ -4,16 +4,14 @@ import (
 	"context"
 	"time"
 
-	"github.com/gobuffalo/genny/v2"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/migration"
+	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/flect"
 )
 
 func GetTime() string {
-	t := time.Now()
-
-	return t.Format("20060102150405")
+	return time.Now().Format("20060102150405")
 }
 
 var MigrationCmd = &cobra.Command{
