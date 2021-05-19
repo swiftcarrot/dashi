@@ -1,12 +1,18 @@
 package migration
 
 import (
+	"embed"
+	"log"
+
 	"github.com/gobuffalo/nulls"
 	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/dashi/generators/attrs/database"
 	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/dashi/genny/gogen"
 )
+
+//go:embed templates
+var templates embed.FS
 
 type MigrationError struct {
 	Message string
@@ -17,13 +23,16 @@ func (e *MigrationError) Error() string {
 }
 
 func New(opts *Options) (*genny.Generator, error) {
+	b, _ := templates.ReadFile("templates/time_name.postgres.up.sql.tmpl")
+	log.Println(string(b))
+
 	g := genny.New()
 
 	if err := opts.Validate(); err != nil {
 		return g, err
 	}
 	if opts.Dialect == "postgres" {
-		if err := g.Box(packr.New("dashi:generators:migration:postgres", "../migration/templates/postgres")); err != nil {
+		if err := g.Box(packr.New("dashi:generators:migration:postgres", "./templates")); err != nil {
 			return g, err
 		}
 	} else {
@@ -65,12 +74,12 @@ func New(opts *Options) (*genny.Generator, error) {
 
 	t := gogen.TemplateTransformer(ctx, help)
 	g.Transformer(t)
-	g.Transformer(genny.Replace("-time-", opts.Time))
+	g.Transformer(genny.Replace("time", opts.Time))
 
 	if len(opts.Attrs) > 0 {
-		g.Transformer(genny.Replace("-name-", "create_"+opts.Name.Underscore().Pluralize().String()))
+		g.Transformer(genny.Replace("name", "create_"+opts.Name.Underscore().Pluralize().String()))
 	} else {
-		g.Transformer(genny.Replace("-name-", opts.Name.Underscore().String()))
+		g.Transformer(genny.Replace("name", opts.Name.Underscore().String()))
 	}
 
 	return g, nil
