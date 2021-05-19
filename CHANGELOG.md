@@ -2,6 +2,7 @@
 
 - fix `defer` in database template
 - rm `cmd/pack`
+- rm `packr`
 
 ## 0.5.0
 
