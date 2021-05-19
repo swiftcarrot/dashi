@@ -1,10 +1,14 @@
 package database
 
 import (
-  "github.com/gobuffalo/packr/v2"
+  "embed"
+
+  "github.com/swifcarrot/dashi/database"
   "github.com/gobuffalo/pop"
   "{{ .opts.Package }}/config"
 )
+
+var MigrationsFS embed.FS
 
 func Connect() (*pop.Connection, error) {
   config, err := config.Load()
@@ -52,7 +56,7 @@ func DatabaseMigrate() error {
     return err
   }
 
-  mig, err := pop.NewMigrationBox(packr.New("Migrations", "../../migrations"), conn)
+  mig, err := database.NewEmbedMigrator(&MigrationsFS, conn)
   if err != nil {
     return err
   }
@@ -66,7 +70,7 @@ func DatabaseRollback() error {
     return err
   }
 
-  mig, err := pop.NewMigrationBox(packr.New("Migrations", "../../migrations"), conn)
+  mig, err := database.NewEmbedMigrator(&MigrationsFS, conn)
   if err != nil {
     return err
   }

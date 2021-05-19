@@ -4,6 +4,7 @@
 
 - remove Pagination & items in scaffold
 - js `export default function()` one liner
+- use go embed for project migration files, add database package
 
 ## 0.4.2
 

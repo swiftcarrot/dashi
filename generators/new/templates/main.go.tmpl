@@ -1,7 +1,17 @@
 package main
 
-import "{{ .opts.Package }}/cmd"
+import (
+	"embed"
+
+	"{{ .opts.Package }}/cmd"
+	"{{ .opts.Package }}/cmd/database"
+)
+
+//go:embed migrations/*
+var migrationsFS embed.FS
 
 func main() {
+	database.MigrationsFS = migrationsFS
+
   cmd.Execute()
 }

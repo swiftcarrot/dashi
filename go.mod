@@ -1,12 +1,14 @@
 module github.com/swiftcarrot/dashi
 
-go 1.13
+go 1.16
 
 require (
 	github.com/99designs/gqlgen v0.11.3
 	github.com/agnivade/levenshtein v1.1.0 // indirect
-	github.com/go-sql-driver/mysql v1.5.0 // indirect
+	github.com/cockroachdb/cockroach-go v2.0.1+incompatible // indirect
+	github.com/fatih/color v1.11.0 // indirect
 	github.com/gobuffalo/envy v1.9.0 // indirect
+	github.com/gobuffalo/fizz v1.13.0 // indirect
 	github.com/gobuffalo/genny v0.6.0
 	github.com/gobuffalo/genny/v2 v2.0.6
 	github.com/gobuffalo/logger v1.0.3
@@ -15,7 +17,6 @@ require (
 	github.com/gobuffalo/pop v4.13.1+incompatible
 	github.com/gofrs/uuid v3.3.0+incompatible
 	github.com/karrick/godirwalk v1.15.6 // indirect
-	github.com/kr/pretty v0.2.0 // indirect
 	github.com/lib/pq v1.5.2
 	github.com/pkg/errors v0.9.1
 	github.com/rogpeppe/go-internal v1.6.0 // indirect
