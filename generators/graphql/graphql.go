@@ -8,7 +8,7 @@ import (
 	"github.com/99designs/gqlgen/codegen/config"
 	"github.com/swiftcarrot/dashi/generators/graphql/plugins/modelgen"
 	"github.com/swiftcarrot/dashi/generators/graphql/plugins/resolvergen"
-	"github.com/swiftcarrot/dashi/genny"
+	"github.com/swiftcarrot/genny"
 )
 
 func New() (*genny.Generator, error) {

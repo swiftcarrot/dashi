@@ -5,8 +5,8 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/packages"
-	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/flect"
+	"github.com/swiftcarrot/genny"
 )
 
 var PackagesCmd = &cobra.Command{

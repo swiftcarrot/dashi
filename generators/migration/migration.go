@@ -5,8 +5,8 @@ import (
 
 	"github.com/gobuffalo/nulls"
 	"github.com/swiftcarrot/dashi/generators/attrs/database"
-	"github.com/swiftcarrot/dashi/genny"
-	"github.com/swiftcarrot/dashi/genny/gogen"
+	"github.com/swiftcarrot/genny"
+	"github.com/swiftcarrot/genny/gogen"
 )
 
 //go:embed templates

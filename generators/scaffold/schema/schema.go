@@ -6,9 +6,9 @@ import (
 	"text/template"
 
 	"github.com/swiftcarrot/dashi/generators/scaffold"
-	"github.com/swiftcarrot/dashi/genny"
-	"github.com/swiftcarrot/dashi/genny/gogen"
 	"github.com/swiftcarrot/flect"
+	"github.com/swiftcarrot/genny"
+	"github.com/swiftcarrot/genny/gogen"
 )
 
 //go:embed templates

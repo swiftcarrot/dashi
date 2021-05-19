@@ -5,7 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/dashboard"
-	"github.com/swiftcarrot/dashi/genny"
+	"github.com/swiftcarrot/genny"
 )
 
 var DashboardCmd = &cobra.Command{

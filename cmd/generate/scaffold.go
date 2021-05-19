@@ -13,8 +13,8 @@ import (
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
 	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
-	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/flect"
+	"github.com/swiftcarrot/genny"
 )
 
 func getOptions(args []string) (*scaffold.Options, error) {

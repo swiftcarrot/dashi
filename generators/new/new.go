@@ -7,8 +7,8 @@ import (
 
 	"github.com/swiftcarrot/dashi/generators/dashboard"
 	"github.com/swiftcarrot/dashi/generators/packages"
-	"github.com/swiftcarrot/dashi/genny"
-	"github.com/swiftcarrot/dashi/genny/gogen"
+	"github.com/swiftcarrot/genny"
+	"github.com/swiftcarrot/genny/gogen"
 )
 
 //go:embed templates

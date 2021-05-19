@@ -6,7 +6,7 @@ import (
 	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/graphql"
-	"github.com/swiftcarrot/dashi/genny"
+	"github.com/swiftcarrot/genny"
 )
 
 var GraphqlCmd = &cobra.Command{

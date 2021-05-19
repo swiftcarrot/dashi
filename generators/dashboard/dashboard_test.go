@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/require"
-	"github.com/swiftcarrot/dashi/genny/gentest"
+	"github.com/swiftcarrot/genny/gentest"
 )
 
 func Test_New(t *testing.T) {

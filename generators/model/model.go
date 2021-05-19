@@ -4,10 +4,10 @@ import (
 	"embed"
 	"strings"
 
-	"github.com/swiftcarrot/dashi/genny"
-	"github.com/swiftcarrot/dashi/genny/gogen"
 	"github.com/swiftcarrot/flect"
 	"github.com/swiftcarrot/flect/name"
+	"github.com/swiftcarrot/genny"
+	"github.com/swiftcarrot/genny/gogen"
 )
 
 //go:embed templates
