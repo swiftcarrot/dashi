@@ -3,9 +3,9 @@ package generate
 import (
 	"context"
 
-	"github.com/gobuffalo/genny/v2"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/dashboard"
+	"github.com/swiftcarrot/dashi/genny"
 )
 
 var DashboardCmd = &cobra.Command{

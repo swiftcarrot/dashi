@@ -5,7 +5,7 @@ import (
 	"go/ast"
 	"strings"
 
-	"github.com/gobuffalo/genny/v2"
+	"github.com/swiftcarrot/dashi/genny"
 )
 
 // AddInsideBlock will add anything inside of the app declaration block inside of file

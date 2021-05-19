@@ -3,8 +3,8 @@ package scaffold
 import (
 	"testing"
 
-	"github.com/gobuffalo/genny/v2/gentest"
 	"github.com/stretchr/testify/require"
+	"github.com/swiftcarrot/dashi/genny/gentest"
 )
 
 func Test_New(t *testing.T) {

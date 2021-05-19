@@ -8,9 +8,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/packd"
 	"github.com/stretchr/testify/require"
+	"github.com/swiftcarrot/dashi/genny"
 )
 
 func Test_Disk_Files(t *testing.T) {

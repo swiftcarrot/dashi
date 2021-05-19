@@ -6,10 +6,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/new"
+	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/flect"
 )
 

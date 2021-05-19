@@ -6,9 +6,9 @@ import (
 
 	"github.com/99designs/gqlgen/api"
 	"github.com/99designs/gqlgen/codegen/config"
-	"github.com/gobuffalo/genny/v2"
 	"github.com/swiftcarrot/dashi/generators/graphql/plugins/modelgen"
 	"github.com/swiftcarrot/dashi/generators/graphql/plugins/resolvergen"
+	"github.com/swiftcarrot/dashi/genny"
 )
 
 func New() (*genny.Generator, error) {

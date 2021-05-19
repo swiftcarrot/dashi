@@ -5,10 +5,10 @@ import (
 
 	"github.com/swiftcarrot/dashi/generators/migration"
 
-	"github.com/gobuffalo/genny/v2"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/attrs"
 	"github.com/swiftcarrot/dashi/generators/model"
+	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/flect"
 )
 

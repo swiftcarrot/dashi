@@ -7,7 +7,7 @@ import (
 
 	"text/template"
 
-	"github.com/gobuffalo/genny/v2"
+	"github.com/swiftcarrot/dashi/genny"
 )
 
 var TemplateHelpers = map[string]interface{}{}

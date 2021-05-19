@@ -3,7 +3,7 @@ package gentest
 import (
 	"context"
 
-	"github.com/gobuffalo/genny/v2"
+	"github.com/swiftcarrot/dashi/genny"
 )
 
 // NewRunner is a dry runner with gentest.NewLogger()

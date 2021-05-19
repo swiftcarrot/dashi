@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/gobuffalo/genny/v2"
+	"github.com/swiftcarrot/dashi/genny"
 )
 
 // ReplaceBlockBody will replace found block with expressions passed

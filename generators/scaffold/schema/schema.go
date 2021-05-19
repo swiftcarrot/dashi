@@ -4,10 +4,10 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/gobuffalo/genny/v2"
-	"github.com/gobuffalo/genny/v2/gogen"
 	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/dashi/generators/scaffold"
+	"github.com/swiftcarrot/dashi/genny"
+	"github.com/swiftcarrot/dashi/genny/gogen"
 	"github.com/swiftcarrot/flect"
 )
 

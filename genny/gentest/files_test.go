@@ -3,9 +3,9 @@ package gentest
 import (
 	"testing"
 
-	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/packd"
 	"github.com/stretchr/testify/require"
+	"github.com/swiftcarrot/dashi/genny"
 )
 
 func Test_CompareFiles(t *testing.T) {

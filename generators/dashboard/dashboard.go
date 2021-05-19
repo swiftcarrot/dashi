@@ -4,9 +4,9 @@ import (
 	"os/exec"
 	"text/template"
 
-	"github.com/gobuffalo/genny/v2"
-	"github.com/gobuffalo/genny/v2/gogen"
 	"github.com/gobuffalo/packr/v2"
+	"github.com/swiftcarrot/dashi/genny"
+	"github.com/swiftcarrot/dashi/genny/gogen"
 )
 
 func New(opts *Options) (*genny.Generator, error) {
