@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- fix `defer` in database template
+
 ## 0.5.0
 
 - remove Pagination & items in scaffold

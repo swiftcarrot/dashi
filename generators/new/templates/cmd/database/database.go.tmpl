@@ -3,8 +3,8 @@ package database
 import (
   "embed"
 
-  "github.com/swifcarrot/dashi/database"
   "github.com/gobuffalo/pop"
+  "github.com/swifcarrot/dashi/database"
   "{{ .opts.Package }}/config"
 )
 
@@ -31,30 +31,30 @@ func Connect() (*pop.Connection, error) {
 
 func DatabaseCreate() error {
   conn, err := Connect()
-  defer conn.Close()
   if err != nil {
     return err
   }
+  defer conn.Close()
 
   return pop.CreateDB(conn)
 }
 
 func DatabaseDrop() error {
   conn, err := Connect()
-  defer conn.Close()
   if err != nil {
     return err
   }
+  defer conn.Close()
 
   return pop.DropDB(conn)
 }
 
 func DatabaseMigrate() error {
   conn, err := Connect()
-  defer conn.Close()
   if err != nil {
     return err
   }
+  defer conn.Close()
 
   mig, err := database.NewEmbedMigrator(&MigrationsFS, conn)
   if err != nil {
@@ -65,10 +65,10 @@ func DatabaseMigrate() error {
 
 func DatabaseRollback() error {
   conn, err := Connect()
-  defer conn.Close()
   if err != nil {
     return err
   }
+  defer conn.Close()
 
   mig, err := database.NewEmbedMigrator(&MigrationsFS, conn)
   if err != nil {
