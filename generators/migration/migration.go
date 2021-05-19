@@ -27,18 +27,14 @@ func New(opts *Options) (*genny.Generator, error) {
 		return g, err
 	}
 
-	if err := g.Templates(&templates); err != nil {
-		return g, err
+	if opts.Dialect == "postgres" {
+		if err := g.Templates(&templates); err != nil {
+			return g, err
+		}
+	} else {
+		println("dialect migration not implemented")
+		return nil, &MigrationError{Message: "dialect migration not implemented"}
 	}
-
-	// if opts.Dialect == "postgres" {
-	// 	if err := g.Box(packr.New("dashi:generators:migration:postgres", "./templates")); err != nil {
-	// 		return g, err
-	// 	}
-	// } else {
-	// 	println("dialect migration not implemented")
-	// 	return nil, &MigrationError{Message: "dialect migration not implemented"}
-	// }
 	var ctx map[string]interface{}
 	help := map[string]interface{}{}
 

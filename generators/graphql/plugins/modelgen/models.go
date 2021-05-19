@@ -1,6 +1,7 @@
 package modelgen
 
 import (
+	_ "embed"
 	"fmt"
 	"go/types"
 	"sort"
@@ -8,9 +9,11 @@ import (
 	"github.com/99designs/gqlgen/codegen/config"
 	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/99designs/gqlgen/plugin"
-	"github.com/gobuffalo/packr/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
+
+//go:embed model.tmpl
+var modelTemplate string
 
 type BuildMutateHook = func(b *ModelBuild) *ModelBuild
 
@@ -214,12 +217,6 @@ func (m *Plugin) MutateConfig(cfg *config.Config) error {
 
 	if m.MutateHook != nil {
 		b = m.MutateHook(b)
-	}
-
-	box := packr.New("dashi:graphql:model", "./templates")
-	modelTemplate, err := box.FindString("model.tmpl")
-	if err != nil {
-		return err
 	}
 
 	return templates.Render(templates.Options{

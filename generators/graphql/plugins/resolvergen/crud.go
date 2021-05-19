@@ -2,26 +2,23 @@ package resolvergen
 
 import (
 	"bytes"
+	_ "embed"
 	"strings"
 	"text/template"
 
 	"github.com/99designs/gqlgen/codegen"
 	"github.com/99designs/gqlgen/codegen/templates"
-	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/flect"
 )
+
+//go:embed crud.tmpl
+var crudTemplate string
 
 type crudResolver struct {
 	Field *codegen.Field
 }
 
 func renderCRUD(field *codegen.Field) (string, error) {
-	box := packr.New("dashi:graphql:templates", "./templates")
-	crudTemplate, err := box.FindString("crud.tmpl")
-	if err != nil {
-		return "", err
-	}
-
 	t, err := template.New("crud.tmpl").Funcs(template.FuncMap{
 		"lcFirst":          templates.LcFirst,
 		"go":               templates.ToGo,

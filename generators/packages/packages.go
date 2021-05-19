@@ -1,13 +1,16 @@
 package packages
 
 import (
+	"embed"
 	"html/template"
 	"os/exec"
 
-	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/dashi/genny/gogen"
 )
+
+//go:embed templates
+var templates embed.FS
 
 func New(opts *Options) (*genny.Generator, error) {
 	g := genny.New()
@@ -16,7 +19,7 @@ func New(opts *Options) (*genny.Generator, error) {
 		return g, err
 	}
 
-	if err := g.Box(packr.New("dashi:generators:packages", "../packages/templates")); err != nil {
+	if err := g.Templates(&templates); err != nil {
 		return g, err
 	}
 

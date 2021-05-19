@@ -13,7 +13,7 @@ require (
 	github.com/gobuffalo/logger v1.0.3
 	github.com/gobuffalo/nulls v0.4.0
 	github.com/gobuffalo/packd v1.0.0
-	github.com/gobuffalo/packr/v2 v2.8.0
+	github.com/gobuffalo/packr/v2 v2.8.0 // indirect
 	github.com/gobuffalo/plush/v4 v4.0.0
 	github.com/gobuffalo/pop v4.13.1+incompatible
 	github.com/gofrs/uuid v3.3.0+incompatible

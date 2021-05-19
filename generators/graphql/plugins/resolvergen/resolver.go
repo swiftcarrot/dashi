@@ -1,6 +1,7 @@
 package resolvergen
 
 import (
+	_ "embed"
 	"os"
 	"path/filepath"
 	"strings"
@@ -9,10 +10,12 @@ import (
 	"github.com/99designs/gqlgen/codegen/config"
 	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/99designs/gqlgen/plugin"
-	"github.com/gobuffalo/packr/v2"
 	"github.com/pkg/errors"
 	"github.com/swiftcarrot/dashi/generators/graphql/rewrite"
 )
+
+//go:embed resolver.tmpl
+var resolverTemplate string
 
 func New() plugin.Plugin {
 	return &Plugin{}
@@ -68,12 +71,6 @@ func (m *Plugin) generateSingleFile(data *codegen.Data) error {
 		PackageName:  data.Config.Resolver.Package,
 		ResolverType: data.Config.Resolver.Type,
 		HasRoot:      true,
-	}
-
-	box := packr.New("dashi:graphql:resolver", "./templates")
-	resolverTemplate, err := box.FindString("resolver.tmpl")
-	if err != nil {
-		return err
 	}
 
 	return templates.Render(templates.Options{
@@ -145,12 +142,6 @@ func (m *Plugin) generatePerSchema(data *codegen.Data) error {
 			File:         file,
 			PackageName:  data.Config.Resolver.Package,
 			ResolverType: data.Config.Resolver.Type,
-		}
-
-		box := packr.New("dashi:graphql:templates", "./templates")
-		resolverTemplate, err := box.FindString("resolver.tmpl")
-		if err != nil {
-			return err
 		}
 
 		err = templates.Render(templates.Options{
