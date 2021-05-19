@@ -1,15 +1,18 @@
 package schema
 
 import (
+	"embed"
 	"strings"
 	"text/template"
 
-	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/dashi/genny/gogen"
 	"github.com/swiftcarrot/flect"
 )
+
+//go:embed templates
+var templates embed.FS
 
 func New(opts *scaffold.Options) (*genny.Generator, error) {
 	g := genny.New()
@@ -24,15 +27,16 @@ func New(opts *scaffold.Options) (*genny.Generator, error) {
 		"camelize":   flect.Camelize,
 		"underscore": flect.Underscore,
 	}
-	//Change to camel
+	// Change to camel
 	data := map[string]interface{}{
 		"opts": opts,
 	}
 	t := gogen.TemplateTransformer(data, helpers)
 	g.Transformer(t)
-	g.Transformer(genny.Replace("-entity-", opts.Name.Singularize().ToLower().String()))
-	g.Transformer(genny.Replace("-path-", "schema"))
-	if err := g.Box(packr.New("scaffold:schema:templates", "../schema/templates")); err != nil {
+	g.Transformer(genny.Replace("entity", opts.Name.Singularize().ToLower().String()))
+	g.Transformer(genny.Replace("path", "schema"))
+
+	if err := g.Templates(&templates); err != nil {
 		return g, err
 	}
 

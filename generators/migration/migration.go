@@ -2,10 +2,8 @@ package migration
 
 import (
 	"embed"
-	"log"
 
 	"github.com/gobuffalo/nulls"
-	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/dashi/generators/attrs/database"
 	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/dashi/genny/gogen"
@@ -23,22 +21,24 @@ func (e *MigrationError) Error() string {
 }
 
 func New(opts *Options) (*genny.Generator, error) {
-	b, _ := templates.ReadFile("templates/time_name.postgres.up.sql.tmpl")
-	log.Println(string(b))
-
 	g := genny.New()
 
 	if err := opts.Validate(); err != nil {
 		return g, err
 	}
-	if opts.Dialect == "postgres" {
-		if err := g.Box(packr.New("dashi:generators:migration:postgres", "./templates")); err != nil {
-			return g, err
-		}
-	} else {
-		println("dialect migration not implemented")
-		return nil, &MigrationError{Message: "dialect migration not implemented"}
+
+	if err := g.Templates(&templates); err != nil {
+		return g, err
 	}
+
+	// if opts.Dialect == "postgres" {
+	// 	if err := g.Box(packr.New("dashi:generators:migration:postgres", "./templates")); err != nil {
+	// 		return g, err
+	// 	}
+	// } else {
+	// 	println("dialect migration not implemented")
+	// 	return nil, &MigrationError{Message: "dialect migration not implemented"}
+	// }
 	var ctx map[string]interface{}
 	help := map[string]interface{}{}
 

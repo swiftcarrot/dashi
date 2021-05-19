@@ -1,13 +1,16 @@
 package dashboard
 
 import (
+	"embed"
 	"text/template"
 
-	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/dashi/generators/scaffold"
 	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/dashi/genny/gogen"
 )
+
+//go:embed templates
+var templates embed.FS
 
 func New(opts *scaffold.Options) (*genny.Generator, error) {
 	g := genny.New()
@@ -23,8 +26,7 @@ func New(opts *scaffold.Options) (*genny.Generator, error) {
 	g.Transformer(genny.Replace("-pages-", "packages/dashboard/src/pages/"+name))
 	g.Transformer(genny.Replace("-components-", "packages/components/src/"+name))
 
-	err := g.Box(packr.New("scaffold:dashboard:templates", "../dashboard/templates"))
-	if err != nil {
+	if err := g.Templates(&templates); err != nil {
 		return g, err
 	}
 

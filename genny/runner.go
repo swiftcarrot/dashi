@@ -241,6 +241,10 @@ func (r *Runner) File(f File) error {
 	return nil
 }
 
+func (r *Runner) Template(path string) error {
+	return nil
+}
+
 func (r *Runner) FindFile(name string) (File, error) {
 	return r.Disk.Find(name)
 }

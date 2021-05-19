@@ -9,7 +9,6 @@ fmt:
 build:
 	find . -name ".DS_Store" -delete
 	go mod tidy
-	~/go/bin/packr2
 	go build -ldflags "-X github.com/swiftcarrot/dashi/cmd.Version=`git rev-parse HEAD`" -o bin/dashi
 
 install:

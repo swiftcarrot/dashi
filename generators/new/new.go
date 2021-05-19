@@ -1,15 +1,18 @@
 package new
 
 import (
+	"embed"
 	"html/template"
 	"os/exec"
 
-	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/dashi/generators/dashboard"
 	"github.com/swiftcarrot/dashi/generators/packages"
 	"github.com/swiftcarrot/dashi/genny"
 	"github.com/swiftcarrot/dashi/genny/gogen"
 )
+
+//go:embed templates
+var templates embed.FS
 
 func New(opts *Options) (*genny.Group, error) {
 	err := opts.Validate()
@@ -25,7 +28,7 @@ func New(opts *Options) (*genny.Group, error) {
 		return nil
 	})
 
-	g.Box(packr.New("dashi:generators:new", "../new/templates"))
+	g.Templates(&templates)
 
 	data := map[string]interface{}{
 		"opts": opts,
@@ -37,7 +40,7 @@ func New(opts *Options) (*genny.Group, error) {
 	g.Transformer(genny.Dot())
 	gg.Add(g)
 
-	if opts.APIOnly != true {
+	if !opts.APIOnly {
 		packages, err := packages.New(&packages.Options{
 			Name: opts.Name,
 		})

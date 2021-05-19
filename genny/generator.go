@@ -1,8 +1,11 @@
 package genny
 
 import (
+	"embed"
+	"io/fs"
 	"math/rand"
 	"os/exec"
+	"strings"
 	"sync"
 	"time"
 
@@ -75,6 +78,25 @@ func (g *Generator) Command(cmd *exec.Cmd) {
 func (g *Generator) Box(box packd.Walker) error {
 	return box.Walk(func(path string, f packd.File) error {
 		g.File(NewFile(path, f))
+		return nil
+	})
+}
+
+func (g *Generator) Templates(templates *embed.FS) error {
+	return fs.WalkDir(templates, ".", func(path string, d fs.DirEntry, err error) error {
+		if err != nil {
+			return err
+		}
+
+		if !d.IsDir() {
+			f, err := templates.Open(path)
+			if err != nil {
+				return err
+			}
+			name := strings.TrimPrefix(path, "templates/")
+			g.File(NewFile(name, f))
+		}
+
 		return nil
 	})
 }
