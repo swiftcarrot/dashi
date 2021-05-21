@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/99designs/gqlgen/graphql"
 	"github.com/gobuffalo/nulls"
+	"github.com/swiftcarrot/dashi/gqlgen/graphql"
 )
 
 func MarshalNullsInt(s nulls.Int) graphql.Marshaler {
