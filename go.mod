@@ -15,8 +15,14 @@ require (
 	github.com/gobuffalo/pop v4.13.1+incompatible
 	github.com/gobuffalo/validate v2.0.4+incompatible // indirect
 	github.com/gofrs/uuid v3.3.0+incompatible
+	github.com/gorilla/websocket v1.4.0
+	github.com/hashicorp/golang-lru v0.5.4
 	github.com/karrick/godirwalk v1.15.6 // indirect
 	github.com/lib/pq v1.5.2
+	github.com/logrusorgru/aurora v2.0.3+incompatible
+	github.com/mattn/go-colorable v0.1.8
+	github.com/mattn/go-isatty v0.0.12
+	github.com/mitchellh/mapstructure v1.1.2
 	github.com/pkg/errors v0.9.1
 	github.com/rogpeppe/go-internal v1.6.0 // indirect
 	github.com/sirupsen/logrus v1.6.0 // indirect
