@@ -6,8 +6,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/swiftcarrot/dashi/gqlgen/codegen"
-	"github.com/swiftcarrot/dashi/gqlgen/codegen/templates"
+	"github.com/99designs/gqlgen/codegen"
+	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/swiftcarrot/flect"
 )
 

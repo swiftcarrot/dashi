@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/swiftcarrot/dashi/gqlgen/graphql"
+	"github.com/99designs/gqlgen/graphql"
 )
 
 // Map is a map[string]interface.

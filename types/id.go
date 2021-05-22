@@ -6,7 +6,7 @@ import (
 	"io"
 	"strconv"
 
-	"github.com/swiftcarrot/dashi/gqlgen/graphql"
+	"github.com/99designs/gqlgen/graphql"
 )
 
 func MarshalID(s string) graphql.Marshaler {

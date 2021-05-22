@@ -6,12 +6,12 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/99designs/gqlgen/codegen"
+	"github.com/99designs/gqlgen/codegen/config"
+	"github.com/99designs/gqlgen/codegen/templates"
+	"github.com/99designs/gqlgen/plugin"
 	"github.com/pkg/errors"
 	"github.com/swiftcarrot/dashi/generators/graphql/rewrite"
-	"github.com/swiftcarrot/dashi/gqlgen/codegen"
-	"github.com/swiftcarrot/dashi/gqlgen/codegen/config"
-	"github.com/swiftcarrot/dashi/gqlgen/codegen/templates"
-	"github.com/swiftcarrot/dashi/gqlgen/plugin"
 )
 
 //go:embed resolver.tmpl
