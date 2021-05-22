@@ -1,5 +1,7 @@
 # CHANGELOG
 
+## 0.5.1
+
 - fix `defer` in database template
 - rm `cmd/pack`
 - replace `packr` with go embed
