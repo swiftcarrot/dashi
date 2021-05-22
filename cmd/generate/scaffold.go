@@ -108,7 +108,7 @@ var ScaffoldCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		modelGen.Command(exec.Command("go", "get", "./..."))
+		modelGen.Command(exec.Command("go", "get", "./models"))
 		gg.Add(modelGen)
 
 		schemaGen, err := schema.New(&scaffold.Options{

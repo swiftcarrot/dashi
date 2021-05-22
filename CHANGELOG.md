@@ -4,6 +4,7 @@
 - rm `cmd/pack`
 - rm `packr`
 - add server generator in `dashi new`
+- no more ignore `DS_Store`
 
 ## 0.5.0
 
