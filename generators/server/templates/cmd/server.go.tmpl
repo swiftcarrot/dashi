@@ -10,10 +10,10 @@ var serverCmd = &cobra.Command{
 	Short: "Start server",
 	Aliases: []string{"s"},
 	RunE: func(cmd *cobra.Command, args []string) error {
-   	server, err := api.NewServer()
-   	if err != nil {
-   		return err
-   	}
+   		server, err := api.NewServer()
+   		if err != nil {
+   			return err
+   		}
 
 		return server.ListenAndServe()
 	},

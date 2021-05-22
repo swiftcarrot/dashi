@@ -3,10 +3,10 @@ package generate
 import (
 	"context"
 
-	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/graphql"
+	"github.com/swiftcarrot/genny"
 )
 
 var GraphqlCmd = &cobra.Command{

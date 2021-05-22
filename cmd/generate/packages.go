@@ -3,10 +3,10 @@ package generate
 import (
 	"context"
 
-	"github.com/gobuffalo/genny/v2"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/packages"
 	"github.com/swiftcarrot/flect"
+	"github.com/swiftcarrot/genny"
 )
 
 var PackagesCmd = &cobra.Command{

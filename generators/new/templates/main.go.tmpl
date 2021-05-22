@@ -7,7 +7,7 @@ import (
 	"{{ .opts.Package }}/cmd/database"
 )
 
-//go:embed migrations/*
+//go:embed migrations
 var migrationsFS embed.FS
 
 func main() {

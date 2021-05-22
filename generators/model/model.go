@@ -1,33 +1,38 @@
 package model
 
 import (
+	"embed"
 	"strings"
 
-	"github.com/gobuffalo/genny/v2"
-	"github.com/gobuffalo/genny/v2/gogen"
-	"github.com/gobuffalo/packr/v2"
 	"github.com/swiftcarrot/flect"
 	"github.com/swiftcarrot/flect/name"
+	"github.com/swiftcarrot/genny"
+	"github.com/swiftcarrot/genny/gogen"
 )
 
-func New(mops *Options) (*genny.Generator, error) {
+//go:embed templates
+var templates embed.FS
+
+func New(opts *Options) (*genny.Generator, error) {
 	g := genny.New()
-	if err := mops.Validate(); err != nil {
+
+	if err := opts.Validate(); err != nil {
 		return g, err
 	}
-	if err := g.Box(packr.New("dashi:generators:model", "../model/templates")); err != nil {
+
+	if err := g.Templates(&templates); err != nil {
 		return g, err
 	}
 
 	m := presenter{
-		Name:        name.New(mops.Name.String()),
-		Validations: validatable(mops.Attrs),
-		Encoding:    name.New(mops.Encoding),
-		Imports:     buildImports(mops),
+		Name:        name.New(opts.Name.String()),
+		Validations: validatable(opts.Attrs),
+		Encoding:    name.New(opts.Encoding),
+		Imports:     buildImports(opts),
 	}
 
 	ctx := map[string]interface{}{
-		"opts":  mops,
+		"opts":  opts,
 		"model": m,
 	}
 	help := map[string]interface{}{
@@ -43,7 +48,7 @@ func New(mops *Options) (*genny.Generator, error) {
 
 	t := gogen.TemplateTransformer(ctx, help)
 	g.Transformer(t)
-	g.Transformer(genny.Replace("-name-", mops.Name.Singularize().ToLower().String()))
-	g.Transformer(genny.Replace("-path-", mops.Path))
+	g.Transformer(genny.Replace("$path$", opts.Path))
+	g.Transformer(genny.Replace("$name$", opts.Name.Singularize().ToLower().String()))
 	return g, nil
 }

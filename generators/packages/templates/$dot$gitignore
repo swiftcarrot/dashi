@@ -1,9 +1,7 @@
 node_modules
 build
-/vendor
 /bin
 /dist
-.DS_Store
 .idea
 *.tmp
 yarn-debug.log*

@@ -4,7 +4,6 @@ import (
 	"context"
 	"os/exec"
 
-	"github.com/gobuffalo/genny/v2"
 	"github.com/gobuffalo/logger"
 	"github.com/spf13/cobra"
 	"github.com/swiftcarrot/dashi/generators/attrs"
@@ -15,6 +14,7 @@ import (
 	"github.com/swiftcarrot/dashi/generators/scaffold/dashboard"
 	"github.com/swiftcarrot/dashi/generators/scaffold/schema"
 	"github.com/swiftcarrot/flect"
+	"github.com/swiftcarrot/genny"
 )
 
 func getOptions(args []string) (*scaffold.Options, error) {
@@ -51,6 +51,9 @@ var ScaffoldDashboardCmd = &cobra.Command{
 		run.Logger = logger.New(logger.DebugLevel)
 
 		opts, err := getOptions(args)
+		if err != nil {
+			return err
+		}
 
 		dashboardGen, err := dashboard.New(opts)
 		if err != nil {
@@ -105,6 +108,7 @@ var ScaffoldCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+		modelGen.Command(exec.Command("go", "get", "./models"))
 		gg.Add(modelGen)
 
 		schemaGen, err := schema.New(&scaffold.Options{
@@ -135,6 +139,7 @@ var ScaffoldCmd = &cobra.Command{
 		}
 		gg.Add(graphqlGen)
 
+		// TODO: skip if api only
 		dashboardGen, err := dashboard.New(opts)
 		if err != nil {
 			return err

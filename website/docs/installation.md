@@ -36,7 +36,6 @@ Available Commands:
   generate    Generates dashboard, scaffold, migration, ...
   help        Help about any command
   new         Create new project
-  pack        Pack migration files with packr2
   version     Print version
 
 Flags:
