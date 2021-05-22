@@ -51,6 +51,9 @@ var ScaffoldDashboardCmd = &cobra.Command{
 		run.Logger = logger.New(logger.DebugLevel)
 
 		opts, err := getOptions(args)
+		if err != nil {
+			return err
+		}
 
 		dashboardGen, err := dashboard.New(opts)
 		if err != nil {
@@ -105,6 +108,7 @@ var ScaffoldCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
+		modelGen.Command(exec.Command("go", "get", "./..."))
 		gg.Add(modelGen)
 
 		schemaGen, err := schema.New(&scaffold.Options{
@@ -135,6 +139,7 @@ var ScaffoldCmd = &cobra.Command{
 		}
 		gg.Add(graphqlGen)
 
+		// TODO: skip if api only
 		dashboardGen, err := dashboard.New(opts)
 		if err != nil {
 			return err

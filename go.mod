@@ -25,7 +25,6 @@ require (
 	github.com/stretchr/testify v1.6.1
 	github.com/swiftcarrot/flect v0.3.2
 	github.com/swiftcarrot/genny v0.1.0
-	github.com/vektah/gqlparser/v2 v2.2.0
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect
 	golang.org/x/tools v0.0.0-20210106214847-113979e3529a
 	gopkg.in/yaml.v2 v2.3.0 // indirect

@@ -4,20 +4,19 @@ all: fmt build
 
 fmt:
 	gofmt -w $(GOFMT_FILES)
-	yarn prettier --write '**/*.{js,json,jsx,ts,tsx,graphql,yaml,yml,md}' --loglevel warn
 
 lint:
 	go vet
-	yarn eslint packages
 
 image:
 	docker build -t {{ .opts.Name }} .
 
-build:
+graphql:
+	go get
 	dashi g graphql
+
+build: graphql
 	go mod tidy
 	go build -ldflags "-X {{ .opts.Package }}/cmd.Version=`git rev-parse HEAD`" -o ./bin/{{ .opts.Name }}
 	go install
 
-graphql:
-	dashi g graphql

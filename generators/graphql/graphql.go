@@ -6,7 +6,7 @@ import (
 
 	"github.com/99designs/gqlgen/api"
 	"github.com/99designs/gqlgen/codegen/config"
-	"github.com/swiftcarrot/dashi/plugin/modelgen"
+	"github.com/99designs/gqlgen/plugin/modelgen"
 	"github.com/swiftcarrot/dashi/plugin/resolvergen"
 	"github.com/swiftcarrot/genny"
 )

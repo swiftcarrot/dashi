@@ -3,6 +3,7 @@
 - fix `defer` in database template
 - rm `cmd/pack`
 - rm `packr`
+- add server generator in `dashi new`
 
 ## 0.5.0
 

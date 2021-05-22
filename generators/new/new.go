@@ -7,6 +7,7 @@ import (
 
 	"github.com/swiftcarrot/dashi/generators/dashboard"
 	"github.com/swiftcarrot/dashi/generators/packages"
+	"github.com/swiftcarrot/dashi/generators/server"
 	"github.com/swiftcarrot/genny"
 	"github.com/swiftcarrot/genny/gogen"
 )
@@ -23,10 +24,12 @@ func New(opts *Options) (*genny.Group, error) {
 	gg := &genny.Group{}
 
 	g := genny.New()
-	g.RunFn(func(r *genny.Runner) error {
-		r.Exec(exec.Command("go", "mod", "init"))
-		return nil
-	})
+
+	g.Command(exec.Command("go", "mod", "init"))
+	// TODO: lock package version
+	g.Command(exec.Command("go", "get", "github.com/swiftcarrot/dashi"))
+	g.Command(exec.Command("go", "get", "github.com/99designs/gqlgen@5ad012e3d7be1127706b9c8a3da0378df3a98ec1"))
+	// g.Command(exec.Command("go", "mod", "edit", "-replace=github.com/99designs/gqlgen=github.com/swiftcarrot/gqlgen@master"))
 
 	g.Templates(&templates)
 
@@ -59,8 +62,18 @@ func New(opts *Options) (*genny.Group, error) {
 	}
 
 	make := genny.New()
-	make.Command(exec.Command("make"))
+	make.Command(exec.Command("make", "graphql"))
 	gg.Add(make)
+
+	server, err := server.New(&server.Options{
+		Name:    opts.Name,
+		Package: opts.Package,
+	})
+	if err != nil {
+		return nil, err
+	}
+	server.Command(exec.Command("go", "get", "./..."))
+	gg.Add(server)
 
 	return gg, nil
 }
