@@ -70,7 +70,7 @@ func New(opts *Options) (*genny.Generator, error) {
 
 	t := gogen.TemplateTransformer(ctx, help)
 	g.Transformer(t)
-	g.Transformer(genny.Replace("time", opts.Time))
+	g.Transformer(genny.Replace("$time$", opts.Time))
 
 	if len(opts.Attrs) > 0 {
 		g.Transformer(genny.Replace("$name$", "create_"+opts.Name.Underscore().Pluralize().String()))
