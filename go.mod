@@ -30,4 +30,4 @@ require (
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
 
-replace github.com/99designs/gqlgen => /Users/zuowang/go/src/github.com/swiftcarrot/gqlgen
+replace github.com/99designs/gqlgen => github.com/swiftcarrot/gqlgen v0.14.0

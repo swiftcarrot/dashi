@@ -309,6 +309,8 @@ github.com/swiftcarrot/flect v0.3.2 h1:WH26oFAfkyKYJQLlkN5Kw4XhwrHQTbMPIFLhjbuoW
 github.com/swiftcarrot/flect v0.3.2/go.mod h1:Q8fbWSjfLnhQtOnE3Q8OtvH9PPIJoZdHp7QcbQ3zAPY=
 github.com/swiftcarrot/genny v0.1.0 h1:jDCF8n/XZuQlEUr+TRVgfobDEe63xsRfIYobhftNrPg=
 github.com/swiftcarrot/genny v0.1.0/go.mod h1:qIFsKAH9sJyxmxPA1UUscLv2Cq+oET8l9TqrRrCPF6Q=
+github.com/swiftcarrot/gqlgen v0.14.0 h1:dCByJEX8B25brTmvHitEYuzVirePd77AiB1yrJu0izA=
+github.com/swiftcarrot/gqlgen v0.14.0/go.mod h1:Q0Cu0QKR99SnpBtxxj4162MGz3jSkMWvgQ79g2YT6lA=
 github.com/tmc/grpc-websocket-proxy v0.0.0-20190109142713-0ad062ec5ee5/go.mod h1:ncp9v5uamzpCO7NfCPTXjqaC+bZgJeR0sMTm6dMHP7U=
 github.com/ugorji/go v1.1.4/go.mod h1:uQMGLiO92mf5W77hV/PUCpI3pbzQx3CRekS0kk+RGrc=
 github.com/ugorji/go/codec v0.0.0-20181204163529-d75b2dcb6bc8/go.mod h1:VFNgLljTbGfSG7qAOspJ7OScBnGdDN/yBr0sguwnwf0=

@@ -2,9 +2,10 @@
 
 - fix `defer` in database template
 - rm `cmd/pack`
-- rm `packr`
-- add server generator in `dashi new`
-- no more ignore `DS_Store`
+- replace `packr` with go embed
+- add server generator
+- no more ignoring `DS_Store`
+- switch to `github.com/swiftcarrot/gqlgen` internally
 
 ## 0.5.0
 
