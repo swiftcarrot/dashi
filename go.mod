@@ -3,7 +3,6 @@ module github.com/swiftcarrot/dashi
 go 1.16
 
 require (
-	github.com/99designs/gqlgen v0.0.0-00010101000000-000000000000
 	github.com/cockroachdb/cockroach-go v2.0.1+incompatible // indirect
 	github.com/fatih/color v1.11.0 // indirect
 	github.com/gobuffalo/envy v1.9.0 // indirect
@@ -25,9 +24,8 @@ require (
 	github.com/stretchr/testify v1.6.1
 	github.com/swiftcarrot/flect v0.3.2
 	github.com/swiftcarrot/genny v0.1.0
+	github.com/swiftcarrot/gqlgen v0.14.1
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect
 	golang.org/x/tools v0.0.0-20210106214847-113979e3529a
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
-
-replace github.com/99designs/gqlgen => github.com/swiftcarrot/gqlgen v0.14.0

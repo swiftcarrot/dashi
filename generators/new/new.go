@@ -28,8 +28,8 @@ func New(opts *Options) (*genny.Group, error) {
 	g.Command(exec.Command("go", "mod", "init"))
 	// TODO: lock package version
 	g.Command(exec.Command("go", "get", "github.com/swiftcarrot/dashi"))
-	g.Command(exec.Command("go", "get", "github.com/99designs/gqlgen@5ad012e3d7be1127706b9c8a3da0378df3a98ec1"))
-	// g.Command(exec.Command("go", "mod", "edit", "-replace=github.com/99designs/gqlgen=github.com/swiftcarrot/gqlgen@master"))
+	g.Command(exec.Command("go", "get", "github.com/swiftcarrot/gqlgen"))
+	// g.Command(exec.Command("go", "mod", "edit", "-replace=github.com/swiftcarrot/gqlgen=github.com/swiftcarrot/gqlgen@master"))
 
 	g.Templates(&templates)
 

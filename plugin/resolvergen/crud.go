@@ -6,9 +6,9 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/99designs/gqlgen/codegen"
-	"github.com/99designs/gqlgen/codegen/templates"
 	"github.com/swiftcarrot/flect"
+	"github.com/swiftcarrot/gqlgen/codegen"
+	"github.com/swiftcarrot/gqlgen/codegen/templates"
 )
 
 //go:embed crud.tmpl

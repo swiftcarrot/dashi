@@ -1,8 +1,8 @@
 package types
 
 import (
-	"github.com/99designs/gqlgen/graphql"
 	"github.com/gobuffalo/nulls"
+	"github.com/swiftcarrot/gqlgen/graphql"
 )
 
 func MarshalNullsTime(s nulls.Time) graphql.Marshaler {

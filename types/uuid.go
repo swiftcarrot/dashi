@@ -3,9 +3,9 @@ package types
 import (
 	"fmt"
 
-	"github.com/99designs/gqlgen/graphql"
 	"github.com/gobuffalo/nulls"
 	"github.com/gofrs/uuid"
+	"github.com/swiftcarrot/gqlgen/graphql"
 )
 
 func MarshalUUID(u uuid.UUID) graphql.Marshaler {

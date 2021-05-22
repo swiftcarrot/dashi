@@ -1,8 +1,8 @@
 package dashboardgen
 
 import (
-	"github.com/99designs/gqlgen/codegen"
-	"github.com/99designs/gqlgen/plugin"
+	"github.com/swiftcarrot/gqlgen/codegen"
+	"github.com/swiftcarrot/gqlgen/plugin"
 )
 
 type Plugin struct {

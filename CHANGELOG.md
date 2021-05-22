@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.5.2
+
+- switch to `github.com/swiftcarrot/gqlgen`
+
 ## 0.5.1
 
 - fix `defer` in database template

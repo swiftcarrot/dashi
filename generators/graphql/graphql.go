@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/99designs/gqlgen/api"
-	"github.com/99designs/gqlgen/codegen/config"
-	"github.com/99designs/gqlgen/plugin/modelgen"
 	"github.com/swiftcarrot/dashi/plugin/resolvergen"
 	"github.com/swiftcarrot/genny"
+	"github.com/swiftcarrot/gqlgen/api"
+	"github.com/swiftcarrot/gqlgen/codegen/config"
+	"github.com/swiftcarrot/gqlgen/plugin/modelgen"
 )
 
 func New() (*genny.Generator, error) {
