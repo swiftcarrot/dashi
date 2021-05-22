@@ -33,8 +33,8 @@ func New(opts *scaffold.Options) (*genny.Generator, error) {
 	}
 	t := gogen.TemplateTransformer(data, helpers)
 	g.Transformer(t)
-	g.Transformer(genny.Replace("entity", opts.Name.Singularize().ToLower().String()))
-	g.Transformer(genny.Replace("path", "schema"))
+	g.Transformer(genny.Replace("$entity$", opts.Name.Singularize().ToLower().String()))
+	g.Transformer(genny.Replace("$path$", "schema"))
 
 	if err := g.Templates(&templates); err != nil {
 		return g, err

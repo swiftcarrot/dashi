@@ -48,7 +48,7 @@ func New(opts *Options) (*genny.Generator, error) {
 
 	t := gogen.TemplateTransformer(ctx, help)
 	g.Transformer(t)
-	g.Transformer(genny.Replace("name", opts.Name.Singularize().ToLower().String()))
-	g.Transformer(genny.Replace("path", opts.Path))
+	g.Transformer(genny.Replace("$path$", opts.Path))
+	g.Transformer(genny.Replace("$name$", opts.Name.Singularize().ToLower().String()))
 	return g, nil
 }

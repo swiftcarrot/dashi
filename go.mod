@@ -8,7 +8,7 @@ require (
 	github.com/fatih/color v1.11.0 // indirect
 	github.com/gobuffalo/envy v1.9.0 // indirect
 	github.com/gobuffalo/fizz v1.13.0 // indirect
-	github.com/gobuffalo/genny v0.6.0
+	github.com/gobuffalo/genny v0.6.0 // indirect
 	github.com/gobuffalo/logger v1.0.3
 	github.com/gobuffalo/nulls v0.4.0
 	github.com/gobuffalo/packr/v2 v2.8.0 // indirect
