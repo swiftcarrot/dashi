@@ -31,7 +31,7 @@ func New(opts *Options) (*genny.Generator, error) {
 	t := gogen.TemplateTransformer(data, helpers)
 	g.Transformer(t)
 
-	g.Transformer(genny.Dot())
+	g.Transformer(genny.Replace("$dot$", "."))
 	g.Command(exec.Command("yarn"))
 
 	return g, nil

@@ -1,4 +1,4 @@
-GOFMT_FILES?=$$(find . -name '*.go' | grep -v vendor)
+GOFMT_FILES?=$$(find . -name '*.go')
 
 all: fmt build
 
@@ -19,4 +19,3 @@ build: graphql
 	go mod tidy
 	go build -ldflags "-X {{ .opts.Package }}/cmd.Version=`git rev-parse HEAD`" -o ./bin/{{ .opts.Name }}
 	go install
-

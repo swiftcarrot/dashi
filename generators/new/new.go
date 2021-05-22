@@ -40,7 +40,7 @@ func New(opts *Options) (*genny.Group, error) {
 	t := gogen.TemplateTransformer(data, helpers)
 	g.Transformer(t)
 
-	g.Transformer(genny.Dot())
+	g.Transformer(genny.Replace("$dot$", "."))
 	gg.Add(g)
 
 	if !opts.APIOnly {
@@ -72,7 +72,7 @@ func New(opts *Options) (*genny.Group, error) {
 	if err != nil {
 		return nil, err
 	}
-	server.Command(exec.Command("go", "get", "./..."))
+	server.Command(exec.Command("go", "get"))
 	gg.Add(server)
 
 	return gg, nil

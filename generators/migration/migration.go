@@ -73,9 +73,9 @@ func New(opts *Options) (*genny.Generator, error) {
 	g.Transformer(genny.Replace("time", opts.Time))
 
 	if len(opts.Attrs) > 0 {
-		g.Transformer(genny.Replace("name", "create_"+opts.Name.Underscore().Pluralize().String()))
+		g.Transformer(genny.Replace("$name$", "create_"+opts.Name.Underscore().Pluralize().String()))
 	} else {
-		g.Transformer(genny.Replace("name", opts.Name.Underscore().String()))
+		g.Transformer(genny.Replace("$name$", opts.Name.Underscore().String()))
 	}
 
 	return g, nil
