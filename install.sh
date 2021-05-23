@@ -156,32 +156,30 @@ start() {
   pkg="github.com/swiftcarrot/dashi"
 
   # binary name such as "hello"
-  bin="dashi"
+  bin="dashi.tar.gz"
 
   # original_version such as "master"
   original_version="v0.5.2"
 
-  # version such as "master"
-  version="v0.5.2"
-  
   prefix=${PREFIX:-"/usr/local/bin"}
-  tmp="$(mktmpdir)/$bin"
+  tmp="$(mktmpdir)"
 
   echo
   log_info "Downloading $pkg@$original_version"
-  if [ "$original_version" != "$version" ]; then
-    log_info "Resolved version $original_version to $version"
-  fi
   log_info "Downloading binary for $os $arch"
-  http_download $tmp "$api/binary/$pkg?os=$os&arch=$arch&version=$version"
+
+  asset=$(curl -s https://api.github.com/repos/swiftcarrot/dashi/releases/latest | grep -i 'browser_download_url.*darwin_amd64' | sed -E 's/.*"([^"]+)".*/\1/')
+  http_download "$tmp/dashi_$original_version.tar.gz" "$asset"
+
+  cd "$tmp"
+  tar zxf "dashi_$original_version.tar.gz"
 
   if [ -w "$prefix" ]; then
-  log_info "Installing $bin to $prefix"
-    install "$tmp" "$prefix"
+  log_info "Installing dashi to $prefix"
+    install dashi "$prefix"
   else
     log_info "Permissions required for installation to $prefix — alternatively specify a new directory with:"
-    log_info "  $ curl -sf https://gobinaries.com/$pkg@$version | PREFIX=. sh"
-    sudo install "$tmp" "$prefix"
+    sudo install dashi "$prefix"
   fi
 
   log_info "Installation complete"
