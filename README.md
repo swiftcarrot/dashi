@@ -22,7 +22,7 @@ Dashi is a framework for building GraphQL application in Go and React.
 Install the latest version of `dashi` with:
 
 ```sh
-curl -sf https://gobinaries.com/swiftcarrot/dashi | sh
+curl -sf https://raw.githubusercontent.com/swiftcarrot/dashi/master/install.sh  | sh
 ```
 
 ## License

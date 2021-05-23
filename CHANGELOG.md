@@ -1,5 +1,7 @@
 # CHANGELOG
 
+- add install.sh
+
 ## 0.5.2
 
 - switch to `github.com/swiftcarrot/gqlgen`
