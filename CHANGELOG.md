@@ -1,6 +1,13 @@
 # CHANGELOG
 
+## 0.5.4
+
 - add install.sh
+- add `arm64` build in goreleaser
+
+## 0.5.3
+
+- update goreleaser filename
 
 ## 0.5.2
 
