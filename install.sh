@@ -163,12 +163,12 @@ start() {
 
   prefix=${PREFIX:-"/usr/local/bin"}
   tmp="$(mktmpdir)"
-
+  
   echo
   log_info "Downloading $pkg@$original_version"
   log_info "Downloading binary for $os $arch"
 
-  asset=$(curl -s https://api.github.com/repos/swiftcarrot/dashi/releases/latest | grep -i "browser_download_url.*$os_$arch" | sed -E 's/.*"([^"]+)".*/\1/')
+  asset=$(curl -s https://api.github.com/repos/swiftcarrot/dashi/releases/latest | grep -i "browser_download_url.*$os\_$arch" | sed -E 's/.*"([^"]+)".*/\1/')
   http_download "$tmp/dashi_$original_version.tar.gz" "$asset"
 
   cd "$tmp"
