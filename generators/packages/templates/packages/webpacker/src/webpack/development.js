@@ -1,13 +1,13 @@
-const base = require('./base');
+const base = require("./base");
 
 module.exports = {
   ...base,
-  mode: 'development',
+  mode: "development",
   output: {
     ...base.output,
-    filename: 'static/[name].js',
-    chunkFilename: 'static/[name].js',
-    publicPath: '/',
+    filename: "static/[name].js",
+    chunkFilename: "static/[name].js",
+    publicPath: "/",
   },
-  devtool: 'cheap-module-source-map',
+  devtool: "cheap-module-source-map",
 };

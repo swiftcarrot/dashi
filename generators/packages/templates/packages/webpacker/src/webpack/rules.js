@@ -1,10 +1,10 @@
-const getStyleLoaders = require('../utils/getStyleLoaders');
-const getCSSModuleLocalIdent = require('../utils/getCSSModuleLocalIdent');
+const getStyleLoaders = require("../utils/getStyleLoaders");
+const getCSSModuleLocalIdent = require("../utils/getCSSModuleLocalIdent");
 const {
   isEnvProduction,
   isEnvDevelopment,
   shouldUseSourceMap,
-} = require('../utils/config');
+} = require("../utils/config");
 
 const cssRegex = /\.css$/;
 const cssModuleRegex = /\.module\.css$/;
@@ -16,16 +16,16 @@ module.exports = [
     oneOf: [
       {
         test: /icons\/.*.\.svg$/,
-        use: [{ loader: require.resolve('@svgr/webpack') }],
+        use: [{ loader: require.resolve("@svgr/webpack") }],
       },
 
       {
         test: /\.(jpg|jpeg|png|gif|svg|eot|ttf|woff|woff2)$/i,
         use: [
           {
-            loader: require.resolve('file-loader'),
+            loader: require.resolve("file-loader"),
             options: {
-              name: 'static/[name].[hash:8].[ext]',
+              name: "static/[name].[hash:8].[ext]",
               esModule: false,
             },
           },
@@ -37,16 +37,16 @@ module.exports = [
   {
     test: /\.(js|mjs|jsx|ts|tsx)$/,
     exclude: /node_modules/,
-    loader: require.resolve('babel-loader'),
+    loader: require.resolve("babel-loader"),
     options: {
-      presets: [require.resolve('babel-preset')],
+      presets: [require.resolve("babel-preset")],
       cacheDirectory: true,
     },
   },
 
   {
     test: /\.ya?ml$/,
-    use: require.resolve('@swiftcarrot/yaml-loader'),
+    use: require.resolve("@swiftcarrot/yaml-loader"),
   },
 
   {
@@ -78,7 +78,7 @@ module.exports = [
         importLoaders: 3,
         sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
       },
-      'sass-loader'
+      "sass-loader"
     ),
     sideEffects: true,
   },
@@ -93,7 +93,7 @@ module.exports = [
           getLocalIdent: getCSSModuleLocalIdent,
         },
       },
-      'sass-loader'
+      "sass-loader"
     ),
   },
 ];

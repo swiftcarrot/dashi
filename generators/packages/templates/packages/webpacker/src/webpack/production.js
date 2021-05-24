@@ -1,21 +1,21 @@
-const TerserPlugin = require('terser-webpack-plugin');
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const base = require('./base');
+const TerserPlugin = require("terser-webpack-plugin");
+const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
+const base = require("./base");
 
 module.exports = {
   ...base,
-  mode: 'production',
+  mode: "production",
 
   output: {
     ...base.output,
-    filename: 'static/[name].[chunkhash:8].js',
-    chunkFilename: 'static/[name].[chunkhash:8].chunk.js',
+    filename: "static/[name].[chunkhash:8].js",
+    chunkFilename: "static/[name].[chunkhash:8].chunk.js",
   },
 
   optimization: {
     runtimeChunk: true,
     splitChunks: {
-      chunks: 'all',
+      chunks: "all",
     },
     minimizer: [
       new TerserPlugin({

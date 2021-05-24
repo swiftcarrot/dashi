@@ -1,11 +1,11 @@
-const { parse } = require('url');
-const webpack = require('webpack');
-const Server = require('webpack-dev-server/lib/Server');
-const { paths } = require('../utils/config');
-const webpackConfig = require('../webpack');
+const { parse } = require("url");
+const webpack = require("webpack");
+const Server = require("webpack-dev-server/lib/Server");
+const { paths } = require("../utils/config");
+const webpackConfig = require("../webpack");
 
 module.exports = (cmd) => {
-  const listen = cmd.args[0] || 'http://0.0.0.0:3000';
+  const listen = cmd.args[0] || "http://0.0.0.0:3000";
   const compiler = webpack(webpackConfig);
   const server = new Server(compiler, {
     contentBase: paths.appPublic,

@@ -1,5 +1,5 @@
-import React from 'react';
-import get from 'lodash/get';
+import React from "react";
+import get from "lodash/get";
 
 export default function Table({ keyExtractor, columns, data, ...props }) {
   return (

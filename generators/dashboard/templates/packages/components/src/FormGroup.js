@@ -1,5 +1,5 @@
-import React from 'react';
-import { FormLabel, FormControl, FormError } from '@swiftcarrot/react-form';
+import React from "react";
+import { FormLabel, FormControl, FormError } from "@swiftcarrot/react-form";
 
 export default function FormGroup({ name, label, ...props }) {
   return (

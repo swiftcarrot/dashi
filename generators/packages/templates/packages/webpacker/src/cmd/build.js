@@ -1,7 +1,7 @@
-const fs = require('fs-extra');
-const webpack = require('webpack');
-const { paths } = require('../utils/config');
-const webpackConfig = require('../webpack');
+const fs = require("fs-extra");
+const webpack = require("webpack");
+const { paths } = require("../utils/config");
+const webpackConfig = require("../webpack");
 
 module.exports = function () {
   if (fs.pathExistsSync(paths.appPublic)) {

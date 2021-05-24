@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## Unreleased
+
+- use prettier default config
+
 ## 0.5.4
 
 - add install.sh

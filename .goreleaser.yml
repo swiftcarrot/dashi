@@ -15,14 +15,14 @@ archives:
   - replacements:
       386: i386
 checksum:
-  name_template: 'checksums.txt'
+  name_template: "checksums.txt"
 snapshot:
-  name_template: '{{ .Tag }}-next'
+  name_template: "{{ .Tag }}-next"
 changelog:
   sort: asc
   filters:
     exclude:
-      - '^docs:'
-      - '^test:'
+      - "^docs:"
+      - "^test:"
       - Merge pull request
       - Merge branch
