@@ -3,6 +3,7 @@
 ## Unreleased
 
 - use prettier default config
+- rm `READEME.md` from templates
 
 ## 0.5.4
 
