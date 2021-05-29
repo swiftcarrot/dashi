@@ -4,6 +4,7 @@
 
 - use prettier default config
 - rm `READEME.md` from templates
+- add `.prettierignore`
 
 ## 0.5.4
 
