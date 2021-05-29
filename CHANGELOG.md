@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 0.5.5
+
 - use prettier default config
 - rm `READEME.md` from templates
 - add `.prettierignore`

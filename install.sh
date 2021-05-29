@@ -159,7 +159,7 @@ start() {
   bin="dashi.tar.gz"
 
   # original_version such as "master"
-  original_version="v0.5.4"
+  original_version="v0.5.5"
 
   prefix=${PREFIX:-"/usr/local/bin"}
   tmp="$(mktmpdir)"
