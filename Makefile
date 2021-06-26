@@ -10,7 +10,7 @@ build:
 	go mod tidy
 	go build -ldflags "-X github.com/swiftcarrot/dashi/cmd.Version=`git rev-parse HEAD`" -o bin/dashi
 
-install:
+install: build
 	install bin/dashi /usr/local/bin
 
 clean:
