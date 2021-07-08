@@ -1,9 +1,0 @@
-{
-  "name": "storybook-preset",
-  "version": "0.1.0",
-  "main": "./src/index.js",
-  "private": true,
-  "dependencies": {
-    "glob": "^7.1.6"
-  }
-}

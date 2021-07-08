@@ -1,0 +1,18 @@
+{
+  "name": "storybook",
+  "version": "0.1.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "start-storybook -p 6006",
+    "build": "rm -rf storybook-static && build-storybook"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@babel/core": "7.x",
+    "@storybook/addon-actions": "6.x",
+    "@storybook/addon-essentials": "6.x",
+    "@storybook/addon-links": "6.x",
+    "@storybook/react": "6.x",
+    "babel-loader": "^8.2.2"
+  }
+}

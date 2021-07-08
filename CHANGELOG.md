@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- move stories to packages/storybook, remove packages/storybook-preset
+
 ## 0.5.5
 
 - use prettier default config
