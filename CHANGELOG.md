@@ -2,7 +2,10 @@
 
 ## Unreleased
 
+## 0.5.6
+
 - move stories to packages/storybook, remove packages/storybook-preset
+- remove `postcss-normalize`
 
 ## 0.5.5
 
