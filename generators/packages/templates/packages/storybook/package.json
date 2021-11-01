@@ -1,6 +1,7 @@
 {
   "name": "storybook",
   "version": "0.1.0",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "start": "start-storybook -p 6006",

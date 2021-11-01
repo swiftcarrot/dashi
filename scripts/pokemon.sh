@@ -13,7 +13,7 @@ dashi g scaffold pokemon number:string name:string weight_min:string weight_max:
 make
 cd packages/dashboard && yarn build && cd ../..
 cd packages/app && yarn build && cd ../..
-yarn build-storybook
+cd packages/storybook && yarn build-storybook
 git add .
 git commit -m "build with `dashi version`"
 git push
