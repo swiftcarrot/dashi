@@ -1,5 +1,4 @@
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const postcssNormalize = require("postcss-normalize");
 const { isEnvDevelopment, isEnvProduction, paths } = require("./config");
 const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
 
@@ -38,10 +37,6 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
             },
             stage: 3,
           }),
-          // Adds PostCSS Normalize as the reset css with default options,
-          // so that it honors browserslist config in package.json
-          // which in turn let's users customize the target behavior as per their needs.
-          postcssNormalize(),
         ],
         sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
       },
