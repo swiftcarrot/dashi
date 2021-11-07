@@ -1,11 +1,11 @@
 import React from 'react';
 import { gql, useMutation } from '@apollo/client'
-import { useNavigate } from 'react-router-dom';
-import { PageHeader } from 'components/src';
-import { {{.opts.Name}}Form } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
+import { useLocation } from '@swiftcarrot/react-router';
+import PageHeader from 'src/components/PageHeader';
+import {{.opts.Name}}Form from 'src/components/{{.opts.Name}}Form';
 
-export default function {{.opts.Name}}NewPage(props) {
-  const navigate = useNavigate();
+export default function Page(props) {
+  const [,navigate] = useLocation();
   const [create{{.opts.Name}}] = useMutation(CREATE_{{.opts.Name.ToUpper}});
 
   function handleSubmit(values, { setSubmitting }) {

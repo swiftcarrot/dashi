@@ -1,9 +1,10 @@
 import "graphiql/graphiql.min.css";
 import React from "react";
 import GraphiQL from "graphiql";
-import PageHeader from "components/src/PageHeader";
+import PageHeader from "src/components/PageHeader";
 
 function graphQLFetcher(graphQLParams) {
+  // TODO: fix fetch url
   return fetch("http://localhost:8080/graphql", {
     method: "post",
     headers: { "Content-Type": "application/json" },

@@ -32,6 +32,8 @@ func New(opts *Options) (*genny.Generator, error) {
 	g.Transformer(t)
 
 	g.Transformer(genny.Replace("$dot$", "."))
+	// TODO: remove $layout$ replace
+	g.Transformer(genny.Replace("$layout$", "__layout__"))
 	g.Command(exec.Command("yarn"))
 
 	return g, nil

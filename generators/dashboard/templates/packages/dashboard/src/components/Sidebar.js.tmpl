@@ -1,14 +1,14 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink } from '@swiftcarrot/react-router';
 
 export default function Sidebar() {
   return (
     <div className="sidebar">
       <div className="sidebar-logo">{{ .opts.Name }}</div>
-      <NavLink className="sidebar-item" to="/" end>
+      <NavLink className="sidebar-item" href="/" end>
         Home
       </NavLink>
-      <NavLink className="sidebar-item" to="/graphiql">
+      <NavLink className="sidebar-item" href="/graphiql">
         GraphiQL
       </NavLink>
     </div>

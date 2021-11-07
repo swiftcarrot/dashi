@@ -25,7 +25,8 @@ func New(opts *scaffold.Options) (*genny.Generator, error) {
 	name := opts.Name.Pascalize().Pluralize().ToLower().String()
 
 	g.Transformer(genny.Replace("$pages$", "packages/dashboard/src/pages/"+name))
-	g.Transformer(genny.Replace("$components$", "packages/components/src/"+name))
+	g.Transformer(genny.Replace("$components$", "packages/dashboard/src/components"))
+	g.Transformer(genny.Replace("$name$", opts.Name.String()))
 
 	if err := g.Templates(&templates); err != nil {
 		return g, err

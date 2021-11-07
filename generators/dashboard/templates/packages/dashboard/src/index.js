@@ -1,6 +1,5 @@
 import "./styles.scss";
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { render } from "react-dom";
 import {
   ApolloProvider,
@@ -10,8 +9,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { ErrorBoundary } from "components";
-import { Layout } from "src/layouts";
-import { HomePage, GraphiQLPage } from "src/pages";
+import Pages from "@swiftcarrot/react-router/src/loader!src/pages";
 
 const ENDPOINT =
   process.env.NODE_ENV === "development"
@@ -47,32 +45,14 @@ const client = new ApolloClient({
   },
 });
 
-const App = () => {
-  return (
-    <ApolloProvider client={client}>
-      <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/graphiql" element={<GraphiQLPage />} />
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Layout>
-      </BrowserRouter>
-    </ApolloProvider>
-  );
-};
-
-const NotFoundPage = () => {
-  return <div>Page not found</div>;
-};
-
-const Root = () => {
+function Root() {
   return (
     <ErrorBoundary>
-      <App />
+      <ApolloProvider client={client}>
+        <Pages />
+      </ApolloProvider>
     </ErrorBoundary>
   );
-};
+}
 
 render(<Root />, document.getElementById("root"));

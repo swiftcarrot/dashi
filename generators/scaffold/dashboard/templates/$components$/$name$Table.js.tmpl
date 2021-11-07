@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from '@swiftcarrot/react-router';
 import { Table } from 'components';
 
 export default function {{.opts.Name}}Table({ data, onDelete }) {
@@ -28,8 +28,8 @@ export default function {{.opts.Name}}Table({ data, onDelete }) {
           title: 'Action',
           render: (item) => (
             <div>
-              <Link to={`/{{.opts.Name.Pluralize.ToLower}}/${item.id}`}>View</Link>&middot;
-              <Link to={`/{{.opts.Name.Pluralize.ToLower}}/${item.id}/edit`}>Edit</Link>&middot;
+              <Link href={`/{{.opts.Name.Pluralize.ToLower}}/${item.id}`}>View</Link>&middot;
+              <Link href={`/{{.opts.Name.Pluralize.ToLower}}/${item.id}/edit`}>Edit</Link>&middot;
               <a href="#" onClick={(e) => handleClick(e, item)}>
                 Delete
               </a>

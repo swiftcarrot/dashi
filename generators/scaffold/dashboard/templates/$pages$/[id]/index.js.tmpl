@@ -1,10 +1,10 @@
 import React from 'react';
 import { gql, useQuery } from '@apollo/client'
-import { Link, useParams } from 'react-router-dom';
-import { Loading, Failure, PageHeader } from 'components/src'
+import { Link } from '@swiftcarrot/react-router';
+import { Loading, Failure } from 'components'
+import PageHeader from 'src/components/PageHeader';
 
-export default function {{.opts.Name}}Page() {
-  const { id } = useParams();
+export default function Page({ params: { id } }) {
   const { loading, error, data, refetch } = useQuery(GET_{{.opts.Name.Underscore.ToUpper}}, { variables: { id }});
 
   if (loading) return <Loading />;
@@ -12,7 +12,7 @@ export default function {{.opts.Name}}Page() {
 
   return (
     <div>
-      <PageHeader title="{{.opts.Name}}" extra={<Link to={`/{{.opts.Name.Pluralize.ToLower}}/${id}/edit`}>Edit</Link>} />
+      <PageHeader title="{{.opts.Name}}" extra={<Link href={`/{{.opts.Name.Pluralize.ToLower}}/${id}/edit`}>Edit</Link>} />
       <div>ID: {data.{{$.opts.Name.Camelize}}.id}</div>
       {{- range .opts.Attrs -}}
         <div>{{ .Name.Pascalize }}: { data.{{$.opts.Name.Camelize}}.{{ .Name.Camelize }} }</div>

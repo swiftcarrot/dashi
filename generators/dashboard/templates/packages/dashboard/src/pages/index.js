@@ -1,2 +1,5 @@
-export HomePage from "./home";
-export GraphiQLPage from "./graphiql";
+import React from "react";
+
+export default function Home() {
+  return <div>Home</div>;
+}

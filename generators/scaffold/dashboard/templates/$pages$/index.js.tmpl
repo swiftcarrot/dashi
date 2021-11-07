@@ -1,4 +1,51 @@
-export {{.opts.Name.Pascalize}}HomePage from './home';
-export {{.opts.Name.Pascalize}}NewPage from './new';
-export {{.opts.Name.Pascalize}}Page from './show';
-export {{.opts.Name.Pascalize}}EditPage from './edit';
+import React from 'react';
+import { gql, useQuery, useMutation } from '@apollo/client';
+import { Link } from '@swiftcarrot/react-router';
+import { Loading, Failure } from 'components'
+import PageHeader from 'src/components/PageHeader';
+import {{.opts.Name}}Table from 'src/components/{{.opts.Name}}Table';
+
+export default function Page() {
+  const { loading, data, error, refetch } = useQuery(GET_{{.opts.Name.Pluralize.Underscore.ToUpper}});
+  const [delete{{.opts.Name}}] = useMutation(DELETE_{{.opts.Name.ToUpper}});
+
+  function handleDelete(item) {
+    return delete{{.opts.Name}}({variables: { input: { id: item.id } }}).then(() => {
+      refetch();
+    }).catch((err) => {
+      console.error(err);
+      alert('Delete failed');
+    });
+  }
+
+  if (loading) return <Loading />;
+  if (error) return <Failure error={error} refetch={refetch} />;
+
+  return (
+    <div>
+      <PageHeader title="{{.opts.Name.Pluralize}}" extra={<Link href="/{{.opts.Name.Pluralize.ToLower}}/new">New {{.opts.Name}}</Link>} />
+      <{{.opts.Name}}Table data={data.{{.opts.Name.Camelize.Pluralize}}} onDelete={handleDelete} />
+    </div>
+  );
+};
+
+const GET_{{.opts.Name.Pluralize.Underscore.ToUpper}} =  gql`
+  query {{.opts.Name.Pluralize}} {
+    {{.opts.Name.Camelize.Pluralize}} {
+      id
+      {{- range .opts.Attrs }}
+        {{ .Name.Camelize }}
+      {{- end }}
+      createdAt
+      updatedAt
+    }
+  }
+`
+
+const DELETE_{{.opts.Name.ToUpper}} = gql`
+  mutation Delete{{.opts.Name.Pascalize}}($input: Delete{{.opts.Name}}Input!) {
+    delete{{.opts.Name.Pascalize}}(input: $input) {
+      id
+    }
+  }
+`

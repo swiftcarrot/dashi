@@ -120,7 +120,7 @@ var ScaffoldCmd = &cobra.Command{
 		}
 		gg.Add(schemaGen)
 
-		// TODO add mysql support, remove hardcode postgres
+		// TODO: add mysql support, remove hardcode postgres
 		// migration attrs is from model opts which is validated and includes timestamp and default id column
 		migrationGen, err := migration.New(&migration.Options{
 			Dialect: "postgres",

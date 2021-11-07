@@ -1,12 +1,12 @@
 import React from 'react';
-import { gql, useQuery, useMutation } from '@apollo/client'
-import { Link, useParams, useNavigate } from 'react-router-dom';
-import { Loading, Failure, PageHeader } from 'components/src'
-import { {{.opts.Name}}Form } from 'components/src/{{.opts.Name.Pluralize.ToLower}}';
+import { gql, useQuery, useMutation } from '@apollo/client';
+import { Link, useLocation } from '@swiftcarrot/react-router';
+import { Loading, Failure } from 'components';
+import PageHeader from 'src/components/PageHeader';
+import {{.opts.Name}}Form from 'src/components/{{.opts.Name}}Form';
 
-export default function {{.opts.Name}}EditPage() {
-  const { id } = useParams();
-  const navigate = useNavigate();
+export default function Pages({ params: { id } }) {
+  const [,navigate] = useLocation();
   const { loading, error, data, refetch } = useQuery(GET_{{.opts.Name.Underscore.ToUpper}}, { variables: { id } });
   const [update{{.opts.Name}}] = useMutation(UPDATE_{{.opts.Name.Underscore.ToUpper}});
 
@@ -28,7 +28,7 @@ export default function {{.opts.Name}}EditPage() {
 
   return (
     <div>
-      <PageHeader title="Edit {{.opts.Name}}" extra={<Link to="/{{.opts.Name.Pluralize.ToLower}}">Back</Link>} />
+      <PageHeader title="Edit {{.opts.Name}}" extra={<Link href="/{{.opts.Name.Pluralize.ToLower}}">Back</Link>} />
       <{{.opts.Name}}Form
         initialValues={data.{{.opts.Name.Camelize}}}
         onSubmit={handleSubmit}
