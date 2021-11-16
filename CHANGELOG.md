@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- scaffold generation with file based router
+
 ## 0.5.6
 
 - move stories to packages/storybook, remove packages/storybook-preset
