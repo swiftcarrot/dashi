@@ -1,11 +1,7 @@
 node_modules
 build
-/vendor
 /bin
 /dist
-.idea
 *.tmp
-yarn-debug.log*
-yarn-error.log*
 *.pid
 storybook-static

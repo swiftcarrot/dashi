@@ -2,9 +2,6 @@ node_modules
 build
 /bin
 /dist
-.idea
 *.tmp
-yarn-debug.log*
-yarn-error.log*
 *.pid
 storybook-static
