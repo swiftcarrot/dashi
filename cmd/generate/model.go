@@ -41,7 +41,6 @@ var ModelCmd = &cobra.Command{
 			Path:                   "models",
 			Package:                "models",
 			TestPackage:            "models",
-			Encoding:               "json",
 			ForceDefaultID:         true,
 			ForceDefaultTimestamps: true,
 		}

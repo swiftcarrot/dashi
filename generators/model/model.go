@@ -4,11 +4,19 @@ import (
 	"embed"
 	"strings"
 
+	"github.com/swiftcarrot/dashi/generators/attrs"
 	"github.com/swiftcarrot/flect"
 	"github.com/swiftcarrot/flect/name"
 	"github.com/swiftcarrot/genny"
 	"github.com/swiftcarrot/genny/gogen"
 )
+
+type presenter struct {
+	Name        name.Ident
+	Encoding    name.Ident
+	Imports     []string
+	Validations attrs.Attrs
+}
 
 //go:embed templates
 var templates embed.FS
@@ -24,7 +32,7 @@ func New(opts *Options) (*genny.Generator, error) {
 		return g, err
 	}
 
-	m := presenter{
+	model := presenter{
 		Name:        name.New(opts.Name.String()),
 		Validations: validatable(opts.Attrs),
 		Encoding:    name.New(opts.Encoding),
@@ -33,7 +41,7 @@ func New(opts *Options) (*genny.Generator, error) {
 
 	ctx := map[string]interface{}{
 		"opts":  opts,
-		"model": m,
+		"model": model,
 	}
 	help := map[string]interface{}{
 		"capitalize": flect.Capitalize,

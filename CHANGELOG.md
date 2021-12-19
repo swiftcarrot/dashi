@@ -3,6 +3,7 @@
 ## Unreleased
 
 - scaffold generation with file based router
+- empty encoding in model by default
 
 ## 0.5.6
 

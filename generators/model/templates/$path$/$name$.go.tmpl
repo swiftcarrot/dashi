@@ -8,6 +8,6 @@ import (
 
 type {{.model.Name.Proper}} struct {
 	{{- range $a := .opts.Attrs }}
-		{{$a.Name.Pascalize}} {{$a.GoType}} `{{$.model.Encoding}}:"{{$a.Name.Camelize}}" db:"{{$a.Name.Underscore}}"`
+		{{$a.Name.Pascalize}} {{$a.GoType}} `{{if $.model.Encoding.Original}}{{$.model.Encoding}}:"{{$a.Name.Camelize}}" {{end}}db:"{{$a.Name.Underscore}}"`
 	{{- end }}
 }
