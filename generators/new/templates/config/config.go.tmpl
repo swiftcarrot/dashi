@@ -1,26 +1,53 @@
 package config
 
 import (
+	"reflect"
+	"strings"
+
 	"github.com/gobuffalo/pop"
 	"github.com/spf13/viper"
 )
 
-type ServerConfig struct {
-	Port   int    `mapstructure:"port"`
-	Secret string `mapstructure:"secret"`
-}
 
 type Config struct {
-	Server   *ServerConfig          `mapstructure:"server"`
-	Database *pop.ConnectionDetails `mapstructure:"database"`
+	Port     int                   `mapstructure:"port"`
+	Database pop.ConnectionDetails `mapstructure:"database"`
+}
+
+func NewConfig() *Config {
+  config := Config{Port: 8080}
+  bindEnvs(config)
+  return &config
 }
 
 func Load() (*Config, error) {
-	config := Config{}
-	err := viper.Unmarshal(&config)
+  config := NewConfig()
+	err := viper.Unmarshal(config)
 	if err != nil {
 		return nil, err
 	}
 
-	return &config, nil
+	return config, nil
+}
+
+func bindEnvs(s interface{}, keys ...string) {
+  sv := reflect.ValueOf(s)
+  st := reflect.TypeOf(s)
+
+  for i := 0; i < st.NumField(); i++ {
+    v := sv.Field(i)
+    t := st.Field(i)
+
+    k, ok := t.Tag.Lookup("mapstructure")
+    if !ok {
+      k = strings.ToLower(t.Name)
+    }
+
+    switch v.Kind() {
+    case reflect.Struct:
+      bindEnvs(v.Interface(), append(keys, k)...)
+    default:
+      viper.BindEnv(strings.Join(append(keys, k), "."))
+    }
+  }
 }

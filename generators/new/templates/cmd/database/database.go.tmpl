@@ -16,7 +16,7 @@ func Connect() (*pop.Connection, error) {
     return nil, err
   }
 
-  conn, err := pop.NewConnection(config.Database)
+  conn, err := pop.NewConnection(&config.Database)
   if err != nil {
     return nil, err
   }

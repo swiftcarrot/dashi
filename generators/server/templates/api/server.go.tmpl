@@ -25,15 +25,10 @@ type Server struct {
 }
 
 func (s *Server) ListenAndServe() error {
-	defer s.db.Close()
-
-	port := s.config.Server.Port
-	if port == 0 {
-		port = 8080
-	}
-
+	port := s.config.Port
 	log.Printf("listening on http://localhost:%d", port)
 	log.Fatal(http.ListenAndServe(":"+strconv.Itoa(port), s.handler))
+	defer s.db.Close()
 	return nil
 }
 
@@ -49,7 +44,7 @@ func NewServer() (*Server, error) {
 		config: config,
 	}
 
-	conn, err := pop.NewConnection(config.Database)
+	conn, err := pop.NewConnection(&config.Database)
 	if err != nil {
 		return nil, err
 	}

@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- config with env support
+
 ## 0.6.0
 
 - scaffold generation with file based router
