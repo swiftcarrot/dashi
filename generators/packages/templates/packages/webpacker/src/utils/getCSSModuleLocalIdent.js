@@ -1,10 +1,15 @@
-const path = require("path");
 const loaderUtils = require("loader-utils");
+const path = require("path");
 
 //
 // https://github.com/facebook/create-react-app/blob/master/packages/react-dev-utils/getCSSModuleLocalIdent.js
 //
-function getCSSModuleLocalIdent(context, localIdentName, localName, options) {
+module.exports = function getLocalIdent(
+  context,
+  localIdentName,
+  localName,
+  options
+) {
   // Use the filename or folder name, based on some uses the index.js / index.module.(css|scss|sass) project style
   const fileNameOrFolder = context.resourcePath.match(
     /index\.module\.(css|scss|sass)$/
@@ -15,8 +20,8 @@ function getCSSModuleLocalIdent(context, localIdentName, localName, options) {
   const hash = loaderUtils.getHashDigest(
     path.posix.relative(context.rootContext, context.resourcePath) + localName,
     "md5",
-    "base64",
-    5
+    "hex",
+    6
   );
   // Use loaderUtils to find the file or folder name
   const className = loaderUtils.interpolateName(
@@ -24,8 +29,6 @@ function getCSSModuleLocalIdent(context, localIdentName, localName, options) {
     fileNameOrFolder + "_" + localName + "__" + hash,
     options
   );
-  // remove the .module that appears in every classname when based on the file.
-  return className.replace(".module_", "_").replace(/\./g, "-");
-}
-
-module.exports = getCSSModuleLocalIdent;
+  // Remove the .module that appears in every classname when based on the file and replace all "." with "_".
+  return className.replace(".module_", "_").replace(/\./g, "_");
+};

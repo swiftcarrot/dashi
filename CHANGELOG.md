@@ -3,6 +3,7 @@
 ## Unreleased
 
 - config with env support
+- fix digest in getCSSModuleLocalIdent
 
 ## 0.6.0
 
