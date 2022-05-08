@@ -26,6 +26,7 @@ require (
 	github.com/swiftcarrot/genny v0.1.0
 	github.com/swiftcarrot/gqlgen v0.14.1
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect
+	golang.org/x/sys v0.0.0-20220503163025-988cb79eb6c6 // indirect
 	golang.org/x/tools v0.0.0-20210106214847-113979e3529a
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
