@@ -26,7 +26,6 @@ require (
 	github.com/swiftcarrot/flect v0.3.2
 	github.com/swiftcarrot/genny v0.1.0
 	github.com/swiftcarrot/gqlgen v0.14.1
-	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect
-	golang.org/x/tools v0.0.0-20210106214847-113979e3529a
+	golang.org/x/tools v0.5.0
 	gopkg.in/yaml.v2 v2.3.0 // indirect
 )
